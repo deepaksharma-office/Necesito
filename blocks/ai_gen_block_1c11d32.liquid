@@ -1,0 +1,269 @@
+{% doc %}
+  @prompt
+    Create a fully responsive Shopify theme section that closely matches the provided reference screenshot. Recreate the design as a premium, minimalist coffee brand storytelling section.
+    
+    **SECTION LAYOUT & DESIGN**
+    
+    1. **Overall styling**
+    - Use a warm off-white/cream background (#FCF9F2 or similar).
+    - Center the content within a max-width container of approximately 1200px.
+    - Use generous whitespace and clean, minimal spacing.
+    - Use dark forest green (#173F32) for headings and video controls.
+    - Maintain a premium, natural, editorial aesthetic suitable for a specialty coffee brand.
+    - Avoid shadows, unnecessary borders, gradients, or decorative elements.
+    
+    2. **Section heading**
+    - At the top, display a small uppercase eyebrow label: “NEIGHBORHOOD MOMENTS”.
+    - Style it with small text (approximately 9–10px), medium-bold weight, dark green color, and subtle letter spacing.
+    - Below it, display the main heading: “Coffee tastes better together.”
+    - Use a clean sans-serif font, approximately 38–42px on desktop, regular font weight, and dark green color.
+    - Below the heading, add the subtitle: “Good coffee, familiar faces and a little time to slow down. Made for the place we call home.”
+    - Use muted gray text, approximately 15px, with comfortable line height.
+    - Align all text to the left.
+    
+    3. **Main video component**
+    - Add a large, landscape video player below the subtitle, with approximately 28–32px spacing above it.
+    - Use a 16:9 aspect ratio, full container width, and rounded corners of approximately 7px.
+    - Allow the merchant to upload or select a video through the Shopify theme editor.
+    - Also support a video poster/thumbnail image that appears before playback.
+    - If no video is selected, display the uploaded poster image as a fallback.
+    - The video must play when the central play button is clicked.
+    - Use native HTML5 video controls or a clean custom control bar.
+    - Ensure the video player works on mobile and desktop.
+    
+    4. **Central play button**
+    - Position a circular white play button at the exact center of the video.
+    - Use a dark forest-green triangular play icon.
+    - Make the button approximately 56–64px in diameter on desktop.
+    - Keep the button simple, with no heavy shadow.
+    - Hide the central play button when the video is playing.
+    
+    5. **Bottom video control bar**
+    - Add a dark forest-green control strip beneath or integrated into the bottom of the video, matching the reference.
+    - Display a small white play icon on the left.
+    - Place the video title “Neighborhood moments” beside it in small white text.
+    - Add a fullscreen icon on the far right.
+    - Use a compact bar approximately 25–30px high.
+    - Keep the controls visually minimal and consistent with the coffee brand aesthetic.
+    
+    6. **Caption below the video**
+    - Add the following text below the video with approximately 12–16px top spacing:
+      “Your Neighborhood Roaster. Coffee, connection and everyday rituals.”
+    - Use muted gray text, approximately 12px on desktop.
+    - Align it to the left.
+    
+    **SHOPIFY THEME EDITOR SETTINGS**
+    
+    Provide editable settings for:
+    - Eyebrow text
+    - Main heading
+    - Subtitle
+    - Video upload/selection
+    - Poster or thumbnail image
+    - Video caption/title
+    - Bottom caption text
+    - Background color
+    - Heading color
+    - Body text color
+    - Control bar color
+    - Section width
+    - Top and bottom padding
+    - Heading font size
+    - Video corner radius
+    
+    Use Shopify schema settings and blocks only where necessary. Make all text and styling configurable from the theme editor without editing code.
+    
+    **RESPONSIVE BEHAVIOR**
+    - Desktop: Maintain the wide landscape video, left-aligned typography, and spacious layout.
+    - Tablet: Reduce heading size and section padding proportionally.
+    - Mobile: Use approximately 24–28px heading text, 14px body text, and 16–20px horizontal padding. Keep the video full-width within the content container, preserve the rounded corners, and ensure the play button and controls remain easy to tap.
+    - Prevent horizontal overflow and maintain proper spacing between all elements.
+    
+    **IMPORTANT IMPLEMENTATION REQUIREMENTS**
+    - Generate a complete, self-contained Shopify section with valid Liquid, HTML, CSS, and schema.
+    - Use unique CSS class names prefixed with `neighborhood-moments-` to prevent conflicts with existing theme styles.
+    - Ensure the section is compatible with the current Shopify theme and its existing typography.
+    - Do not modify global theme styles or other sections.
+    - Use accessible buttons, keyboard-friendly controls, and appropriate alt text.
+    - Avoid external JavaScript libraries.
+    - Match the reference screenshot as closely as possible in proportions, spacing, typography, colors, and video presentation.
+    - Prioritize a clean, functional, production-ready implementation over unnecessary decorative effects.
+{% enddoc %}
+{% assign neighborhood_moments_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .neighborhood-moments-{{ neighborhood_moments_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.body_color }};
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} *,
+  .neighborhood-moments-{{ neighborhood_moments_id }} *::before,
+  .neighborhood-moments-{{ neighborhood_moments_id }} *::after { box-sizing: border-box; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__inner {
+    width: 100%; max-width: 1200px; margin: 0 auto;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__eyebrow {
+    margin: 0 0 10px; color: {{ block.settings.heading_color }}; font-size: 10px; line-height: 1.4;
+    font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__heading {
+    margin: 0; color: {{ block.settings.heading_color }}; font-family: var(--font-heading--family, inherit);
+    font-size: {{ block.settings.heading_size }}px; font-weight: 400; line-height: 1.15; letter-spacing: -0.025em;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__subtitle {
+    max-width: 700px; margin: 12px 0 0; color: {{ block.settings.body_color }}; font-size: 15px; line-height: 1.65;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__player {
+    position: relative; width: 100%; margin-top: 30px; aspect-ratio: 16 / 9;
+    overflow: hidden; border-radius: {{ block.settings.corner_radius }}px; background: #e8e3d9;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__media,
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__poster {
+    display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__video {
+    z-index: 1; background: #111;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__poster {
+    z-index: 2;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__placeholder {
+    display: flex; position: absolute; inset: 0; z-index: 0; align-items: center; justify-content: center;
+    background: #e8e3d9; color: #625f56;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__placeholder svg { width: 100%; height: 100%; object-fit: cover; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__empty-message {
+    position: absolute; bottom: 18px; left: 12px; right: 12px; text-align: center; font-size: 13px; color: #45433e;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__play {
+    position: absolute; z-index: 4; top: 50%; left: 50%; display: flex; width: 62px; height: 62px;
+    align-items: center; justify-content: center; padding: 0; transform: translate(-50%, -50%);
+    border: 0; border-radius: 50%; background: #fff; color: {{ block.settings.control_color }}; cursor: pointer;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__play svg { width: 20px; height: 20px; margin-left: 3px; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__play:focus-visible,
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__bar-button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__player.is-playing .neighborhood-moments__play { display: none; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__player.is-playing .neighborhood-moments__poster,
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__player.is-playing .neighborhood-moments__placeholder { display: none; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__bar {
+    position: absolute; right: 0; bottom: 0; left: 0; z-index: 5; display: flex; height: 30px;
+    align-items: center; gap: 9px; padding: 0 11px; background: {{ block.settings.control_color }}; color: #fff;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__bar-button {
+    display: inline-flex; width: 30px; height: 30px; flex: 0 0 30px; align-items: center; justify-content: center;
+    padding: 0; border: 0; background: transparent; color: #fff; cursor: pointer;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__bar-button svg { width: 13px; height: 13px; }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__title {
+    overflow: hidden; flex: 1; color: #fff; font-size: 11px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__caption {
+    margin: 13px 0 0; color: {{ block.settings.body_color }}; font-size: 12px; line-height: 1.5;
+  }
+  @media screen and (max-width: 749px) {
+    .neighborhood-moments-{{ neighborhood_moments_id }} { padding: {{ block.settings.padding_top | times: 0.6 | round }}px 18px {{ block.settings.padding_bottom | times: 0.6 | round }}px; }
+    .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__heading { font-size: min({{ block.settings.heading_size }}px, 28px); }
+    .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__subtitle { margin-top: 10px; font-size: 14px; }
+    .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__player { margin-top: 22px; }
+    .neighborhood-moments-{{ neighborhood_moments_id }} .neighborhood-moments__play { width: 58px; height: 58px; }
+  }
+{% endstyle %}
+
+<neighborhood-moments-{{ neighborhood_moments_id }} class="neighborhood-moments-{{ neighborhood_moments_id }}" {{ block.shopify_attributes }}>
+  <div class="neighborhood-moments__inner">
+    {% if block.settings.eyebrow != blank %}<p class="neighborhood-moments__eyebrow">{{ block.settings.eyebrow | escape }}</p>{% endif %}
+    {% if block.settings.heading != blank %}<h2 class="neighborhood-moments__heading">{{ block.settings.heading | escape }}</h2>{% endif %}
+    {% if block.settings.subtitle != blank %}<p class="neighborhood-moments__subtitle">{{ block.settings.subtitle | escape }}</p>{% endif %}
+    <div class="neighborhood-moments__player" data-player>
+      {% if block.settings.video != blank %}
+        {{ block.settings.video | video_tag: class: 'neighborhood-moments__media neighborhood-moments__video', image_size: '1600x', controls: false, autoplay: false, loop: false, muted: false, playsinline: true }}
+      {% endif %}
+      {% if block.settings.poster != blank %}
+        <img class="neighborhood-moments__poster" src="{{ block.settings.poster | image_url: width: 1800 }}" alt="{{ block.settings.poster.alt | default: block.settings.video_title | escape }}" width="{{ block.settings.poster.width }}" height="{{ block.settings.poster.height }}" loading="lazy">
+      {% elsif block.settings.video != blank and block.settings.video.preview_image != blank %}
+        <img class="neighborhood-moments__poster" src="{{ block.settings.video.preview_image | image_url: width: 1800 }}" alt="{{ block.settings.video_title | escape }}" width="{{ block.settings.video.preview_image.width }}" height="{{ block.settings.video.preview_image.height }}" loading="lazy">
+      {% else %}
+        <div class="neighborhood-moments__placeholder">{{ 'image' | placeholder_svg_tag }}{% unless block.settings.video != blank %}<span class="neighborhood-moments__empty-message">Add a video and poster image to tell your story.</span>{% endunless %}</div>
+      {% endif %}
+      {% if block.settings.video != blank %}
+        <button class="neighborhood-moments__play" type="button" aria-label="Play {{ block.settings.video_title | escape }}"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M5 2.8v14.4L17 10z"/></svg></button>
+      {% endif %}
+      <div class="neighborhood-moments__bar">
+        {% if block.settings.video != blank %}
+          <button class="neighborhood-moments__bar-button" type="button" data-toggle aria-label="Play video"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 2.2v11.6L13 8z"/></svg></button>
+        {% else %}
+          <span class="neighborhood-moments__bar-button" aria-hidden="true"><svg viewBox="0 0 16 16"><path fill="currentColor" d="M4 2.2v11.6L13 8z"/></svg></span>
+        {% endif %}
+        <span class="neighborhood-moments__title">{{ block.settings.video_title | escape }}</span>
+        {% if block.settings.video != blank %}<button class="neighborhood-moments__bar-button" type="button" data-fullscreen aria-label="View video fullscreen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>{% endif %}
+      </div>
+    </div>
+    {% if block.settings.caption != blank %}<p class="neighborhood-moments__caption">{{ block.settings.caption | escape }}</p>{% endif %}
+  </div>
+  <script>
+    (() => {
+      const root = document.currentScript.closest('neighborhood-moments-{{ neighborhood_moments_id }}');
+      if (!root || root.dataset.ready) return;
+      root.dataset.ready = 'true';
+      const player = root.querySelector('[data-player]');
+      const video = root.querySelector('video');
+      const play = root.querySelector('.neighborhood-moments__play');
+      const toggle = root.querySelector('[data-toggle]');
+      const fullscreen = root.querySelector('[data-fullscreen]');
+      if (!video || !player) return;
+      const updateState = () => {
+        const playing = !video.paused && !video.ended;
+        player.classList.toggle('is-playing', playing);
+        if (toggle) {
+          toggle.setAttribute('aria-label', playing ? 'Pause video' : 'Play video');
+          toggle.innerHTML = playing ? '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 2h3v12H4zm5 0h3v12H9z"/></svg>' : '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 2.2v11.6L13 8z"/></svg>';
+        }
+      };
+      const startPlayback = () => { video.play().catch(() => {}); };
+      if (play) play.addEventListener('click', startPlayback);
+      if (toggle) toggle.addEventListener('click', () => { if (video.paused) startPlayback(); else video.pause(); });
+      if (fullscreen) fullscreen.addEventListener('click', () => {
+        if (player.requestFullscreen) player.requestFullscreen();
+        else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+      });
+      video.addEventListener('play', updateState);
+      video.addEventListener('pause', updateState);
+      video.addEventListener('ended', updateState);
+    })();
+  </script>
+</neighborhood-moments-{{ neighborhood_moments_id }}>
+
+{% schema %}
+{
+  "name": "Neighborhood moments",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NEIGHBORHOOD MOMENTS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Coffee tastes better together." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Good coffee, familiar faces and a little time to slow down. Made for the place we call home." },
+    { "type": "video", "id": "video", "label": "Video" },
+    { "type": "image_picker", "id": "poster", "label": "Poster image" },
+    { "type": "text", "id": "video_title", "label": "Video title", "default": "Neighborhood moments" },
+    { "type": "text", "id": "caption", "label": "Bottom caption", "default": "Your Neighborhood Roaster. Coffee, connection and everyday rituals." },
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FCF9F2" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#173F32" },
+    { "type": "color", "id": "body_color", "label": "Body text color", "default": "#595B55" },
+    { "type": "color", "id": "control_color", "label": "Control bar color", "default": "#173F32" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 5, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 5, "unit": "px", "default": 60 },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 28, "max": 56, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "corner_radius", "label": "Video corner radius", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 7 }
+  ],
+  "presets": [{ "name": "Neighborhood moments" }],
+  "tag": null,
+  "class": "neighborhood-moments-block"
+}
+{% endschema %}

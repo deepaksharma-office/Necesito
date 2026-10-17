@@ -1,0 +1,206 @@
+{% doc %}
+  @prompt
+    Create a Shopify theme section that closely matches the provided reference image of a premium coffee brand’s journal/blog section. Reproduce the layout, spacing, typography, colors, card design, and overall visual appearance as accurately as possible.
+    
+    ### Section Layout
+    - Use a warm cream background (#F7F3E9 or a very similar shade).
+    - Add approximately 36px horizontal padding on desktop.
+    - At the top, display a small uppercase eyebrow label: “FROM THE ROASTER'S JOURNAL” in dark green, bold, compact text.
+    - Below it, add a large heading: “A little coffee know-how.” Use a clean, modern sans-serif font, dark forest green (#21483D), approximately 36px on desktop with regular font weight.
+    - Add a short subtitle underneath: “Brewing tips, everyday rituals and stories worth sharing over a cup.” Use muted gray-green text around 15px.
+    - Maintain the reference image’s generous whitespace and left alignment.
+    
+    ### Blog Cards Grid
+    Create three equal-width blog cards in a single horizontal row on desktop, with approximately 20px gaps between cards.
+    
+    Each card should have:
+    1. A large, edge-to-edge featured image at the top, approximately 172px tall on desktop.
+    2. Slightly rounded top image corners, around 5px.
+    3. A white-warm background (#FFFCF6) for the content area.
+    4. A subtle light beige border (#E5E0D5) and a small border radius of 6px.
+    5. Internal content padding of approximately 15px.
+    
+    Use these three example blog posts:
+    
+    **Card 1**
+    - Category: “EVERYDAY RITUALS”
+    - Title: “Make room for a slower morning.”
+    - Description: “A little pause, a favorite mug and time for a good cup.”
+    - Link: “Read story”
+    - Image: A woman enjoying coffee in a green ceramic mug while sitting in a bright, sunlit outdoor lounge. Include a bag of premium coffee beside her.
+    
+    **Card 2**
+    - Category: “NEIGHBORHOOD RITUALS”
+    - Title: “Good coffee is better together.”
+    - Description: “Small moments that bring a neighborhood a little closer.”
+    - Link: “Read story”
+    - Image: An older couple sitting outdoors in a garden, smiling and drinking coffee together, with a premium coffee bag between them.
+    
+    **Card 3**
+    - Category: “BREW BETTER”
+    - Title: “A better cup starts with the basics.”
+    - Description: “Small details to bring a little more care to your daily brew.”
+    - Link: “Read story”
+    - Image: A man brewing pour-over coffee in a bright modern kitchen, with a kettle, dripper, coffee server, and premium coffee bag visible.
+    
+    ### Card Typography and Styling
+    - Category labels: uppercase, dark green, approximately 9px, bold.
+    - Card titles: dark forest green, approximately 21px, regular font weight, with compact line spacing.
+    - Descriptions: muted gray-green (#77786D), approximately 12px, with a line height of 1.5.
+    - Place the “Read story” link at the bottom left of each card in bold dark green text, approximately 11px.
+    - Add a simple thin right-arrow icon at the bottom right of each card.
+    - Use flexbox so the links and arrows align along the bottom edge of all three cards, even when titles or descriptions wrap onto different numbers of lines.
+    - Make the entire card clickable, as well as its “Read story” link. Link each card to its corresponding Shopify blog article.
+    
+    ### Bottom CTA Button
+    Below the three cards, align one button to the left with approximately 30px of top spacing.
+    - Button text: “Explore the journal”
+    - Add a right-arrow icon on the right side of the text.
+    - Use a transparent or cream background.
+    - Add a thin dark green border, approximately 1px.
+    - Use a subtle 4px corner radius.
+    - Use bold dark green text around 12px.
+    - Apply approximately 12px vertical and 14px horizontal padding.
+    - On hover, use a dark green background with white text and a smooth transition.
+    - Make the button link to the main Shopify blog/journal page.
+    
+    ### Shopify Theme Editor Settings
+    Make the section fully editable through the Shopify theme customizer. Include:
+    - Eyebrow text
+    - Main heading
+    - Subtitle
+    - Background and text colors
+    - Card background, border, and text colors
+    - Blog selection
+    - Number of blog posts to display
+    - Individual card images, with automatic featured-image fallback
+    - Card categories, titles, descriptions, and article links
+    - CTA button label and URL
+    - Desktop and mobile spacing controls
+    - Image height and card border-radius controls
+    
+    Use Shopify Liquid and schema settings so the section can be added, removed, and customized from the theme editor. If possible, support selecting a Shopify blog and automatically rendering its latest articles. Allow manual overrides for each card's image and category label.
+    
+    ### Responsive Design
+    - Desktop: three cards in one row.
+    - Tablet: two cards per row, with the third card wrapping onto the next row.
+    - Mobile: stack all cards vertically in a single column.
+    - Reduce horizontal padding on mobile to approximately 18px.
+    - Scale the main heading to approximately 28px on mobile.
+    - Keep card images full-width with a consistent aspect ratio.
+    - Ensure descriptions and titles remain readable without horizontal overflow.
+    - Make the 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-journal-{{ ai_gen_id }} { display: block; width: 100%; box-sizing: border-box; padding: {{ block.settings.padding_desktop }}px 36px; background: {{ block.settings.background_color }}; color: {{ block.settings.text_color }}; }
+  .ai-journal-{{ ai_gen_id }} *, .ai-journal-{{ ai_gen_id }} *::before, .ai-journal-{{ ai_gen_id }} *::after { box-sizing: border-box; }
+  .ai-journal__inner-{{ ai_gen_id }} { width: {{ block.settings.desktop_width_percent }}%; max-width: 100%; margin: 0 auto; }
+  .ai-journal__eyebrow-{{ ai_gen_id }} { margin: 0 0 10px; color: {{ block.settings.accent_color }}; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+  .ai-journal__heading-{{ ai_gen_id }} { margin: 0; color: {{ block.settings.heading_color }}; font-size: 36px; line-height: 1.15; font-weight: 400; }
+  .ai-journal__subtitle-{{ ai_gen_id }} { margin: 10px 0 26px; color: {{ block.settings.muted_color }}; font-size: 15px; line-height: 1.5; }
+  .ai-journal__grid-{{ ai_gen_id }} { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .ai-journal__card-{{ ai_gen_id }} { display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid {{ block.settings.card_border_color }}; border-radius: {{ block.settings.card_radius }}px; background: {{ block.settings.card_background }}; color: {{ block.settings.card_text_color }}; text-decoration: none; }
+  .ai-journal__image-{{ ai_gen_id }} { display: block; width: 100%; height: {{ block.settings.image_height }}px; object-fit: cover; }
+  .ai-journal__placeholder-{{ ai_gen_id }} { width: 100%; height: {{ block.settings.image_height }}px; overflow: hidden; background: #eee9dd; position: relative; }
+  .ai-journal__placeholder-{{ ai_gen_id }} svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ai-journal__placeholder-note-{{ ai_gen_id }} { position: absolute; bottom: 8px; left: 10px; color: #55594f; background: #fffcf6; padding: 4px 7px; font-size: 11px; }
+  .ai-journal__body-{{ ai_gen_id }} { display: flex; flex: 1; flex-direction: column; padding: 15px; }
+  .ai-journal__category-{{ ai_gen_id }} { margin: 0 0 8px; color: {{ block.settings.accent_color }}; font-size: 9px; line-height: 1.3; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  .ai-journal__title-{{ ai_gen_id }} { margin: 0 0 8px; color: {{ block.settings.heading_color }}; font-size: 21px; line-height: 1.18; font-weight: 400; }
+  .ai-journal__description-{{ ai_gen_id }} { margin: 0 0 18px; color: {{ block.settings.muted_color }}; font-size: 12px; line-height: 1.5; }
+  .ai-journal__read-{{ ai_gen_id }} { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; color: {{ block.settings.accent_color }}; font-size: 11px; font-weight: 700; }
+  .ai-journal__read-{{ ai_gen_id }} svg, .ai-journal__cta-{{ ai_gen_id }} svg { flex: none; width: 15px; height: 15px; }
+  .ai-journal__card-{{ ai_gen_id }}:focus-visible, .ai-journal__cta-{{ ai_gen_id }}:focus-visible { outline: 2px solid {{ block.settings.accent_color }}; outline-offset: 3px; }
+  .ai-journal__cta-{{ ai_gen_id }} { display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; padding: 12px 14px; border: 1px solid {{ block.settings.accent_color }}; border-radius: 4px; background: transparent; color: {{ block.settings.accent_color }}; font-size: 12px; font-weight: 700; text-decoration: none; transition: background-color .2s ease, color .2s ease; }
+  .ai-journal__cta-{{ ai_gen_id }}:hover { background: {{ block.settings.accent_color }}; color: #fff; }
+  @media (max-width: 989px) { .ai-journal__grid-{{ ai_gen_id }} { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 749px) { .ai-journal-{{ ai_gen_id }} { padding: {{ block.settings.padding_mobile }}px 18px; } .ai-journal__inner-{{ ai_gen_id }} { width: 100%; } .ai-journal__heading-{{ ai_gen_id }} { font-size: 28px; } .ai-journal__subtitle-{{ ai_gen_id }} { margin-bottom: 22px; } .ai-journal__grid-{{ ai_gen_id }} { grid-template-columns: 1fr; gap: 16px; } .ai-journal__image-{{ ai_gen_id }}, .ai-journal__placeholder-{{ ai_gen_id }} { height: auto; aspect-ratio: 1.9 / 1; } }
+{% endstyle %}
+
+<div class="ai-journal-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-journal__inner-{{ ai_gen_id }}">
+    {% if block.settings.eyebrow != blank %}<p class="ai-journal__eyebrow-{{ ai_gen_id }}">{{ block.settings.eyebrow | escape }}</p>{% endif %}
+    {% if block.settings.heading != blank %}<h2 class="ai-journal__heading-{{ ai_gen_id }}">{{ block.settings.heading | escape }}</h2>{% endif %}
+    {% if block.settings.subtitle != blank %}<p class="ai-journal__subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle | escape }}</p>{% endif %}
+    <div class="ai-journal__grid-{{ ai_gen_id }}">
+      {% assign journal_blog = block.settings.blog %}
+      {% if journal_blog != blank and block.settings.use_blog_posts %}
+        {% for article in journal_blog.articles limit: block.settings.post_count %}
+          {% assign article_image = article.image %}
+          <a class="ai-journal__card-{{ ai_gen_id }}" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
+            {% if article_image %}<img class="ai-journal__image-{{ ai_gen_id }}" src="{{ article_image | image_url: width: 900 }}" alt="{{ article_image.alt | default: article.title | escape }}" loading="lazy" width="{{ article_image.width }}" height="{{ article_image.height }}">{% else %}<div class="ai-journal__placeholder-{{ ai_gen_id }}">{{ 'image' | placeholder_svg_tag }}<span class="ai-journal__placeholder-note-{{ ai_gen_id }}">Add a featured image to this article</span></div>{% endif %}
+            <div class="ai-journal__body-{{ ai_gen_id }}"><p class="ai-journal__category-{{ ai_gen_id }}">{{ article.tags | first | default: 'From the journal' | escape }}</p><h3 class="ai-journal__title-{{ ai_gen_id }}">{{ article.title | escape }}</h3><p class="ai-journal__description-{{ ai_gen_id }}">{{ article.excerpt_or_content | strip_html | truncate: 115 | escape }}</p><span class="ai-journal__read-{{ ai_gen_id }}"><span>{{ block.settings.read_label | escape }}</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </a>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..3) %}
+          {% assign image_key = 'card_' | append: i | append: '_image' %}{% assign category_key = 'card_' | append: i | append: '_category' %}{% assign title_key = 'card_' | append: i | append: '_title' %}{% assign description_key = 'card_' | append: i | append: '_description' %}{% assign url_key = 'card_' | append: i | append: '_url' %}
+          {% assign card_image = block.settings[image_key] %}{% assign card_url = block.settings[url_key] %}
+          {% if card_url == blank and journal_blog != blank %}{% assign card_url = journal_blog.url %}{% endif %}
+          <a class="ai-journal__card-{{ ai_gen_id }}" href="{{ card_url | default: routes.root_url }}" aria-label="{{ block.settings[title_key] | escape }}">
+            {% if card_image %}<img class="ai-journal__image-{{ ai_gen_id }}" src="{{ card_image | image_url: width: 900 }}" alt="{{ card_image.alt | escape }}" loading="lazy" width="{{ card_image.width }}" height="{{ card_image.height }}">{% else %}<div class="ai-journal__placeholder-{{ ai_gen_id }}">{{ 'image' | placeholder_svg_tag }}<span class="ai-journal__placeholder-note-{{ ai_gen_id }}">Choose an image for this story</span></div>{% endif %}
+            <div class="ai-journal__body-{{ ai_gen_id }}"><p class="ai-journal__category-{{ ai_gen_id }}">{{ block.settings[category_key] | escape }}</p><h3 class="ai-journal__title-{{ ai_gen_id }}">{{ block.settings[title_key] | escape }}</h3><p class="ai-journal__description-{{ ai_gen_id }}">{{ block.settings[description_key] | escape }}</p><span class="ai-journal__read-{{ ai_gen_id }}"><span>{{ block.settings.read_label | escape }}</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </a>
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% if block.settings.cta_label != blank %}<a class="ai-journal__cta-{{ ai_gen_id }}" href="{{ block.settings.cta_url | default: journal_blog.url | default: routes.root_url }}">{{ block.settings.cta_label | escape }}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>{% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Journal cards",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FROM THE ROASTER'S JOURNAL" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A little coffee know-how." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Brewing tips, everyday rituals and stories worth sharing over a cup." },
+    { "type": "blog", "id": "blog", "label": "Journal blog" },
+    { "type": "checkbox", "id": "use_blog_posts", "label": "Show latest blog articles", "default": true },
+    { "type": "range", "id": "post_count", "label": "Number of articles", "min": 3, "max": 9, "step": 1, "default": 3 },
+    { "type": "text", "id": "read_label", "label": "Article link label", "default": "Read story" },
+    { "type": "header", "content": "Manual card 1" },
+    { "type": "image_picker", "id": "card_1_image", "label": "Image" },
+    { "type": "text", "id": "card_1_category", "label": "Category", "default": "EVERYDAY RITUALS" },
+    { "type": "text", "id": "card_1_title", "label": "Title", "default": "Make room for a slower morning." },
+    { "type": "textarea", "id": "card_1_description", "label": "Description", "default": "A little pause, a favorite mug and time for a good cup." },
+    { "type": "url", "id": "card_1_url", "label": "Article link" },
+    { "type": "header", "content": "Manual card 2" },
+    { "type": "image_picker", "id": "card_2_image", "label": "Image" },
+    { "type": "text", "id": "card_2_category", "label": "Category", "default": "NEIGHBORHOOD RITUALS" },
+    { "type": "text", "id": "card_2_title", "label": "Title", "default": "Good coffee is better together." },
+    { "type": "textarea", "id": "card_2_description", "label": "Description", "default": "Small moments that bring a neighborhood a little closer." },
+    { "type": "url", "id": "card_2_url", "label": "Article link" },
+    { "type": "header", "content": "Manual card 3" },
+    { "type": "image_picker", "id": "card_3_image", "label": "Image" },
+    { "type": "text", "id": "card_3_category", "label": "Category", "default": "BREW BETTER" },
+    { "type": "text", "id": "card_3_title", "label": "Title", "default": "A better cup starts with the basics." },
+    { "type": "textarea", "id": "card_3_description", "label": "Description", "default": "Small details to bring a little more care to your daily brew." },
+    { "type": "url", "id": "card_3_url", "label": "Article link" },
+    { "type": "header", "content": "Journal button" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Explore the journal" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F7F3E9" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#21483D" },
+    { "type": "color", "id": "heading_color", "label": "Headings", "default": "#21483D" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#21483D" },
+    { "type": "color", "id": "muted_color", "label": "Muted text", "default": "#686C62" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#FFFCF6" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#E5E0D5" },
+    { "type": "color", "id": "card_text_color", "label": "Card text", "default": "#21483D" },
+    { "type": "header", "content": "Spacing and style" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop content width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "padding_desktop", "label": "Desktop vertical spacing", "min": 20, "max": 100, "step": 5, "unit": "px", "default": 50 },
+    { "type": "range", "id": "padding_mobile", "label": "Mobile vertical spacing", "min": 10, "max": 60, "step": 5, "unit": "px", "default": 30 },
+    { "type": "range", "id": "image_height", "label": "Image height", "min": 120, "max": 300, "step": 10, "unit": "px", "default": 170 },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 16, "step": 1, "unit": "px", "default": 6 }
+  ],
+  "presets": [{ "name": "Journal cards" }],
+  "tag": null,
+  "class": "journal-cards-block"
+}
+{% endschema %}

@@ -1,0 +1,246 @@
+{% doc %}
+  @prompt
+    Create a custom Shopify section that closely matches the attached reference design for a premium coffee brand’s “Signature Collection” product showcase.
+    
+    **Section Layout & Structure**
+    - Create a clean, premium, minimalist section on a warm off-white background (#F7F3E9).
+    - Use a centered content container with approximately 50px horizontal padding on desktop.
+    - At the top, add a small uppercase eyebrow label: “THE SIGNATURE COLLECTION” in dark green, approximately 8–10px, bold, with subtle letter spacing.
+    - Below it, add a large heading: “Meet your next morning ritual.” in dark forest green (#23483D), approximately 28–30px on desktop, with regular font weight.
+    - Add a short subtitle underneath: “Three coffees. One neighborhood. The final coffee details are coming soon.” in muted gray-green, approximately 11–12px.
+    - Add sufficient spacing between the heading area and the product cards.
+    
+    **Product Grid**
+    Create a responsive three-column grid of coffee products. Each card should have:
+    
+    1. **Product image container**
+       - Large rectangular image area with rounded corners of approximately 6px.
+       - Use three individual coffee product images supplied through Shopify product images or editable image-picker settings.
+       - Each image container should have a different subtle pastel background:
+         - Morning Blend: warm beige (#EAE0CE).
+         - The Community: pale sage (#DCE9E2).
+         - Reserve: muted light gray-beige (#E9E7DA).
+       - Display the coffee pouch image prominently in the center, maintaining its natural aspect ratio without cropping, stretching, or distorting it.
+       - Use `object-fit: contain` for product images.
+       - Add a small white pill-shaped badge at the top-left corner of each image that says “Coming soon”, using dark green text and small typography.
+       - Include a subtle decorative botanical leaf silhouette behind the product image on the right side, using a muted, low-opacity shade that complements each card background. Keep the decoration behind the product and avoid obstructing the label.
+    
+    2. **Product information**
+       - Under each image, display the product title in dark green, approximately 17–18px, regular weight.
+       - Product titles:
+         - Morning Blend
+         - The Community
+         - Reserve
+       - Add a short muted gray-green description below each title:
+         - Morning Blend: “Roast & tasting notes TBA”
+         - The Community: “Origin & tasting notes TBA”
+         - Reserve: “Coffee details coming soon”
+    
+    3. **Bottom product row**
+       - Add a thin, subtle horizontal divider below the product description.
+       - Under the divider, create a horizontally aligned row:
+         - Left: “Price TBA” in small muted gray text.
+         - Right: “View coffee” in dark green, semibold, with a small right-pointing arrow icon.
+       - Align the price and link consistently across all three cards.
+       - Make the entire “View coffee” link clickable and connect it to the corresponding product page using Shopify's product URL.
+    
+    **Design Style**
+    - Match the reference image’s elegant editorial aesthetic.
+    - Use generous whitespace, restrained colors, subtle rounded corners, and a clean typographic hierarchy.
+    - Avoid shadows that are too strong, excessive borders, gradients, or unnecessary decorative elements.
+    - Use a suitable clean sans-serif font. Inherit the existing Shopify theme typography where possible.
+    - Keep the layout visually balanced, with equal card widths and consistent spacing.
+    
+    **Shopify Theme Editor Requirements**
+    Make the section fully editable through Shopify's theme customizer:
+    - Eyebrow text.
+    - Main heading and subtitle.
+    - Background color and text colors.
+    - Three product blocks, each with:
+      - Product image.
+      - Optional Shopify product selection.
+      - Product title.
+      - Product description.
+      - Coming-soon badge text and visibility.
+      - Card background color.
+      - Price label.
+      - CTA label.
+      - Product page URL.
+    - Botanical decoration visibility and opacity.
+    - Section top and bottom padding.
+    - Desktop and mobile typography sizes.
+    
+    **Responsive Behavior**
+    - Desktop: display all three cards in a single row.
+    - Tablet: use two columns, with the remaining card centered or displayed in a balanced second row.
+    - Mobile: display one card per row with full-width images and consistent spacing. Optionally support a horizontal swipe layout if it fits the existing theme design.
+    - Ensure product names, descriptions, prices, and CTA links never overflow.
+    - Maintain comfortable mobile spacing and readable typography.
+    
+    **Implementation Instructions**
+    - Generate a complete, functional Shopify Liquid section with schema settings and repeatable product blocks.
+    - Use valid Liquid, HTML, CSS, and minimal JavaScript only if necessary.
+    - Scope CSS to this section to avoid affecting other parts of the store.
+    - Use Shopify's native product objects and image filters when a product is selected.
+    - Do not use hardcoded external image URLs.
+    - Do not modify the existing header, footer, global theme styles, or other sections.
+    - Prioritize matching t
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+  .ai-signature-{{ ai_gen_id }} { display:block; width:100%; box-sizing:border-box; background:{{ block.settings.background_color }}; padding:{{ block.settings.padding_top }}px 50px {{ block.settings.padding_bottom }}px; color:{{ block.settings.text_color }}; }
+  .ai-signature-{{ ai_gen_id }} * { box-sizing:border-box; }
+  .ai-signature-{{ ai_gen_id }}__inner { width:100%; max-width:1440px; margin:0 auto; }
+  .ai-signature-{{ ai_gen_id }}__intro { margin-bottom:42px; }
+  .ai-signature-{{ ai_gen_id }}__eyebrow { margin:0 0 12px; color:{{ block.settings.accent_color }}; font-size:{{ block.settings.eyebrow_size }}px; line-height:1.4; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+  .ai-signature-{{ ai_gen_id }}__heading { margin:0 0 10px; color:{{ block.settings.accent_color }}; font-size:{{ block.settings.heading_size }}px; line-height:1.18; font-weight:400; }
+  .ai-signature-{{ ai_gen_id }}__subtitle { margin:0; color:{{ block.settings.muted_color }}; font-size:{{ block.settings.subtitle_size }}px; line-height:1.6; }
+  .ai-signature-{{ ai_gen_id }}__grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
+  .ai-signature-{{ ai_gen_id }}__card { min-width:0; display:flex; flex-direction:column; }
+  .ai-signature-{{ ai_gen_id }}__visual { height:clamp(250px,31vw,390px); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; border-radius:6px; background:var(--card-bg); }
+  .ai-signature-{{ ai_gen_id }}__visual:after { content:""; position:absolute; right:7%; top:15%; width:29%; height:68%; opacity:{{ block.settings.leaf_opacity | divided_by: 100.0 }}; pointer-events:none; background:var(--leaf-color); clip-path:polygon(50% 0,62% 19%,55% 34%,76% 23%,73% 42%,100% 40%,78% 54%,92% 68%,65% 63%,57% 100%,44% 100%,47% 70%,20% 83%,32% 61%,0 56%,28% 47%,17% 31%,42% 39%); }
+  .ai-signature-{{ ai_gen_id }}__visual.no-leaves:after { display:none; }
+  .ai-signature-{{ ai_gen_id }}__badge { position:absolute; top:14px; left:14px; z-index:2; padding:6px 11px; border-radius:999px; background:#fff; color:#23483D; font-size:10px; line-height:1.2; }
+  .ai-signature-{{ ai_gen_id }}__image { position:relative; z-index:1; display:block; width:74%; height:82%; object-fit:contain; }
+  .ai-signature-{{ ai_gen_id }}__placeholder { position:relative; z-index:1; width:74%; height:82%; display:flex; align-items:center; justify-content:center; }
+  .ai-signature-{{ ai_gen_id }}__placeholder svg { width:100%; height:100%; object-fit:contain; color:#23483D; }
+  .ai-signature-{{ ai_gen_id }}__empty { position:absolute; bottom:10px; left:8px; right:8px; z-index:2; text-align:center; color:#40564d; font-size:11px; }
+  .ai-signature-{{ ai_gen_id }}__details { padding:17px 2px 0; display:flex; flex-direction:column; flex:1; }
+  .ai-signature-{{ ai_gen_id }}__title { margin:0 0 6px; color:{{ block.settings.accent_color }}; font-size:{{ block.settings.product_title_size }}px; line-height:1.35; font-weight:400; overflow-wrap:anywhere; }
+  .ai-signature-{{ ai_gen_id }}__description { margin:0; min-height:2.8em; color:{{ block.settings.muted_color }}; font-size:{{ block.settings.description_size }}px; line-height:1.5; overflow-wrap:anywhere; }
+  .ai-signature-{{ ai_gen_id }}__bottom { margin-top:auto; padding-top:14px; border-top:1px solid rgba(35,72,61,.2); display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .ai-signature-{{ ai_gen_id }}__price { color:{{ block.settings.muted_color }}; font-size:12px; }
+  .ai-signature-{{ ai_gen_id }}__link { display:inline-flex; align-items:center; gap:7px; color:{{ block.settings.accent_color }}; font-size:12px; font-weight:600; text-decoration:none; }
+  .ai-signature-{{ ai_gen_id }}__link:hover { text-decoration:underline; text-underline-offset:3px; }
+  .ai-signature-{{ ai_gen_id }}__link:focus-visible { outline:2px solid currentColor; outline-offset:4px; }
+  .ai-signature-{{ ai_gen_id }}__link svg { width:14px; height:14px; flex:none; }
+  @media(max-width:900px) { .ai-signature-{{ ai_gen_id }} { padding-left:30px; padding-right:30px; } .ai-signature-{{ ai_gen_id }}__grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px; } .ai-signature-{{ ai_gen_id }}__card:last-child:nth-child(odd) { grid-column:1 / -1; width:calc(50% - 13px); justify-self:center; } }
+  @media(max-width:600px) { .ai-signature-{{ ai_gen_id }} { padding:{{ block.settings.mobile_padding }}px 20px; } .ai-signature-{{ ai_gen_id }}__intro { margin-bottom:28px; } .ai-signature-{{ ai_gen_id }}__grid { grid-template-columns:1fr; gap:30px; } .ai-signature-{{ ai_gen_id }}__card:last-child:nth-child(odd) { grid-column:auto; width:100%; } .ai-signature-{{ ai_gen_id }}__visual { height:clamp(260px,85vw,360px); } .ai-signature-{{ ai_gen_id }}__heading { font-size:{{ block.settings.mobile_heading_size }}px; } }
+{% endstyle %}
+<section class="ai-signature-{{ ai_gen_id }}" style="width:100%;" {{ block.shopify_attributes }}>
+  <div class="ai-signature-{{ ai_gen_id }}__inner">
+    <header class="ai-signature-{{ ai_gen_id }}__intro">
+      {% if block.settings.eyebrow != blank %}<p class="ai-signature-{{ ai_gen_id }}__eyebrow">{{ block.settings.eyebrow | escape }}</p>{% endif %}
+      {% if block.settings.heading != blank %}<h2 class="ai-signature-{{ ai_gen_id }}__heading">{{ block.settings.heading | escape }}</h2>{% endif %}
+      {% if block.settings.subtitle != blank %}<p class="ai-signature-{{ ai_gen_id }}__subtitle">{{ block.settings.subtitle | escape }}</p>{% endif %}
+    </header>
+    <div class="ai-signature-{{ ai_gen_id }}__grid">
+      {% for i in (1..3) %}
+        {% liquid
+          assign image_key = 'image_' | append: i
+          assign product_key = 'product_' | append: i
+          assign title_key = 'title_' | append: i
+          assign description_key = 'description_' | append: i
+          assign badge_key = 'badge_' | append: i
+          assign show_badge_key = 'show_badge_' | append: i
+          assign card_color_key = 'card_color_' | append: i
+          assign price_key = 'price_' | append: i
+          assign cta_key = 'cta_' | append: i
+          assign url_key = 'url_' | append: i
+          assign image = block.settings[image_key]
+          assign selected_product = block.settings[product_key]
+          assign title = block.settings[title_key]
+          assign description = block.settings[description_key]
+          assign link_url = block.settings[url_key]
+          if selected_product != blank
+            if image == blank
+              assign image = selected_product.featured_image
+            endif
+            if title == blank
+              assign title = selected_product.title
+            endif
+            if link_url == blank
+              assign link_url = selected_product.url
+            endif
+          endif
+          assign bg = block.settings[card_color_key]
+          assign leaf = block.settings.accent_color
+          if i == 2
+            assign leaf = '#789184'
+          elsif i == 3
+            assign leaf = '#8c8b76'
+          endif
+        %}
+        <article class="ai-signature-{{ ai_gen_id }}__card">
+          <div class="ai-signature-{{ ai_gen_id }}__visual{% unless block.settings.show_leaves %} no-leaves{% endunless %}" style="--card-bg:{{ bg }};--leaf-color:{{ leaf }};">
+            {% if block.settings[show_badge_key] and block.settings[badge_key] != blank %}<span class="ai-signature-{{ ai_gen_id }}__badge">{{ block.settings[badge_key] | escape }}</span>{% endif %}
+            {% if image != blank %}<img class="ai-signature-{{ ai_gen_id }}__image" src="{{ image | image_url: width: 900 }}" alt="{{ image.alt | default: title | escape }}" loading="lazy" width="{{ image.width }}" height="{{ image.height }}">
+            {% else %}<div class="ai-signature-{{ ai_gen_id }}__placeholder">{{ 'product-apparel-1' | placeholder_svg_tag }}<span class="ai-signature-{{ ai_gen_id }}__empty">Add a product image or select a product</span></div>{% endif %}
+          </div>
+          <div class="ai-signature-{{ ai_gen_id }}__details">
+            <h3 class="ai-signature-{{ ai_gen_id }}__title">{{ title | escape }}</h3>
+            <p class="ai-signature-{{ ai_gen_id }}__description">{{ description | escape }}</p>
+            <div class="ai-signature-{{ ai_gen_id }}__bottom">
+              <span class="ai-signature-{{ ai_gen_id }}__price">{{ block.settings[price_key] | escape }}</span>
+              {% if link_url != blank %}<a class="ai-signature-{{ ai_gen_id }}__link" href="{{ link_url }}">{{ block.settings[cta_key] | escape }}<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>{% else %}<span class="ai-signature-{{ ai_gen_id }}__link">{{ block.settings[cta_key] | escape }}<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Signature collection",
+  "settings": [
+    {"type":"header","content":"Section content"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"THE SIGNATURE COLLECTION"},
+    {"type":"text","id":"heading","label":"Heading","default":"Meet your next morning ritual."},
+    {"type":"text","id":"subtitle","label":"Subtitle","default":"Three coffees. One neighborhood. The final coffee details are coming soon."},
+    {"type":"color","id":"background_color","label":"Background","default":"#F7F3E9"},
+    {"type":"color","id":"text_color","label":"Text","default":"#23483D"},
+    {"type":"color","id":"accent_color","label":"Heading and links","default":"#23483D"},
+    {"type":"color","id":"muted_color","label":"Muted text","default":"#53645B"},
+    {"type":"checkbox","id":"show_leaves","label":"Show botanical decoration","default":true},
+    {"type":"range","id":"leaf_opacity","label":"Decoration opacity","min":5,"max":35,"step":5,"unit":"%","default":15},
+    {"type":"header","content":"Spacing and typography"},
+    {"type":"range","id":"padding_top","label":"Top padding","min":20,"max":120,"step":10,"unit":"px","default":60},
+    {"type":"range","id":"padding_bottom","label":"Bottom padding","min":20,"max":120,"step":10,"unit":"px","default":60},
+    {"type":"range","id":"mobile_padding","label":"Mobile vertical padding","min":20,"max":80,"step":5,"unit":"px","default":40},
+    {"type":"range","id":"eyebrow_size","label":"Eyebrow size","min":8,"max":14,"step":1,"unit":"px","default":9},
+    {"type":"range","id":"heading_size","label":"Heading size","min":24,"max":48,"step":2,"unit":"px","default":30},
+    {"type":"range","id":"mobile_heading_size","label":"Mobile heading size","min":20,"max":36,"step":2,"unit":"px","default":26},
+    {"type":"range","id":"subtitle_size","label":"Subtitle size","min":10,"max":18,"step":1,"unit":"px","default":12},
+    {"type":"range","id":"product_title_size","label":"Product title size","min":14,"max":22,"step":1,"unit":"px","default":18},
+    {"type":"range","id":"description_size","label":"Description size","min":10,"max":16,"step":1,"unit":"px","default":12},
+    {"type":"header","content":"Morning Blend"},
+    {"type":"image_picker","id":"image_1","label":"Product image"},
+    {"type":"product","id":"product_1","label":"Product"},
+    {"type":"text","id":"title_1","label":"Product title","default":"Morning Blend"},
+    {"type":"text","id":"description_1","label":"Description","default":"Roast & tasting notes TBA"},
+    {"type":"checkbox","id":"show_badge_1","label":"Show badge","default":true},
+    {"type":"text","id":"badge_1","label":"Badge text","default":"Coming soon"},
+    {"type":"color","id":"card_color_1","label":"Image background","default":"#EAE0CE"},
+    {"type":"text","id":"price_1","label":"Price label","default":"Price TBA"},
+    {"type":"text","id":"cta_1","label":"CTA label","default":"View coffee"},
+    {"type":"url","id":"url_1","label":"Product page URL"},
+    {"type":"header","content":"The Community"},
+    {"type":"image_picker","id":"image_2","label":"Product image"},
+    {"type":"product","id":"product_2","label":"Product"},
+    {"type":"text","id":"title_2","label":"Product title","default":"The Community"},
+    {"type":"text","id":"description_2","label":"Description","default":"Origin & tasting notes TBA"},
+    {"type":"checkbox","id":"show_badge_2","label":"Show badge","default":true},
+    {"type":"text","id":"badge_2","label":"Badge text","default":"Coming soon"},
+    {"type":"color","id":"card_color_2","label":"Image background","default":"#DCE9E2"},
+    {"type":"text","id":"price_2","label":"Price label","default":"Price TBA"},
+    {"type":"text","id":"cta_2","label":"CTA label","default":"View coffee"},
+    {"type":"url","id":"url_2","label":"Product page URL"},
+    {"type":"header","content":"Reserve"},
+    {"type":"image_picker","id":"image_3","label":"Product image"},
+    {"type":"product","id":"product_3","label":"Product"},
+    {"type":"text","id":"title_3","label":"Product title","default":"Reserve"},
+    {"type":"text","id":"description_3","label":"Description","default":"Coffee details coming soon"},
+    {"type":"checkbox","id":"show_badge_3","label":"Show badge","default":true},
+    {"type":"text","id":"badge_3","label":"Badge text","default":"Coming soon"},
+    {"type":"color","id":"card_color_3","label":"Image background","default":"#E9E7DA"},
+    {"type":"text","id":"price_3","label":"Price label","default":"Price TBA"},
+    {"type":"text","id":"cta_3","label":"CTA label","default":"View coffee"},
+    {"type":"url","id":"url_3","label":"Product page URL"},
+    {"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100}
+  ],
+  "presets": [{"name":"Signature collection"}],
+  "tag": null,
+  "class": "signature-collection-block"
+}
+{% endschema %}

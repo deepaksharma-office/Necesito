@@ -1,0 +1,69 @@
+{% doc %}
+  @prompt
+    Create a custom Shopify section called **“Neighborhood Coffee Stories”** that closely matches the provided reference image.
+    
+    **Layout and Structure**
+    - Create a full-width, two-column section with a dark forest-green background (#163F33).
+    - Use a horizontal layout on desktop with approximately 52% width for the left content and 48% for the right testimonial card.
+    - Keep the section compact, with approximately 16–20px vertical padding and 35px horizontal padding.
+    - Vertically center both columns and maintain balanced spacing.
+    
+    **Left Column — Brand Introduction**
+    - Add a small uppercase eyebrow label: “NEIGHBORHOOD STORIES” in white, approximately 6–7px, with a subtle letter spacing.
+    - Add a large, lightweight heading split into two lines:
+      “Good coffee.
+      Even better company.”
+    - Use a clean sans-serif font, approximately 24–26px on desktop, with a line height of 1.05–1.15 and regular font weight.
+    - Add supporting text below:
+      “One neighborhood, so many coffee stories. We can’t wait to hear yours.”
+    - Style the paragraph in a muted light-green/cream color (#D2DED5), approximately 10–11px, with a maximum width of 260px and comfortable line spacing.
+    
+    **Right Column — Testimonial Card**
+    - Create a warm off-white card (#FFFCF5) with approximately 6px rounded corners.
+    - Use approximately 16px internal padding and a minimum height of 174px on desktop.
+    - Place a decorative opening quotation mark ““” in the upper-left corner in a muted caramel-brown (#8B6936), using a bold serif font at approximately 27px.
+    - Position a small pale-green pill badge in the top-right corner with the text “Coming soon” in dark green, using approximately 7px text and rounded ends.
+    - Add a dark-green headline:
+      “Your first cup. Your first impression.”
+      Use approximately 15–16px regular-weight sans-serif typography.
+    - Below it, add muted gray-green supporting copy:
+      “Our neighbors’ coffee stories will appear here after launch. Tried a cup? We’d love to hear from you.”
+      Use approximately 9–10px text with a line height of 1.4.
+    - Add a small outlined button labeled “Leave a review” with a right-arrow icon aligned on the right side of the button.
+    - Style the button with a transparent background, thin muted-green border, dark-green text, subtle 3px corner radius, and approximately 102px width and 26px height.
+    - Make the entire card clean, minimal, and editorial, without shadows or extra decorative elements.
+    
+    **Responsive Behavior**
+    - On desktop, preserve the side-by-side two-column layout.
+    - On mobile, stack the content vertically, with the introduction first and testimonial card below it.
+    - Use approximately 24px mobile padding and 20–24px spacing between the columns when stacked.
+    - Ensure the card fits within the screen width, the text wraps naturally, and the button remains fully visible.
+    - Avoid horizontal scrolling and maintain accessible color contrast.
+    
+    **Shopify Theme Editor Settings**
+    Make the section customizable through the Shopify theme editor:
+    - Eyebrow text
+    - Main heading
+    - Description text
+    - Testimonial headline
+    - Testimonial description
+    - Badge text
+    - Button label and link
+    - Background color
+    - Card background color
+    - Text colors
+    - Button border color
+    - Desktop and mobile padding
+    - Heading and body font sizes
+    - Card corner radius
+    
+    **Important:** Match the reference image as closely as possible. Preserve the compact proportions, dark-green and cream color palette, lightweight typography, precise spacing, simple outlined CTA, and minimal premium coffee-brand aesthetic. Use native Shopify Liquid, HTML, and CSS. Keep all elements editable in the theme editor, ensure mobile responsiveness, and avoid adding images, gradients, shadows, extra buttons, or unnecessary content.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+.ai-neighborhood-{{ ai_gen_id }}{display:block;width:100%;box-sizing:border-box;background:{{ block.settings.background_color }};color:{{ block.settings.intro_color }};padding:{{ block.settings.desktop_padding_vertical }}px {{ block.settings.desktop_padding_horizontal }}px}.ai-neighborhood-{{ ai_gen_id }} *,.ai-neighborhood-{{ ai_gen_id }} *:before,.ai-neighborhood-{{ ai_gen_id }} *:after{box-sizing:border-box}.ai-neighborhood-{{ ai_gen_id }}__inner{width:{{ block.settings.desktop_width_percent }}%;max-width:100%;margin:0 auto;display:grid;grid-template-columns:52fr 48fr;align-items:center;gap:32px}.ai-neighborhood-{{ ai_gen_id }}__intro{min-width:0}.ai-neighborhood-{{ ai_gen_id }}__eyebrow{margin:0 0 11px;color:{{ block.settings.intro_color }};font-family:{{ settings.type_body_font.family }},sans-serif;font-size:7px;line-height:1.3;letter-spacing:.13em;text-transform:uppercase}.ai-neighborhood-{{ ai_gen_id }}__heading{margin:0;color:{{ block.settings.intro_color }};font-family:{{ settings.type_heading_font.family }},sans-serif;font-size:{{ block.settings.heading_size }}px;font-weight:400;line-height:1.1;white-space:pre-line}.ai-neighborhood-{{ ai_gen_id }}__description{max-width:260px;margin:12px 0 0;color:{{ block.settings.description_color }};font-family:{{ settings.type_body_font.family }},sans-serif;font-size:{{ block.settings.body_size }}px;line-height:1.5}.ai-neighborhood-{{ ai_gen_id }}__card{position:relative;min-width:0;min-height:174px;padding:16px;border-radius:{{ block.settings.card_radius }}px;background:{{ block.settings.card_background }};color:{{ block.settings.card_text_color }}.ai-neighborhood-{{ ai_gen_id }}__quote{margin:-5px 0 5px;color:{{ block.settings.quote_color }};font-family:Georgia,serif;font-size:27px;font-weight:700;line-height:1}.ai-neighborhood-{{ ai_gen_id }}__badge{position:absolute;top:16px;right:16px;padding:4px 8px;border-radius:999px;background:{{ block.settings.badge_background }};color:{{ block.settings.badge_text_color }};font-family:{{ settings.type_body_font.family }},sans-serif;font-size:7px;line-height:1.3}.ai-neighborhood-{{ ai_gen_id }}__card-heading{max-width:85%;margin:0 0 7px;color:{{ block.settings.card_text_color }};font-family:{{ settings.type_body_font.family }},sans-serif;font-size:15px;font-weight:400;line-height:1.3}.ai-neighborhood-{{ ai_gen_id }}__card-copy{max-width:340px;margin:0;color:{{ block.settings.card_copy_color }};font-family:{{ settings.type_body_font.family }},sans-serif;font-size:{{ block.settings.body_size }}px;line-height:1.4}.ai-neighborhood-{{ ai_gen_id }}__button{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-height:26px;margin-top:13px;padding:4px 8px;border:1px solid {{ block.settings.button_border_color }};border-radius:3px;background:transparent;color:{{ block.settings.card_text_color }};font-family:{{ settings.type_body_font.family }},sans-serif;font-size:9px;line-height:1.2;text-decoration:none}.ai-neighborhood-{{ ai_gen_id }}__button:hover{text-decoration:underline}.ai-neighborhood-{{ ai_gen_id }}__button:focus-visible{outline:2px solid {{ block.settings.card_text_color }};outline-offset:3px}.ai-neighborhood-{{ ai_gen_id }}__button svg{display:block;width:11px;height:11px;flex:0 0 auto}@media screen and (max-width:749px){.ai-neighborhood-{{ ai_gen_id }}{padding:{{ block.settings.mobile_padding }}px}.ai-neighborhood-{{ ai_gen_id }}__inner{width:100%;grid-template-columns:minmax(0,1fr);gap:22px}.ai-neighborhood-{{ ai_gen_id }}__heading{font-size:min({{ block.settings.heading_size }}px,26px)}.ai-neighborhood-{{ ai_gen_id }}__description{max-width:340px}}
+{% endstyle %}
+<section class="ai-neighborhood-{{ ai_gen_id }}" {{ block.shopify_attributes }}><div class="ai-neighborhood-{{ ai_gen_id }}__inner"><div class="ai-neighborhood-{{ ai_gen_id }}__intro">{% if block.settings.eyebrow != blank %}<p class="ai-neighborhood-{{ ai_gen_id }}__eyebrow">{{ block.settings.eyebrow | escape }}</p>{% endif %}{% if block.settings.main_heading != blank %}<h2 class="ai-neighborhood-{{ ai_gen_id }}__heading">{{ block.settings.main_heading | escape }}</h2>{% endif %}{% if block.settings.description != blank %}<p class="ai-neighborhood-{{ ai_gen_id }}__description">{{ block.settings.description | escape }}</p>{% endif %}</div><div class="ai-neighborhood-{{ ai_gen_id }}__card"><p class="ai-neighborhood-{{ ai_gen_id }}__quote" aria-hidden="true">“</p>{% if block.settings.badge_text != blank %}<span class="ai-neighborhood-{{ ai_gen_id }}__badge">{{ block.settings.badge_text | escape }}</span>{% endif %}{% if block.settings.testimonial_heading != blank %}<h3 class="ai-neighborhood-{{ ai_gen_id }}__card-heading">{{ block.settings.testimonial_heading | escape }}</h3>{% endif %}{% if block.settings.testimonial_description != blank %}<p class="ai-neighborhood-{{ ai_gen_id }}__card-copy">{{ block.settings.testimonial_description | escape }}</p>{% endif %}{% if block.settings.button_label != blank %}{% if block.settings.button_link != blank %}<a class="ai-neighborhood-{{ ai_gen_id }}__button" href="{{ block.settings.button_link }}">{{ block.settings.button_label | escape }}<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>{% else %}<span class="ai-neighborhood-{{ ai_gen_id }}__button">{{ block.settings.button_label | escape }}<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endif %}{% endif %}</div></div></section>
+{% schema %}
+{"name":"Neighborhood stories","settings":[{"type":"header","content":"Introduction"},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"NEIGHBORHOOD STORIES"},{"type":"textarea","id":"main_heading","label":"Main heading","default":"Good coffee.\nEven better company."},{"type":"textarea","id":"description","label":"Description","default":"One neighborhood, so many coffee stories. We can’t wait to hear yours."},{"type":"range","id":"heading_size","label":"Heading size","min":20,"max":40,"step":1,"unit":"px","default":26},{"type":"range","id":"body_size","label":"Body size","min":9,"max":15,"step":1,"unit":"px","default":10},{"type":"header","content":"Testimonial card"},{"type":"text","id":"testimonial_heading","label":"Testimonial headline","default":"Your first cup. Your first impression."},{"type":"textarea","id":"testimonial_description","label":"Testimonial description","default":"Our neighbors’ coffee stories will appear here after launch. Tried a cup? We’d love to hear from you."},{"type":"text","id":"badge_text","label":"Badge text","default":"Coming soon"},{"type":"text","id":"button_label","label":"Button label","default":"Leave a review"},{"type":"url","id":"button_link","label":"Button link"},{"type":"range","id":"card_radius","label":"Card corner radius","min":0,"max":16,"step":1,"unit":"px","default":6},{"type":"header","content":"Colors"},{"type":"color","id":"background_color","label":"Background","default":"#163F33"},{"type":"color","id":"intro_color","label":"Introduction text","default":"#FFFFFF"},{"type":"color","id":"description_color","label":"Description text","default":"#D2DED5"},{"type":"color","id":"card_background","label":"Card background","default":"#FFFCF5"},{"type":"color","id":"card_text_color","label":"Card heading and button","default":"#163F33"},{"type":"color","id":"card_copy_color","label":"Card description","default":"#4F5D55"},{"type":"color","id":"quote_color","label":"Quotation mark","default":"#8B6936"},{"type":"color","id":"badge_background","label":"Badge background","default":"#E4EDE5"},{"type":"color","id":"badge_text_color","label":"Badge text","default":"#163F33"},{"type":"color","id":"button_border_color","label":"Button border","default":"#687A6E"},{"type":"header","content":"Spacing"},{"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100},{"type":"range","id":"desktop_padding_vertical","label":"Desktop vertical padding","min":10,"max":40,"step":2,"unit":"px","default":18},{"type":"range","id":"desktop_padding_horizontal","label":"Desktop horizontal padding","min":15,"max":60,"step":5,"unit":"px","default":35},{"type":"range","id":"mobile_padding","label":"Mobile padding","min":16,"max":40,"step":2,"unit":"px","default":24}],"presets":[{"name":"Neighborhood stories"}],"tag":null,"class":"neighborhood-stories-block"}
+{% endschema %}
