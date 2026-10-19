@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Afspil 3D-model",
     "play_video": "Afspil video",
-    "unit_price": "Stykpris",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Stykpris",
     "country_results_count": "{{ count }} resultater",
     "slideshow_pause": "Sæt diasshow på pause",
     "slideshow_play": "Afspil diasshow",

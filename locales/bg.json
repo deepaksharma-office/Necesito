@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Възпроизвеждане на 3D модел",
     "play_video": "Възпроизвеждане на видеоклип",
-    "unit_price": "Единична цена",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Единична цена",
     "country_results_count": "{{ count }} резултата",
     "slideshow_pause": "Пауза на слайдшоуто",
     "slideshow_play": "Възпроизвеждане на слайдшоу",

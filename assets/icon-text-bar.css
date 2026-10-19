@@ -1,0 +1,147 @@
+.icon-text-bar {
+  overflow: clip;
+  padding-block: var(--icon-text-bar-padding-top) var(--icon-text-bar-padding-bottom);
+  background: var(--icon-text-bar-background);
+}
+
+.icon-text-bar__container {
+  width: min(calc(100% - 40px), var(--icon-text-bar-content-width));
+  margin-inline: auto;
+}
+
+.icon-text-bar__items {
+  display: grid;
+  grid-template-columns: repeat(var(--icon-text-bar-columns), minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--icon-text-bar-gap);
+}
+
+.icon-text-bar__item {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: var(--icon-text-bar-alignment);
+}
+
+.icon-text-bar__item:not(:last-child)::after {
+  position: absolute;
+  inset-inline-end: calc(var(--icon-text-bar-gap) / -2);
+  top: 50%;
+  display: var(--icon-text-bar-divider-display);
+  width: var(--icon-text-bar-divider-thickness);
+  height: var(--icon-text-bar-divider-height);
+  content: '';
+  background: var(--icon-text-bar-divider-color);
+  transform: translate(50%, -50%);
+}
+
+.icon-text-bar__content.hero-composition__support {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: var(--hero-support-align);
+  gap: var(--hero-support-gap);
+  margin: 0;
+  color: var(--hero-support-text-color);
+  font-size: var(--hero-support-text-size);
+  text-decoration: none;
+}
+
+.icon-text-bar__content .hero-composition__support-icon,
+.icon-text-bar__content .hero-composition__support-image {
+  width: var(--hero-support-icon-size);
+  height: var(--hero-support-icon-size);
+  flex: 0 0 var(--hero-support-icon-size);
+  color: var(--hero-support-icon-color);
+  object-fit: contain;
+}
+
+.icon-text-bar__content .hero-composition__support-text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.icon-text-bar__content .hero-composition__support-heading,
+.icon-text-bar__content .hero-composition__support-description {
+  display: block;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.icon-text-bar__content .hero-composition__support-heading {
+  color: var(--hero-support-heading-color);
+  font-size: var(--hero-support-heading-size);
+  font-weight: var(--hero-support-heading-weight);
+  line-height: 1.25;
+}
+
+.icon-text-bar__content .hero-composition__support-description {
+  color: var(--hero-support-description-color);
+  font-size: var(--hero-support-description-size);
+  line-height: var(--hero-support-description-leading);
+}
+
+.icon-text-bar__content:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+@media (max-width: 989px) {
+  .icon-text-bar__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .icon-text-bar__item:nth-child(2n)::after,
+  .icon-text-bar__item:last-child::after {
+    display: none;
+  }
+}
+
+@media (max-width: 749px) {
+  .icon-text-bar {
+    padding-block: var(--icon-text-bar-padding-top-mobile) var(--icon-text-bar-padding-bottom-mobile);
+  }
+
+  .icon-text-bar__container {
+    width: min(calc(100% - 32px), var(--icon-text-bar-content-width));
+  }
+
+  .icon-text-bar--mobile-stack .icon-text-bar__items {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .icon-text-bar--mobile-two-columns .icon-text-bar__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--icon-text-bar-gap-mobile);
+  }
+
+  .icon-text-bar--mobile-stack .icon-text-bar__item {
+    justify-content: flex-start;
+    padding-block: var(--icon-text-bar-item-padding-mobile);
+  }
+
+  .icon-text-bar--mobile-stack .icon-text-bar__item:first-child {
+    padding-block-start: 0;
+  }
+
+  .icon-text-bar--mobile-stack .icon-text-bar__item:last-child {
+    padding-block-end: 0;
+  }
+
+  .icon-text-bar--mobile-stack .icon-text-bar__item:not(:last-child)::after {
+    inset: auto 0 0;
+    display: var(--icon-text-bar-divider-display);
+    width: 100%;
+    height: var(--icon-text-bar-divider-thickness);
+    transform: none;
+  }
+
+  .icon-text-bar--mobile-two-columns .icon-text-bar__item::after {
+    display: none;
+  }
+}

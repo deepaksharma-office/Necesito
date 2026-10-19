@@ -1,0 +1,172 @@
+{% comment %}
+  Editorial journal grid sourced exclusively from a merchant-selected Shopify blog.
+  @example
+  Add “Blog journal” and select an existing blog in the theme editor.
+{% endcomment %}
+
+{{ 'blog-journal.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign selected_blog = section.settings.blog
+  assign journal_url = section.settings.button_url | default: selected_blog.url
+%}
+
+<section
+  class="blog-journal blog-journal--align-{{ section.settings.text_alignment }}"
+  style="--blog-journal-background: {{ section.settings.background_color }}; --blog-journal-width: {{ section.settings.content_width }}px; --blog-journal-padding-top: {{ section.settings.padding_top }}px; --blog-journal-padding-bottom: {{ section.settings.padding_bottom }}px; --blog-journal-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --blog-journal-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --blog-journal-alignment: {{ section.settings.text_alignment }}; --blog-journal-heading-gap: {{ section.settings.eyebrow_heading_gap }}px; --blog-journal-description-gap: {{ section.settings.heading_description_gap }}px; --blog-journal-header-gap: {{ section.settings.header_gap }}px; --blog-journal-columns: {{ section.settings.columns }}; --blog-journal-mobile-columns: {{ section.settings.mobile_columns }}; --blog-journal-gap: {{ section.settings.card_gap }}px; --blog-journal-gap-tablet: {{ section.settings.card_gap_tablet }}px; --blog-journal-gap-mobile: {{ section.settings.card_gap_mobile }}px; --blog-journal-footer-gap: {{ section.settings.footer_gap }}px; --blog-card-category-gap: {{ section.settings.category_title_gap }}px; --blog-card-excerpt-gap: {{ section.settings.title_excerpt_gap }}px; --blog-card-footer-gap: {{ section.settings.article_footer_gap }}px; --blog-card-link-size: {{ section.settings.article_link_size }}px; --blog-card-arrow-size: {{ section.settings.article_arrow_size }}px; --blog-journal-empty-color: {{ section.settings.excerpt_color }};"
+>
+  <div class="blog-journal__container">
+    <header class="blog-journal__header">
+      {% if section.settings.show_eyebrow %}
+        {% render 'hero-eyebrow', content: section.settings.eyebrow, color: section.settings.eyebrow_color, font_size: section.settings.eyebrow_size, font_weight: section.settings.eyebrow_weight, text_transform: 'uppercase', class: 'blog-journal__eyebrow' %}
+      {% endif %}
+
+      {% render 'hero-title', content: section.settings.heading, heading_tag: section.settings.heading_tag, color: section.settings.heading_color, highlight_color: section.settings.heading_highlight_color, desktop_size: section.settings.heading_size, mobile_size: section.settings.heading_size_mobile, font_weight: section.settings.heading_weight, line_height: section.settings.heading_line_height, letter_spacing: section.settings.heading_letter_spacing, max_width: section.settings.heading_max_width, alignment: section.settings.text_alignment %}
+
+      {% if section.settings.show_description %}
+        {% render 'hero-content', content: section.settings.description, color: section.settings.description_color, desktop_size: section.settings.description_size, mobile_size: section.settings.description_size_mobile, line_height: section.settings.description_line_height, max_width: section.settings.description_max_width, font_weight: section.settings.description_weight, alignment: section.settings.text_alignment %}
+      {% endif %}
+    </header>
+
+    {% if selected_blog != blank and selected_blog.articles_count > 0 %}
+      <div class="blog-journal__grid">
+        {% paginate selected_blog.articles by section.settings.article_limit %}
+          {% for article in selected_blog.articles %}
+            {% liquid
+              assign category_label = blank
+              case section.settings.category_source
+                when 'first_tag'
+                  assign category_label = article.tags.first
+                when 'blog_title'
+                  assign category_label = selected_blog.title
+              endcase
+
+              assign image_loading = 'lazy'
+              assign image_fetchpriority = 'auto'
+              if section.index == 1 and forloop.first
+                assign image_loading = 'eager'
+                assign image_fetchpriority = 'high'
+              endif
+            %}
+            {% render 'blog-article-card', article: article, category_label: category_label, show_excerpt: section.settings.show_excerpts, show_link: section.settings.show_article_links, link_label: section.settings.article_link_label, image_aspect_ratio: section.settings.image_aspect_ratio, image_fit: section.settings.image_fit, image_radius: section.settings.image_radius, card_background: section.settings.card_background, card_border_color: section.settings.card_border_color, card_border_width: section.settings.card_border_width, card_radius: section.settings.card_radius, card_padding: section.settings.card_padding, category_color: section.settings.category_color, category_size: section.settings.category_size, title_color: section.settings.article_title_color, title_size: section.settings.article_title_size, excerpt_color: section.settings.excerpt_color, excerpt_size: section.settings.excerpt_size, link_color: section.settings.article_link_color, arrow_color: section.settings.article_arrow_color, loading: image_loading, fetchpriority: image_fetchpriority %}
+          {% endfor %}
+        {% endpaginate %}
+      </div>
+    {% elsif request.design_mode %}
+      <div class="blog-journal__empty">Select a blog containing published articles to populate this section.</div>
+    {% endif %}
+
+    {% if section.settings.show_button and section.settings.button_label != blank and journal_url != blank %}
+      <div class="blog-journal__footer">
+        {% render 'hero-button', label: section.settings.button_label, url: journal_url, type: section.settings.button_type, background: section.settings.button_background, color: section.settings.button_color, border_color: section.settings.button_border_color, border_width: section.settings.button_border_width, border_radius: section.settings.button_radius, font_size: section.settings.button_size, font_weight: section.settings.button_weight, padding_horizontal: section.settings.button_padding_horizontal, padding_vertical: section.settings.button_padding_vertical, open_in_new_tab: section.settings.button_new_tab, show_arrow: section.settings.button_arrow, arrow_color: section.settings.button_arrow_color, arrow_size: section.settings.button_arrow_size, class: 'blog-journal__cta' %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog journal",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Article source" },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "range", "id": "article_limit", "label": "Articles to show", "min": 3, "max": 6, "step": 1, "default": 3 },
+    { "type": "select", "id": "category_source", "label": "Category label", "options": [{ "value": "none", "label": "Hidden" }, { "value": "first_tag", "label": "First article tag" }, { "value": "blog_title", "label": "Blog title" }], "default": "first_tag" },
+    { "type": "checkbox", "id": "show_excerpts", "label": "Show excerpts", "default": true },
+    { "type": "checkbox", "id": "show_article_links", "label": "Show article links", "default": true },
+    { "type": "text", "id": "article_link_label", "label": "Article link label", "default": "Read story", "visible_if": "{{ section.settings.show_article_links }}" },
+
+    { "type": "header", "content": "Header" },
+    { "type": "checkbox", "id": "show_eyebrow", "label": "Show eyebrow", "default": true },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow", "default": "FROM THE ROASTER’S JOURNAL" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "A little coffee know-how." },
+    { "type": "select", "id": "heading_tag", "label": "Heading tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }], "default": "h2" },
+    { "type": "checkbox", "id": "show_description", "label": "Show description", "default": true },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Brewing tips, everyday rituals and stories worth sharing over a cup.</p>" },
+    { "type": "text_alignment", "id": "text_alignment", "label": "Text alignment", "default": "left" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#f6f1e7" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#456553" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#20483d" },
+    { "type": "color", "id": "heading_highlight_color", "label": "Bold heading", "default": "#cf6d3b" },
+    { "type": "color", "id": "description_color", "label": "Description", "default": "#667a70" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#fffcf6" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#dedbd2" },
+    { "type": "color", "id": "category_color", "label": "Category label", "default": "#315f53" },
+    { "type": "color", "id": "article_title_color", "label": "Article title", "default": "#315f53" },
+    { "type": "color", "id": "excerpt_color", "label": "Excerpt", "default": "#718077" },
+    { "type": "color", "id": "article_link_color", "label": "Article link", "default": "#173f35" },
+    { "type": "color", "id": "article_arrow_color", "label": "Article arrow", "default": "#315f53" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "eyebrow_weight", "label": "Eyebrow weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "heading_size", "label": "Heading desktop size", "min": 28, "max": 68, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading mobile size", "min": 26, "max": 48, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "heading_weight", "label": "Heading weight", "min": 300, "max": 800, "step": 100, "default": 500 },
+    { "type": "range", "id": "heading_line_height", "label": "Heading line height", "min": 90, "max": 150, "step": 5, "unit": "%", "default": 110 },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -10, "max": 10, "step": 1, "unit": "%", "default": -2 },
+    { "type": "range", "id": "heading_max_width", "label": "Heading maximum width", "min": 400, "max": 1320, "step": 20, "unit": "px", "default": 1000 },
+    { "type": "range", "id": "description_size", "label": "Description desktop size", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "description_size_mobile", "label": "Description mobile size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "description_line_height", "label": "Description line height", "min": 110, "max": 190, "step": 5, "unit": "%", "default": 150 },
+    { "type": "range", "id": "description_max_width", "label": "Description maximum width", "min": 320, "max": 1000, "step": 20, "unit": "px", "default": 800 },
+    { "type": "range", "id": "description_weight", "label": "Description weight", "min": 300, "max": 700, "step": 100, "default": 400 },
+    { "type": "range", "id": "category_size", "label": "Category size", "min": 9, "max": 16, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "article_title_size", "label": "Article title size", "min": 18, "max": 34, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "excerpt_size", "label": "Excerpt size", "min": 11, "max": 19, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "article_link_size", "label": "Article link size", "min": 11, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "article_arrow_size", "label": "Article arrow size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16 },
+
+    { "type": "header", "content": "Card appearance" },
+    { "type": "select", "id": "image_aspect_ratio", "label": "Image aspect ratio", "options": [{ "value": "16 / 9", "label": "Landscape (16:9)" }, { "value": "3 / 2", "label": "Landscape (3:2)" }, { "value": "4 / 3", "label": "Standard (4:3)" }, { "value": "1 / 1", "label": "Square" }], "default": "16 / 9" },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "options": [{ "value": "cover", "label": "Crop to fill" }, { "value": "contain", "label": "Fit image" }], "default": "cover" },
+    { "type": "range", "id": "image_radius", "label": "Image corner radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 6 },
+    { "type": "range", "id": "card_border_width", "label": "Card border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 6 },
+    { "type": "range", "id": "card_padding", "label": "Card content padding", "min": 12, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "category_title_gap", "label": "Category to title", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 10 },
+    { "type": "range", "id": "title_excerpt_gap", "label": "Title to excerpt", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 10 },
+    { "type": "range", "id": "article_footer_gap", "label": "Excerpt to article link", "min": 12, "max": 40, "step": 2, "unit": "px", "default": 24 },
+
+    { "type": "header", "content": "Section CTA" },
+    { "type": "checkbox", "id": "show_button", "label": "Show button", "default": true },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore the journal", "visible_if": "{{ section.settings.show_button }}" },
+    { "type": "url", "id": "button_url", "label": "Button link override", "info": "Uses the selected blog when blank.", "visible_if": "{{ section.settings.show_button }}" },
+    { "type": "select", "id": "button_type", "label": "Button style", "options": [{ "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "custom", "label": "Custom" }], "default": "custom" },
+    { "type": "color", "id": "button_background", "label": "Background", "default": "#fffcf6", "visible_if": "{{ section.settings.button_type == 'custom' }}" },
+    { "type": "color", "id": "button_color", "label": "Text", "default": "#173f35", "visible_if": "{{ section.settings.button_type == 'custom' }}" },
+    { "type": "color", "id": "button_border_color", "label": "Border", "default": "#687a6e", "visible_if": "{{ section.settings.button_type == 'custom' }}" },
+    { "type": "range", "id": "button_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "button_radius", "label": "Corner radius", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 4 },
+    { "type": "range", "id": "button_size", "label": "Font size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "button_weight", "label": "Font weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "button_padding_horizontal", "label": "Horizontal padding", "min": 10, "max": 36, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "button_padding_vertical", "label": "Vertical padding", "min": 6, "max": 20, "step": 1, "unit": "px", "default": 10 },
+    { "type": "checkbox", "id": "button_new_tab", "label": "Open in new tab", "default": false },
+    { "type": "checkbox", "id": "button_arrow", "label": "Show arrow", "default": true },
+    { "type": "color", "id": "button_arrow_color", "label": "Arrow", "default": "#315f53", "visible_if": "{{ section.settings.button_arrow }}" },
+    { "type": "range", "id": "button_arrow_size", "label": "Arrow size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ section.settings.button_arrow }}" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
+    { "type": "range", "id": "columns", "label": "Desktop columns", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "select", "id": "mobile_columns", "label": "Mobile columns", "options": [{ "value": "1", "label": "One" }, { "value": "2", "label": "Two" }], "default": "1" },
+    { "type": "range", "id": "card_gap", "label": "Desktop card gap", "min": 12, "max": 64, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "card_gap_tablet", "label": "Tablet card gap", "min": 12, "max": 48, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "card_gap_mobile", "label": "Mobile card gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "eyebrow_heading_gap", "label": "Eyebrow to heading", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "heading_description_gap", "label": "Heading to description", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "header_gap", "label": "Header to cards", "min": 16, "max": 64, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "footer_gap", "label": "Cards to button", "min": 12, "max": 56, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "presets": [{ "name": "Blog journal" }]
+}
+{% endschema %}

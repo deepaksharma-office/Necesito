@@ -1,0 +1,27 @@
+{% doc %}
+  Renders Shopify rich text in a semantic heading wrapper. Bold text receives the highlight color.
+
+  @param {string} content - Rich-text heading content.
+  @param {string} heading_tag - Heading tag from h1 through h6.
+  @param {color} color - Heading color.
+  @param {color} highlight_color - Bold highlight color.
+  @param {number} desktop_size - Desktop font size in pixels.
+  @param {number} mobile_size - Mobile font size in pixels.
+  @param {number} font_weight - Heading font weight.
+  @param {number} line_height - Line height as a percentage.
+  @param {number} letter_spacing - Letter spacing in hundredths of an em.
+  @param {number} max_width - Maximum width in pixels.
+  @param {string} alignment - Text alignment.
+
+  @example
+  {% render 'hero-title', content: section.settings.heading, heading_tag: 'h1', color: section.settings.heading_color, highlight_color: section.settings.heading_highlight_color, desktop_size: 72, mobile_size: 44, font_weight: 600, line_height: 100, letter_spacing: -2, max_width: 620, alignment: 'left' %}
+{% enddoc %}
+
+{% if content != blank %}
+  <{{ heading_tag }}
+    class="hero-composition__title"
+    style="--hero-title-color: {{ color }}; --hero-title-highlight: {{ highlight_color }}; --hero-title-size: {{ desktop_size }}px; --hero-title-size-mobile: {{ mobile_size }}px; --hero-title-weight: {{ font_weight }}; --hero-title-leading: {{ line_height | divided_by: 100.0 }}; --hero-title-tracking: {{ letter_spacing | divided_by: 100.0 }}em; --hero-title-max-width: {{ max_width }}px; --hero-title-align: {{ alignment }};"
+  >
+    {{ content }}
+  </{{ heading_tag }}>
+{% endif %}

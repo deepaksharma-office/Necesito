@@ -1,0 +1,29 @@
+{% doc %}
+  Renders a static pill caption positioned within a hero media stage.
+
+  @param {string} content - Inline rich-text caption.
+  @param {color} color - Text color.
+  @param {color} background - Background color.
+  @param {number} font_size - Font size in pixels.
+  @param {number} font_weight - Font weight.
+  @param {number} border_radius - Border radius in pixels.
+  @param {number} padding_horizontal - Inline padding in pixels.
+  @param {number} padding_vertical - Block padding in pixels.
+  @param {number} left - Horizontal position as a percentage.
+  @param {number} top - Vertical position as a percentage.
+  @param {number} z_index - Stacking order.
+  @param {number} max_width - Maximum width in pixels.
+  @param {string} alignment - Text alignment.
+
+  @example
+  {% render 'hero-media-caption', content: section.settings.caption, left: 50, top: 88, z_index: 8 %}
+{% enddoc %}
+
+{% if content != blank %}
+  <div
+    class="hero-composition__caption"
+    style="--hero-caption-color: {{ color }}; --hero-caption-background: {{ background }}; --hero-caption-size: {{ font_size }}px; --hero-caption-weight: {{ font_weight }}; --hero-caption-radius: {{ border_radius }}px; --hero-caption-padding-inline: {{ padding_horizontal }}px; --hero-caption-padding-block: {{ padding_vertical }}px; --hero-caption-left: {{ left }}%; --hero-caption-top: {{ top }}%; --hero-caption-z: {{ z_index }}; --hero-caption-max-width: {{ max_width }}px; --hero-caption-align: {{ alignment }};"
+  >
+    {{ content }}
+  </div>
+{% endif %}

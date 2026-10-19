@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Reproduciraj 3D model",
     "play_video": "Reproduciraj videozapis",
-    "unit_price": "Jedinična cijena",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Jedinična cijena",
     "country_results_count": "Broj rezultata: {{ count }}",
     "slideshow_pause": "Pauziraj prezentaciju",
     "slideshow_play": "Reproduciraj prezentaciju",

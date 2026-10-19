@@ -1,0 +1,185 @@
+{% comment %}
+  Instagram-style media section with mutually exclusive manual-image and native app-block modes.
+  @example
+  Add “Instagram posts”, then add image blocks or switch to app mode and insert a compatible app block.
+{% endcomment %}
+
+{{ 'instagram-posts.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="instagram-posts instagram-posts--{{ section.settings.display_mode }} instagram-posts--mobile-{% if section.settings.mobile_scroll %}scroll{% else %}stack{% endif %}"
+  style="--instagram-background: {{ section.settings.background_color }}; --instagram-heading-color: {{ section.settings.heading_color }}; --instagram-content-width: {{ section.settings.content_width }}px; --instagram-padding-top: {{ section.settings.padding_top }}px; --instagram-padding-bottom: {{ section.settings.padding_bottom }}px; --instagram-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --instagram-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --instagram-header-gap: {{ section.settings.header_grid_gap }}px; --instagram-header-gap-mobile: {{ section.settings.header_grid_gap_mobile }}px; --instagram-heading-gap: {{ section.settings.eyebrow_heading_gap }}px; --instagram-description-gap: {{ section.settings.heading_description_gap }}px; --instagram-icon-color: {{ section.settings.icon_color }}; --instagram-icon-size: {{ section.settings.icon_size }}px; --instagram-profile-color: {{ section.settings.follow_link_color }}; --instagram-profile-size: {{ section.settings.follow_link_size }}px; --instagram-profile-arrow-color: {{ section.settings.arrow_color }}; --instagram-profile-arrow-size: {{ section.settings.arrow_size }}px; --instagram-columns: {{ section.settings.desktop_columns }}; --instagram-grid-gap: {{ section.settings.image_gap }}px; --instagram-grid-gap-mobile: {{ section.settings.image_gap_mobile }}px; --instagram-image-radius: {{ section.settings.image_radius }}px; --instagram-image-fit: {{ section.settings.image_fit }}; --instagram-mobile-card-width: {{ section.settings.mobile_card_width }}vw;"
+>
+  <div class="instagram-posts__container">
+    <header class="instagram-posts__header">
+      <div class="instagram-posts__top-row">
+        <div class="instagram-posts__eyebrow-wrap">
+          {% if section.settings.show_icon %}
+            <svg class="instagram-posts__instagram-icon" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+              {% render 'icon', icon: 'instagram' %}
+            </svg>
+          {% endif %}
+
+          {% render 'hero-eyebrow', content: section.settings.eyebrow, color: section.settings.eyebrow_color, font_size: section.settings.eyebrow_size, font_weight: 600, text_transform: 'uppercase', class: 'instagram-posts__eyebrow' %}
+        </div>
+
+        {% if section.settings.profile_url != blank and section.settings.follow_label != blank %}
+          <a class="instagram-posts__profile-link" href="{{ section.settings.profile_url }}"{% if section.settings.profile_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+            <span>{{ section.settings.follow_label | escape }}</span>
+            <svg class="instagram-posts__profile-arrow" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+              {% render 'icon', icon: 'arrow' %}
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="instagram-posts__main-header">
+        {% render 'hero-title', content: section.settings.heading, heading_tag: section.settings.heading_tag, color: section.settings.heading_color, highlight_color: section.settings.heading_color, desktop_size: section.settings.heading_size, mobile_size: section.settings.heading_size_mobile, font_weight: 500, line_height: 110, letter_spacing: -2, max_width: 1000, alignment: 'left' %}
+
+        {% render 'hero-content', content: section.settings.description, color: section.settings.description_color, desktop_size: section.settings.description_size, mobile_size: section.settings.description_size_mobile, line_height: 150, max_width: 800, font_weight: 400, alignment: 'left' %}
+      </div>
+    </header>
+
+    {% if section.settings.display_mode == 'manual' %}
+      <div class="instagram-posts__grid"{% if section.settings.mobile_scroll %} role="region" aria-label="{{ section.settings.heading | strip_html | escape }}" tabindex="0"{% endif %}>
+        {% assign manual_image_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'instagram_image' %}
+            {% liquid
+              assign manual_image_index = manual_image_index | plus: 1
+              assign image_alt = block.settings.alt_text
+              if image_alt == blank and block.settings.image != blank
+                assign image_alt = block.settings.image.alt
+              endif
+
+              assign image_loading = 'lazy'
+              assign image_fetchpriority = 'auto'
+              if section.index == 1 and manual_image_index == 1
+                assign image_loading = 'eager'
+                assign image_fetchpriority = 'high'
+              endif
+
+              assign desktop_gap_count = section.settings.desktop_columns | minus: 1
+              assign desktop_total_gap = desktop_gap_count | times: section.settings.image_gap
+              capture image_sizes
+                echo '(min-width: 990px) calc((min(100vw - 40px, '
+                echo section.settings.content_width
+                echo 'px) - '
+                echo desktop_total_gap
+                echo 'px) / '
+                echo section.settings.desktop_columns
+                echo '), (min-width: 750px) calc((100vw - 80px) / 3), '
+                echo section.settings.mobile_card_width
+                echo 'vw'
+              endcapture
+            %}
+            <div class="instagram-posts__item" {{ block.shopify_attributes }}>
+              {% capture image_markup %}
+                <div class="instagram-posts__image-wrap">
+                  {% if block.settings.image != blank %}
+                    {{ block.settings.image | image_url: width: 1000 | image_tag: widths: '240, 360, 480, 720, 900, 1000', sizes: image_sizes, loading: image_loading, fetchpriority: image_fetchpriority, alt: image_alt, class: 'instagram-posts__image' }}
+                  {% elsif request.design_mode %}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'instagram-posts__placeholder' }}
+                  {% endif %}
+                </div>
+              {% endcapture %}
+
+              {% if block.settings.url != blank and block.settings.image != blank %}
+                <a class="instagram-posts__image-link" href="{{ block.settings.url }}"{% if block.settings.link_label != blank %} aria-label="{{ block.settings.link_label | escape }}"{% endif %}{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                  {{ image_markup }}
+                </a>
+              {% else %}
+                {{ image_markup }}
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="instagram-posts__app-content">
+        {% for block in section.blocks %}
+          {% if block.type == '@app' %}
+            {% render block %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram posts",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "header", "content": "Rendering" },
+    { "type": "select", "id": "display_mode", "label": "Display mode", "options": [{ "value": "manual", "label": "Manual image blocks" }, { "value": "app", "label": "App blocks" }], "default": "manual" },
+
+    { "type": "header", "content": "Header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow", "default": "FOLLOW OUR COFFEE MOMENTS" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "A daily dose of neighborhood." },
+    { "type": "select", "id": "heading_tag", "label": "Heading tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }], "default": "h2" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Coffee, connection and a little Florida sunshine. Find us on Instagram.</p>" },
+    { "type": "checkbox", "id": "show_icon", "label": "Show Instagram icon", "default": true },
+    { "type": "url", "id": "profile_url", "label": "Instagram profile URL" },
+    { "type": "text", "id": "follow_label", "label": "Follow link label", "default": "Follow on Instagram" },
+    { "type": "checkbox", "id": "profile_new_tab", "label": "Open profile in new tab", "default": true, "visible_if": "{{ section.settings.profile_url != blank }}" },
+
+    { "type": "header", "content": "Manual image layout", "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+    { "type": "select", "id": "desktop_columns", "label": "Images per desktop row", "options": [{ "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" }, { "value": "6", "label": "6" }], "default": "4", "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+    { "type": "checkbox", "id": "mobile_scroll", "label": "Mobile horizontal scrolling", "default": true, "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+    { "type": "range", "id": "mobile_card_width", "label": "Mobile image width", "min": 60, "max": 92, "step": 2, "unit": "%", "default": 78, "visible_if": "{{ section.settings.display_mode == 'manual' and section.settings.mobile_scroll }}" },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "options": [{ "value": "cover", "label": "Crop to fill" }, { "value": "contain", "label": "Fit image" }], "default": "cover", "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+    { "type": "range", "id": "image_radius", "label": "Image corner radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 6, "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+    { "type": "range", "id": "image_gap", "label": "Desktop image gap", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 18, "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+    { "type": "range", "id": "image_gap_mobile", "label": "Mobile image gap", "min": 8, "max": 32, "step": 2, "unit": "px", "default": 14, "visible_if": "{{ section.settings.display_mode == 'manual' }}" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#fffcf6" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#173f35" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#173f35" },
+    { "type": "color", "id": "description_color", "label": "Description", "default": "#667a70" },
+    { "type": "color", "id": "icon_color", "label": "Instagram icon", "default": "#315f53" },
+    { "type": "color", "id": "follow_link_color", "label": "Follow link", "default": "#173f35" },
+    { "type": "color", "id": "arrow_color", "label": "Follow arrow", "default": "#315f53" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "heading_size", "label": "Heading desktop size", "min": 28, "max": 68, "step": 2, "unit": "px", "default": 48 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading mobile size", "min": 26, "max": 48, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "description_size", "label": "Description desktop size", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "description_size_mobile", "label": "Description mobile size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "icon_size", "label": "Instagram icon size", "min": 14, "max": 32, "step": 1, "unit": "px", "default": 20 },
+    { "type": "range", "id": "follow_link_size", "label": "Follow link size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "arrow_size", "label": "Follow arrow size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 17 },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "eyebrow_heading_gap", "label": "Top row to heading", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "heading_description_gap", "label": "Heading to description", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "header_grid_gap", "label": "Header to content", "min": 16, "max": 64, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "header_grid_gap_mobile", "label": "Mobile header to content", "min": 16, "max": 56, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "instagram_image",
+      "name": "Instagram image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "alt_text", "label": "Image alt text", "info": "Uses the selected image alt text when blank." },
+        { "type": "url", "id": "url", "label": "Post link" },
+        { "type": "text", "id": "link_label", "label": "Link accessible label", "placeholder": "View this Instagram post", "visible_if": "{{ block.settings.url != blank }}" },
+        { "type": "checkbox", "id": "open_in_new_tab", "label": "Open link in new tab", "default": true, "visible_if": "{{ block.settings.url != blank }}" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Instagram posts" }]
+}
+{% endschema %}

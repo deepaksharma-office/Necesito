@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Jouer le modèle 3D",
     "play_video": "Lire la vidéo",
-    "unit_price": "Prix unitaire",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Prix unitaire",
     "country_results_count": "{{ count }} résultats",
     "slideshow_pause": "Interrompre le diaporama",
     "slideshow_play": "Lire le diaporama",

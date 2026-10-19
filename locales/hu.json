@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "3D-modell lejátszása",
     "play_video": "Videó lejátszása",
-    "unit_price": "Egységár",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Egységár",
     "country_results_count": "{{ count }} találat",
     "slideshow_pause": "Diavetítés megállítása",
     "slideshow_play": "Diavetítés indítása",

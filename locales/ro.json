@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Redă modelul 3D",
     "play_video": "Redă videoclipul",
-    "unit_price": "Preț unitar",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Preț unitar",
     "country_results_count": "{{ count }} rezultate",
     "slideshow_pause": "Întrerupe prezentarea de diapozitive",
     "slideshow_play": "Redă prezentarea de diapozitive",

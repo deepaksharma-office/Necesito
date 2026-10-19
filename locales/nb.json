@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Spill av 3D-modell",
     "play_video": "Spill av video",
-    "unit_price": "Enhetspris",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Enhetspris",
     "country_results_count": "{{ count }} resultater",
     "slideshow_pause": "Sett lysbildefremvisningen på pause",
     "slideshow_play": "Spill av lysbildefremvisningen",

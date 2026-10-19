@@ -1,0 +1,107 @@
+{% comment %}
+  Premium editorial video section with reusable typography and an event-synchronized player.
+  @example
+  Add “Video showcase” in the theme editor, then select a Shopify-hosted video.
+{% endcomment %}
+
+{{ 'video-showcase.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'video-showcase.js' | asset_url }}" type="module"></script>
+
+<section
+  class="video-showcase"
+  style="--video-showcase-background: {{ section.settings.background_color }}; --video-showcase-content-width: {{ section.settings.content_width }}px; --video-showcase-max-width: {{ section.settings.video_max_width }}px; --video-showcase-padding-top: {{ section.settings.padding_top }}px; --video-showcase-padding-bottom: {{ section.settings.padding_bottom }}px; --video-showcase-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --video-showcase-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --video-showcase-heading-gap: {{ section.settings.heading_gap }}px; --video-showcase-description-gap: {{ section.settings.description_gap }}px; --video-showcase-video-gap: {{ section.settings.video_gap }}px; --video-showcase-caption-gap: {{ section.settings.caption_gap }}px; --video-showcase-radius: {{ section.settings.video_radius }}px; --video-showcase-control-background: {{ section.settings.control_background }}; --video-showcase-control-text: {{ section.settings.control_text_color }}; --video-showcase-play-icon: {{ section.settings.play_icon_color }}; --video-showcase-fullscreen-icon: {{ section.settings.fullscreen_icon_color }}; --video-showcase-center-background: {{ section.settings.center_background }}; --video-showcase-center-icon: {{ section.settings.center_icon_color }}; --video-showcase-center-size: {{ section.settings.center_button_size }}px; --video-showcase-icon-size: {{ section.settings.icon_size }}px; --video-showcase-control-padding-inline: {{ section.settings.control_padding_horizontal }}px; --video-showcase-control-padding-block: {{ section.settings.control_padding_vertical }}px; --video-showcase-control-height: {{ section.settings.control_height }}px; --video-showcase-control-radius: {{ section.settings.video_radius }}px; --video-showcase-label-size: {{ section.settings.label_size }}px; --video-showcase-caption-color: {{ section.settings.caption_color }}; --video-showcase-caption-size: {{ section.settings.caption_size }}px;"
+>
+  <div class="video-showcase__container">
+    <header class="video-showcase__header">
+      {% render 'hero-eyebrow', content: section.settings.eyebrow, color: section.settings.eyebrow_color, font_size: section.settings.eyebrow_size, font_weight: section.settings.eyebrow_weight, text_transform: 'uppercase', class: 'video-showcase__eyebrow' %}
+      {% render 'hero-title', content: section.settings.heading, heading_tag: section.settings.heading_tag, color: section.settings.heading_color, highlight_color: section.settings.heading_highlight_color, desktop_size: section.settings.heading_size, mobile_size: section.settings.heading_size_mobile, font_weight: section.settings.heading_weight, line_height: section.settings.heading_line_height, letter_spacing: section.settings.heading_letter_spacing, max_width: section.settings.heading_max_width, alignment: 'left' %}
+      {% render 'hero-content', content: section.settings.description, color: section.settings.description_color, desktop_size: section.settings.description_size, mobile_size: section.settings.description_size_mobile, line_height: section.settings.description_line_height, max_width: section.settings.description_max_width, font_weight: 400, alignment: 'left' %}
+    </header>
+
+    <div class="video-showcase__media">
+      {% render 'video-showcase-player', video: section.settings.video, external_video: section.settings.external_video, poster: section.settings.poster, label: section.settings.video_label, instance_id: section.id, aspect_ratio: section.settings.aspect_ratio, preload: section.settings.preload, muted_autoplay: section.settings.muted_autoplay, show_center_control: section.settings.show_center_control, show_control_bar: section.settings.show_control_bar, show_fullscreen: section.settings.show_fullscreen %}
+
+      {% if section.settings.show_caption and section.settings.caption != blank %}
+        <div class="video-showcase__caption rte">{{ section.settings.caption }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video showcase",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow", "default": "NEIGHBORHOOD MOMENTS" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Coffee tastes better together." },
+    { "type": "select", "id": "heading_tag", "label": "Heading tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }], "default": "h2" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Good coffee, familiar faces and a little time to slow down. Made for the place we call home.</p>" },
+    { "type": "text", "id": "video_label", "label": "Video label", "default": "Neighborhood moments" },
+    { "type": "checkbox", "id": "show_caption", "label": "Show supporting caption", "default": true },
+    { "type": "richtext", "id": "caption", "label": "Supporting caption", "default": "<p>Your Neighborhood Roaster. Coffee, connection and everyday rituals.</p>", "visible_if": "{{ section.settings.show_caption }}" },
+
+    { "type": "header", "content": "Video" },
+    { "type": "video", "id": "video", "label": "Shopify-hosted video", "info": "Uses the custom playback and fullscreen controls." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image" },
+    { "type": "video_url", "id": "external_video", "label": "YouTube or Vimeo URL", "accept": ["youtube", "vimeo"], "info": "Used only when no Shopify-hosted video is selected. Provider controls are shown." },
+    { "type": "select", "id": "aspect_ratio", "label": "Aspect ratio", "options": [{ "value": "16 / 9", "label": "Landscape (16:9)" }, { "value": "3 / 2", "label": "Landscape (3:2)" }, { "value": "4 / 3", "label": "Standard (4:3)" }, { "value": "1 / 1", "label": "Square" }], "default": "16 / 9" },
+    { "type": "range", "id": "video_radius", "label": "Corner radius", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 8 },
+    { "type": "select", "id": "preload", "label": "Preload", "options": [{ "value": "none", "label": "None" }, { "value": "metadata", "label": "Metadata" }, { "value": "auto", "label": "Auto" }], "default": "metadata" },
+    { "type": "checkbox", "id": "muted_autoplay", "label": "Muted autoplay", "default": false },
+    { "type": "checkbox", "id": "show_center_control", "label": "Show center playback button", "default": true },
+    { "type": "checkbox", "id": "show_control_bar", "label": "Show control bar", "default": true },
+    { "type": "checkbox", "id": "show_fullscreen", "label": "Show fullscreen button", "default": true, "visible_if": "{{ section.settings.show_control_bar }}" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#fffcf6" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#456553" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#173f35" },
+    { "type": "color", "id": "heading_highlight_color", "label": "Bold heading", "default": "#cf6d3b" },
+    { "type": "color", "id": "description_color", "label": "Description", "default": "#667a70" },
+    { "type": "color", "id": "caption_color", "label": "Caption", "default": "#667a70" },
+    { "type": "color", "id": "control_background", "label": "Control bar background", "default": "#173f35" },
+    { "type": "color", "id": "control_text_color", "label": "Control bar text", "default": "#f8f3e9" },
+    { "type": "color", "id": "play_icon_color", "label": "Playback icon", "default": "#f8f3e9" },
+    { "type": "color", "id": "fullscreen_icon_color", "label": "Fullscreen icon", "default": "#f8f3e9" },
+    { "type": "color", "id": "center_background", "label": "Center button background", "default": "#fffcf6" },
+    { "type": "color", "id": "center_icon_color", "label": "Center button icon", "default": "#173f35" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_weight", "label": "Eyebrow weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "heading_size", "label": "Heading desktop size", "min": 32, "max": 80, "step": 2, "unit": "px", "default": 52 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading mobile size", "min": 26, "max": 52, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "heading_weight", "label": "Heading weight", "min": 300, "max": 800, "step": 100, "default": 500 },
+    { "type": "range", "id": "heading_line_height", "label": "Heading line height", "min": 90, "max": 150, "step": 5, "unit": "%", "default": 110 },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -10, "max": 10, "step": 1, "unit": "%", "default": -2 },
+    { "type": "range", "id": "heading_max_width", "label": "Heading maximum width", "min": 320, "max": 1000, "step": 20, "unit": "px", "default": 900 },
+    { "type": "range", "id": "description_size", "label": "Description desktop size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "description_size_mobile", "label": "Description mobile size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "description_line_height", "label": "Description line height", "min": 110, "max": 190, "step": 5, "unit": "%", "default": 150 },
+    { "type": "range", "id": "description_max_width", "label": "Description maximum width", "min": 280, "max": 1000, "step": 20, "unit": "px", "default": 900 },
+    { "type": "range", "id": "caption_size", "label": "Caption size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "label_size", "label": "Video label size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+
+    { "type": "header", "content": "Layout and spacing" },
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
+    { "type": "range", "id": "video_max_width", "label": "Video maximum width", "min": 720, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "heading_gap", "label": "Eyebrow to heading", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "description_gap", "label": "Heading to description", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "video_gap", "label": "Description to video", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "caption_gap", "label": "Video to caption", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "center_button_size", "label": "Center button size", "min": 44, "max": 96, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "icon_size", "label": "Control icon size", "min": 14, "max": 32, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "control_height", "label": "Control bar minimum height", "min": 44, "max": 80, "step": 2, "unit": "px", "default": 52 },
+    { "type": "range", "id": "control_padding_horizontal", "label": "Control bar horizontal padding", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "control_padding_vertical", "label": "Control bar vertical padding", "min": 4, "max": 20, "step": 2, "unit": "px", "default": 8 }
+  ],
+  "presets": [{ "name": "Video showcase" }]
+}
+{% endschema %}

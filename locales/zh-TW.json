@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "播放 3D 模型",
     "play_video": "播放影片",
-    "unit_price": "單價",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "單價",
     "country_results_count": "{{ count }} 項結果",
     "slideshow_pause": "暫停素材輪播",
     "slideshow_play": "播放素材輪播",

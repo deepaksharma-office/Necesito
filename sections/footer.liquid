@@ -1,264 +1,128 @@
+{% comment %}
+  Storewide footer with brand identity, three menu columns, and native policy links.
+  @example
+  Configure this section in the Footer section group through the theme editor.
+{% endcomment %}
 
+{{ 'footer.css' | asset_url | stylesheet_tag }}
 
 {% liquid
-  if section.settings.background_color != blank
-    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  assign footer_logo = section.settings.logo
+  if footer_logo == blank
+    assign footer_logo = settings.logo
   endif
 %}
 
-<div
-  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
-></div>
-<div
-  class="section section--{{ section.settings.section_width }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+<footer
+  class="site-footer"
+  style="--footer-background: {{ section.settings.background_color }}; --footer-heading-color: {{ section.settings.heading_color }}; --footer-brand-color: {{ section.settings.brand_text_color }}; --footer-body-color: {{ section.settings.body_text_color }}; --footer-description-color: {{ section.settings.description_color }}; --footer-link-color: {{ section.settings.link_color }}; --footer-link-hover-color: {{ section.settings.link_hover_color }}; --footer-divider-color: {{ section.settings.divider_color }}; --footer-divider-opacity: {{ section.settings.divider_opacity | divided_by: 100.0 }}; --footer-content-width: {{ section.settings.content_width }}px; --footer-padding-top: {{ section.settings.padding_top }}px; --footer-padding-bottom: {{ section.settings.padding_bottom }}px; --footer-column-gap: {{ section.settings.column_gap }}px; --footer-brand-width: {{ section.settings.brand_width }}%; --footer-logo-size: {{ section.settings.logo_size }}px;"
 >
-  {% liquid
-    assign total_blocks = section.blocks.size
+  <div class="site-footer__container">
+    <div class="site-footer__main">
+      <div class="site-footer__brand">
+        <div class="site-footer__brand-header">
+          {% if footer_logo != blank %}
+            {{ footer_logo | image_url: width: 240 | image_tag: widths: '64, 96, 128, 180, 240', sizes: section.settings.logo_size | append: 'px', loading: 'lazy', alt: section.settings.brand_name, class: 'site-footer__logo' }}
+          {% endif %}
+          <div class="site-footer__brand-copy">
+            {% if section.settings.brand_name != blank %}<div class="site-footer__brand-name">{{ section.settings.brand_name | escape }}</div>{% endif %}
+            {% if section.settings.tagline != blank %}<div class="site-footer__tagline">{{ section.settings.tagline | escape }}</div>{% endif %}
+          </div>
+        </div>
+        {% if section.settings.description != blank %}<div class="site-footer__description rte">{{ section.settings.description }}</div>{% endif %}
+      </div>
 
-    # Grid layout calculations
-    assign grid_columns = total_blocks | at_most: 4
+      {% if section.settings.explore_menu != blank %}
+        <nav class="site-footer__column" aria-label="{{ section.settings.explore_heading | strip_html | escape }}">
+          {% if section.settings.explore_heading != blank %}<h2 class="site-footer__column-title">{{ section.settings.explore_heading | escape }}</h2>{% endif %}
+          <ul class="site-footer__menu" role="list">
+            {% for link in section.settings.explore_menu.links %}<li><a class="site-footer__menu-link" href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
 
-    # Calculate last row counts using modulo arithmetic
-    # last_row_count = (total_blocks - 1) % N + 1
-    assign last_row_count = total_blocks | minus: 1 | modulo: 4 | plus: 1
-    assign tablet_last_row_count = total_blocks | minus: 1 | modulo: 2 | plus: 1
+      {% if section.settings.help_menu != blank %}
+        <nav class="site-footer__column" aria-label="{{ section.settings.help_heading | strip_html | escape }}">
+          {% if section.settings.help_heading != blank %}<h2 class="site-footer__column-title">{{ section.settings.help_heading | escape }}</h2>{% endif %}
+          <ul class="site-footer__menu" role="list">
+            {% for link in section.settings.help_menu.links %}<li><a class="site-footer__menu-link" href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
 
-    # Check if there are orphaned elements (single item in last row)
-    assign has_isolated_grid_item_desktop = false
-    assign has_isolated_grid_item_tablet = false
+      {% if section.settings.online_menu != blank or section.settings.online_fallback != blank %}
+        <nav class="site-footer__column" aria-label="{{ section.settings.online_heading | strip_html | escape }}">
+          {% if section.settings.online_heading != blank %}<h2 class="site-footer__column-title">{{ section.settings.online_heading | escape }}</h2>{% endif %}
+          {% if section.settings.online_menu != blank %}
+            <ul class="site-footer__menu" role="list">
+              {% for link in section.settings.online_menu.links %}<li><a class="site-footer__menu-link" href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+            </ul>
+          {% else %}
+            <div class="site-footer__information rte">{{ section.settings.online_fallback }}</div>
+          {% endif %}
+        </nav>
+      {% endif %}
+    </div>
 
-    if total_blocks > 4 and last_row_count == 1
-      assign has_isolated_grid_item_desktop = true
-    endif
-
-    if total_blocks == 5
-      assign has_isolated_grid_item_tablet = true
-    endif
-  %}
-  <div
-    class="
-      footer-content
-      spacing-style
-      {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
-      {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
-    "
-    style="
-      {%  render 'spacing-style', settings: section.settings %}
-      --footer-gap: {{ section.settings.gap }}px;
-      --grid-columns: {{ grid_columns }};
-      --last-row-count: {{ last_row_count }};
-      --tablet-last-row-count: {{ tablet_last_row_count }};
-    "
-  >
-    {% content_for 'blocks' %}
+    <div class="site-footer__divider" aria-hidden="true"></div>
+    <div class="site-footer__bottom">
+      {% if section.settings.show_copyright %}
+        <div class="site-footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: shop.name | escape }}</div>
+      {% endif %}
+      <div class="site-footer__legal-links">
+        {% if section.settings.show_privacy and shop.policies.privacy_policy.url != blank %}<a href="{{ shop.policies.privacy_policy.url }}">{{ section.settings.privacy_label | escape }}</a>{% endif %}
+        {% if section.settings.show_terms and shop.policies.terms_of_service.url != blank %}<a href="{{ shop.policies.terms_of_service.url }}">{{ section.settings.terms_label | escape }}</a>{% endif %}
+      </div>
+    </div>
   </div>
-</div>
-
-{% stylesheet %}
-  .footer-content {
-    contain: content;
-    content-visibility: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--footer-gap);
-    align-items: start;
-  }
-
-  .footer-content .menu__heading__default {
-    font-weight: var(--font-heading--weight);
-  }
-
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    .footer-content {
-      grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
-      grid-auto-flow: row;
-    }
-
-    .footer-content[style*='--grid-columns: 4'] {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-content--isolated-grid-item-tablet > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .footer-content {
-      grid-template-columns: repeat(var(--grid-columns), 1fr);
-    }
-
-    /* Single item centered */
-    .footer-content[style*='--grid-columns: 1'] {
-      justify-items: center;
-    }
-
-    .footer-content--isolated-grid-item-desktop > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-{% endstylesheet %}
+</footer>
 
 {% schema %}
 {
-  "name": "t:names.footer",
+  "name": "Necesito footer",
   "class": "section-wrapper",
-  "blocks": [
-    {
-      "type": "_divider"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "follow-on-shop"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "menu"
-    },
-    {
-      "type": "payment-icons"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "logo"
-    },
-    {
-      "type": "jumbo-text"
-    },
-    {
-      "type": "social-links"
-    },
-    {
-      "type": "email-signup"
-    }
-  ],
-  "enabled_on": {
-    "groups": ["footer"]
-  },
+  "enabled_on": { "groups": ["footer"] },
   "settings": [
-    {
-      "type": "select",
-      "id": "section_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "page-width"
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "t:settings.background_color",
-      "default": "{{ settings.color_palette.foreground }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.padding"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 20
-    }
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Uses the theme logo when blank." },
+    { "type": "range", "id": "logo_size", "label": "Logo size", "min": 40, "max": 88, "step": 2, "unit": "px", "default": 56 },
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Necesito" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Your Neighborhood Roaster." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Small-batch coffee, rooted in Estero.<br>Local delivery to The Place at Corkscrew.</p>" },
+    { "type": "color", "id": "brand_text_color", "label": "Brand text", "default": "#fffaf0" },
+    { "type": "color", "id": "description_color", "label": "Description", "default": "#c0cdc7" },
+
+    { "type": "header", "content": "Navigation" },
+    { "type": "text", "id": "explore_heading", "label": "Explore heading", "default": "Explore" },
+    { "type": "link_list", "id": "explore_menu", "label": "Explore menu" },
+    { "type": "text", "id": "help_heading", "label": "Help heading", "default": "Here to help" },
+    { "type": "link_list", "id": "help_menu", "label": "Help menu" },
+    { "type": "text", "id": "online_heading", "label": "Online heading", "default": "Find us online" },
+    { "type": "link_list", "id": "online_menu", "label": "Online menu" },
+    { "type": "richtext", "id": "online_fallback", "label": "Online information when no menu is selected", "default": "<p>Estero, Florida</p><p>Online-only business</p><p>Launch coming soon</p>" },
+
+    { "type": "header", "content": "Bottom row" },
+    { "type": "text", "id": "copyright_name", "label": "Copyright business name", "default": "Necesito Coffee Roasters LLC." },
+    { "type": "checkbox", "id": "show_copyright", "label": "Show copyright", "default": true },
+    { "type": "checkbox", "id": "show_privacy", "label": "Show privacy policy", "default": true },
+    { "type": "text", "id": "privacy_label", "label": "Privacy policy label", "default": "Privacy policy", "visible_if": "{{ section.settings.show_privacy }}" },
+    { "type": "checkbox", "id": "show_terms", "label": "Show terms", "default": true },
+    { "type": "text", "id": "terms_label", "label": "Terms label", "default": "Terms", "visible_if": "{{ section.settings.show_terms }}" },
+
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#153f33" },
+    { "type": "color", "id": "heading_color", "label": "Column headings", "default": "#fffaf0" },
+    { "type": "color", "id": "body_text_color", "label": "Bottom text", "default": "#aebfb7" },
+    { "type": "color", "id": "link_color", "label": "Links", "default": "#b8c8c1" },
+    { "type": "color", "id": "link_hover_color", "label": "Link hover", "default": "#ffffff" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#9cb0a7" },
+    { "type": "range", "id": "divider_opacity", "label": "Divider opacity", "min": 10, "max": 60, "step": 5, "unit": "%", "default": 25 },
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 32, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 24, "max": 96, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 24, "max": 120, "step": 4, "unit": "px", "default": 68 },
+    { "type": "range", "id": "brand_width", "label": "Brand column width", "min": 28, "max": 46, "step": 1, "unit": "%", "default": 38 }
   ],
-  "presets": [
-    {
-      "name": "t:names.footer",
-      "category": "t:categories.footer",
-      "settings": {
-        "gap": 20,
-        "padding-block-start": 36,
-        "padding-block-end": 36
-      },
-      "blocks": {
-        "newsletter-group": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "gap": 6,
-            "width": "fill"
-          },
-          "blocks": {
-            "newsletter-heading": {
-              "type": "text",
-              "settings": {
-                "text": "t:html_defaults.join_our_email_list",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "h3"
-              }
-            },
-            "newsletter-text": {
-              "type": "text",
-              "settings": {
-                "text": "t:html_defaults.get_exclusive_deals_and_early_access_to_new_products",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "rte"
-              }
-            }
-          },
-          "block_order": ["newsletter-heading", "newsletter-text"]
-        },
-        "newsletter-form": {
-          "type": "email-signup",
-          "settings": {
-            "width": "fill"
-          }
-        }
-      },
-      "block_order": ["newsletter-group", "newsletter-form"]
-    }
-  ]
+  "presets": [{ "name": "Necesito footer", "category": "Footer" }]
 }
 {% endschema %}

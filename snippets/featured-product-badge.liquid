@@ -1,0 +1,27 @@
+{% doc %}
+  Renders a merchant-controlled visual badge inside a featured product media area.
+
+  @param {boolean} enabled - Whether the badge is enabled.
+  @param {string} text - Badge text.
+  @param {color} text_color - Badge text color.
+  @param {color} background_color - Badge background color.
+  @param {number} font_size - Font size in pixels.
+  @param {number} font_weight - Font weight.
+  @param {number} border_radius - Border radius in pixels.
+  @param {number} padding_horizontal - Inline padding in pixels.
+  @param {number} padding_vertical - Block padding in pixels.
+  @param {number} left - Position from the left in pixels.
+  @param {number} top - Position from the top in pixels.
+
+  @example
+  {% render 'featured-product-badge', enabled: true, text: 'Coming soon', text_color: '#173f35', background_color: '#ffffff' %}
+{% enddoc %}
+
+{% if enabled and text != blank %}
+  <span
+    class="featured-products__badge"
+    style="--featured-badge-color: {{ text_color }}; --featured-badge-background: {{ background_color }}; --featured-badge-size: {{ font_size }}px; --featured-badge-weight: {{ font_weight }}; --featured-badge-radius: {{ border_radius }}px; --featured-badge-padding-inline: {{ padding_horizontal }}px; --featured-badge-padding-block: {{ padding_vertical }}px; --featured-badge-left: {{ left }}px; --featured-badge-top: {{ top }}px;"
+  >
+    {{ text | escape }}
+  </span>
+{% endif %}

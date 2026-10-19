@@ -1,0 +1,57 @@
+{% doc %}
+  Renders one reusable linked or static information card.
+
+  @param {string} [icon] - Icon name supported by the shared icon snippet.
+  @param {string} [heading] - Card heading.
+  @param {string} [description] - Card description.
+  @param {string} [url] - Optional card destination.
+  @param {boolean} [open_in_new_tab] - Opens the destination in a new tab.
+  @param {color} background - Card background color.
+  @param {color} border_color - Card border color.
+  @param {number} border_width - Card border width in pixels.
+  @param {number} border_radius - Card corner radius in pixels.
+  @param {number} padding - Card padding in pixels.
+  @param {color} icon_color - Icon color.
+  @param {number} icon_size - Icon size in pixels.
+  @param {color} heading_color - Heading color.
+  @param {number} heading_size - Heading size in pixels.
+  @param {color} description_color - Description color.
+  @param {number} description_size - Description size in pixels.
+
+  @example
+  {% render 'news-information-card', icon: 'clock', heading: 'Ordering & closures', description: 'Online-only. Find the latest updates.' %}
+{% enddoc %}
+
+{% capture card_content %}
+  {% if icon != blank and icon != 'none' %}
+    <svg class="news-information-cards__icon" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+      {% render 'icon', icon: icon %}
+    </svg>
+  {% endif %}
+
+  {% if heading != blank %}
+    <h3 class="news-information-cards__card-title">{{ heading | escape }}</h3>
+  {% endif %}
+
+  {% if description != blank %}
+    <div class="news-information-cards__description rte">{{ description }}</div>
+  {% endif %}
+{% endcapture %}
+
+{% if url != blank %}
+  <a
+    class="news-information-cards__card news-information-cards__card--linked"
+    href="{{ url }}"
+    style="--news-card-background: {{ background }}; --news-card-border-color: {{ border_color }}; --news-card-border-width: {{ border_width }}px; --news-card-radius: {{ border_radius }}px; --news-card-padding: {{ padding }}px; --news-card-icon-color: {{ icon_color }}; --news-card-icon-size: {{ icon_size }}px; --news-card-heading-color: {{ heading_color }}; --news-card-heading-size: {{ heading_size }}px; --news-card-description-color: {{ description_color }}; --news-card-description-size: {{ description_size }}px;"
+    {% if open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+  >
+    {{ card_content }}
+  </a>
+{% else %}
+  <div
+    class="news-information-cards__card"
+    style="--news-card-background: {{ background }}; --news-card-border-color: {{ border_color }}; --news-card-border-width: {{ border_width }}px; --news-card-radius: {{ border_radius }}px; --news-card-padding: {{ padding }}px; --news-card-icon-color: {{ icon_color }}; --news-card-icon-size: {{ icon_size }}px; --news-card-heading-color: {{ heading_color }}; --news-card-heading-size: {{ heading_size }}px; --news-card-description-color: {{ description_color }}; --news-card-description-size: {{ description_size }}px;"
+  >
+    {{ card_content }}
+  </div>
+{% endif %}

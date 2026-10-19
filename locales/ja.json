@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "3Dモデルを再生",
     "play_video": "ビデオを再生",
-    "unit_price": "単価",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "単価",
     "country_results_count": "{{ count }}件の結果",
     "slideshow_pause": "スライドショーを一時停止",
     "slideshow_play": "スライドショーを再生",

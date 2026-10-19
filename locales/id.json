@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Putar model 3D",
     "play_video": "Putar video",
-    "unit_price": "Harga satuan",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Harga satuan",
     "country_results_count": "{{ count }} hasil",
     "slideshow_pause": "Jeda slideshow",
     "slideshow_play": "Putar slideshow",

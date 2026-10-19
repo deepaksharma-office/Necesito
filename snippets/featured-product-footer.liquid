@@ -1,0 +1,67 @@
+{% doc %}
+  Renders the divider, price, and linked CTA for a featured product card.
+
+  @param {product} product - Selected Shopify product.
+  @param {boolean} show_price - Whether the price area is shown.
+  @param {boolean} use_price_placeholder - Whether placeholder text replaces the product price.
+  @param {string} price_placeholder - Merchant-provided placeholder text.
+  @param {color} price_color - Price color.
+  @param {number} price_size - Price font size in pixels.
+  @param {boolean} show_link - Whether the CTA is shown.
+  @param {string} cta_label - CTA label.
+  @param {string} url - CTA URL.
+  @param {color} cta_color - CTA text color.
+  @param {color} arrow_color - Arrow color.
+  @param {number} arrow_size - Arrow size in pixels.
+  @param {boolean} show_divider - Whether the divider is shown.
+  @param {color} divider_color - Divider color.
+  @param {number} divider_thickness - Divider thickness in pixels.
+  @param {number} spacing - Footer top spacing in pixels.
+
+  @example
+  {% render 'featured-product-footer', product: product, show_price: true, cta_label: 'View product', url: product.url, show_link: true %}
+{% enddoc %}
+
+{% liquid
+  assign has_price = false
+  if show_price
+    if use_price_placeholder and price_placeholder != blank
+      assign has_price = true
+    elsif product != blank
+      assign has_price = true
+    endif
+  endif
+
+  assign has_link = false
+  if show_link and cta_label != blank and url != blank
+    assign has_link = true
+  endif
+%}
+
+{% if has_price or has_link %}
+  <div
+    class="featured-products__footer{% unless show_divider %} featured-products__footer--no-divider{% endunless %}"
+    style="--featured-footer-price-color: {{ price_color }}; --featured-footer-price-size: {{ price_size }}px; --featured-footer-cta-color: {{ cta_color }}; --featured-footer-arrow-color: {{ arrow_color }}; --featured-footer-arrow-size: {{ arrow_size }}px; --featured-footer-divider-color: {{ divider_color }}; --featured-footer-divider-thickness: {{ divider_thickness }}px; --featured-footer-spacing: {{ spacing }}px;"
+  >
+    {% if has_price %}
+      <span class="featured-products__price">
+        {% if use_price_placeholder and price_placeholder != blank %}
+          {{ price_placeholder | escape }}
+        {% else %}
+          {% render 'format-price', price: product.price %}
+        {% endif %}
+      </span>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+    {% if has_link %}
+      <a class="featured-products__cta" href="{{ url }}">
+        <span>{{ cta_label | escape }}</span>
+        <svg class="featured-products__cta-arrow" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+          {% render 'icon', icon: 'arrow' %}
+        </svg>
+      </a>
+    {% endif %}
+  </div>
+{% endif %}

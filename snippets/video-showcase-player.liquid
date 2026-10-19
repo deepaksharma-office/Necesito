@@ -1,0 +1,115 @@
+{% doc %}
+  Renders a responsive video player with custom controls for Shopify-hosted video.
+
+  @param {object} [video] - Shopify-hosted video object.
+  @param {object} [external_video] - YouTube or Vimeo video object.
+  @param {object} [poster] - Optional poster image override.
+  @param {string} [label] - Text shown in the custom control bar.
+  @param {string} instance_id - Unique section instance identifier.
+  @param {string} aspect_ratio - CSS aspect-ratio value.
+  @param {string} preload - Native video preload value.
+  @param {boolean} muted_autoplay - Whether hosted video starts muted and autoplaying.
+  @param {boolean} show_center_control - Whether to show the large playback control.
+  @param {boolean} show_control_bar - Whether to show the custom control bar.
+  @param {boolean} show_fullscreen - Whether to show the fullscreen control.
+
+  @example
+  {% render 'video-showcase-player', video: section.settings.video, instance_id: section.id, aspect_ratio: '16 / 9', preload: 'metadata', muted_autoplay: false, show_center_control: true, show_control_bar: true, show_fullscreen: true %}
+{% enddoc %}
+
+{% liquid
+  assign poster_image = poster | default: video.preview_image
+  assign poster_url = blank
+  if poster_image != blank
+    assign poster_url = poster_image | image_url: width: 2400
+  endif
+%}
+
+<video-showcase-component
+  id="VideoShowcase-{{ instance_id }}"
+  class="video-showcase__player{% if external_video != blank %} video-showcase__player--external{% endif %}"
+  style="--video-showcase-aspect-ratio: {{ aspect_ratio }};"
+  data-video-showcase-player
+  data-play-label="{{ 'accessibility.play_video' | t | escape }}"
+  data-pause-label="{{ 'accessibility.pause_video' | t | escape }}"
+  data-enter-fullscreen-label="{{ 'accessibility.enter_fullscreen' | t | escape }}"
+  data-exit-fullscreen-label="{{ 'accessibility.exit_fullscreen' | t | escape }}"
+>
+  {% if video != blank %}
+    {{
+      video
+      | video_tag:
+        autoplay: muted_autoplay,
+        muted: muted_autoplay,
+        loop: false,
+        controls: false,
+        playsinline: true,
+        preload: preload,
+        poster: poster_url,
+        class: 'video-showcase__video',
+        ref: 'video'
+    }}
+
+    {% if show_center_control %}
+      <button
+        class="video-showcase__center-control"
+        type="button"
+        ref="centerToggle"
+        on:click="/togglePlayback"
+        aria-label="{{ 'accessibility.play_video' | t }}"
+      >
+        <span class="video-showcase__icon video-showcase__icon--play" ref="playIcon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.376 12.4161L8.77735 19.4818C8.54759 19.635 8.23715 19.5729 8.08397 19.3432C8.02922 19.261 8 19.1645 8 19.0658V4.93433C8 4.65818 8.22386 4.43433 8.5 4.43433C8.59871 4.43433 8.69522 4.46355 8.77735 4.5183L19.376 11.584C19.6057 11.7372 19.6678 12.0477 19.5146 12.2774C19.478 12.3323 19.4309 12.3795 19.376 12.4161Z"></path></svg>
+        </span>
+        <span class="video-showcase__icon video-showcase__icon--pause" ref="pauseIcon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5H8V19H6V5ZM16 5H18V19H16V5Z"></path></svg>
+        </span>
+      </button>
+    {% endif %}
+
+    {% if show_control_bar %}
+      <div class="video-showcase__control-bar">
+        <div class="video-showcase__control-group">
+          <button
+            class="video-showcase__control video-showcase__play-toggle"
+            type="button"
+            ref="barToggle"
+            on:click="/togglePlayback"
+            aria-label="{{ 'accessibility.play_video' | t }}"
+          >
+            <span class="video-showcase__icon video-showcase__icon--play" ref="playIcon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.376 12.4161L8.77735 19.4818C8.54759 19.635 8.23715 19.5729 8.08397 19.3432C8.02922 19.261 8 19.1645 8 19.0658V4.93433C8 4.65818 8.22386 4.43433 8.5 4.43433C8.59871 4.43433 8.69522 4.46355 8.77735 4.5183L19.376 11.584C19.6057 11.7372 19.6678 12.0477 19.5146 12.2774C19.478 12.3323 19.4309 12.3795 19.376 12.4161Z"></path></svg>
+            </span>
+            <span class="video-showcase__icon video-showcase__icon--pause" ref="pauseIcon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5H8V19H6V5ZM16 5H18V19H16V5Z"></path></svg>
+            </span>
+          </button>
+          {% if label != blank %}<span class="video-showcase__label">{{ label | escape }}</span>{% endif %}
+        </div>
+
+        {% if show_fullscreen %}
+          <button
+            class="video-showcase__control video-showcase__fullscreen-toggle"
+            type="button"
+            ref="fullscreenToggle"
+            on:click="/toggleFullscreen"
+            aria-label="{{ 'accessibility.enter_fullscreen' | t }}"
+          >
+            <span class="video-showcase__icon video-showcase__icon--enter-fullscreen" ref="enterFullscreenIcon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 3V5H4V9H2V3H8ZM2 21V15H4V19H8V21H2ZM22 21H16V19H20V15H22V21ZM22 9H20V5H16V3H22V9Z"></path></svg>
+            </span>
+            <span class="video-showcase__icon video-showcase__icon--exit-fullscreen" ref="exitFullscreenIcon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 7H22V9H16V3H18V7ZM8 9H2V7H6V3H8V9ZM18 17V21H16V15H22V17H18ZM8 15V21H6V17H2V15H8Z"></path></svg>
+            </span>
+          </button>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% elsif external_video != blank %}
+    {{ external_video | external_video_url: autoplay: false, controls: true | external_video_tag: class: 'video-showcase__external-video', loading: 'lazy', allowfullscreen: true }}
+  {% elsif poster_image != blank %}
+    {{ poster_image | image_url: width: 2400 | image_tag: widths: '480, 750, 1100, 1500, 2000, 2400', sizes: '(min-width: 750px) min(100vw - 40px, 1320px), calc(100vw - 32px)', loading: 'lazy', class: 'video-showcase__poster' }}
+  {% else %}
+    {{ 'lifestyle-1' | placeholder_svg_tag: 'video-showcase__poster video-showcase__poster--placeholder' }}
+  {% endif %}
+</video-showcase-component>

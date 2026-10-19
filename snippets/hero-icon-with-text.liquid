@@ -1,0 +1,59 @@
+{% doc %}
+  Renders supporting inline rich text with either a theme icon or uploaded image.
+
+  @param {string} icon_source - theme or custom.
+  @param {string} icon - Theme icon name supported by icon.liquid.
+  @param {image} custom_image - Uploaded icon image.
+  @param {string} custom_image_alt - Uploaded icon alt text.
+  @param {string} content - Inline rich-text content.
+  @param {string} [heading] - Optional heading content rendered above description.
+  @param {string} [description] - Optional supporting description.
+  @param {color} text_color - Text color.
+  @param {number} text_size - Text size in pixels.
+  @param {color} [heading_color] - Heading color.
+  @param {number} [heading_size] - Heading size in pixels.
+  @param {number} [heading_weight] - Heading font weight.
+  @param {color} [description_color] - Description color.
+  @param {number} [description_size] - Description size in pixels.
+  @param {number} [description_line_height] - Description line height as a percentage.
+  @param {color} icon_color - Icon color.
+  @param {number} icon_size - Icon size in pixels.
+  @param {number} gap - Horizontal gap in pixels.
+  @param {string} alignment - CSS align-items value.
+  @param {string} [url] - Optional destination.
+  @param {string} [class] - Additional CSS class.
+
+  @example
+  {% render 'hero-icon-with-text', icon_source: 'theme', icon: 'map_pin', content: section.settings.supporting_text, icon_size: 20 %}
+{% enddoc %}
+
+{% if content != blank or heading != blank or description != blank %}
+  {% capture inner %}
+    {% if icon_source == 'custom' and custom_image != blank %}
+      {{ custom_image | image_url: width: 160 | image_tag: widths: '40, 80, 120, 160', sizes: icon_size, width: icon_size, height: icon_size, alt: custom_image_alt, class: 'hero-composition__support-image', loading: 'lazy' }}
+    {% elsif icon_source == 'theme' and icon != 'none' %}
+      <svg class="hero-composition__support-icon" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+        {% render 'icon', icon: icon %}
+      </svg>
+    {% endif %}
+    <span class="hero-composition__support-text">
+      {% if heading != blank %}
+        <span class="hero-composition__support-heading">{{ heading }}</span>
+      {% endif %}
+      {% if description != blank %}
+        <span class="hero-composition__support-description">{{ description }}</span>
+      {% endif %}
+      {% if content != blank %}
+        {{ content }}
+      {% endif %}
+    </span>
+  {% endcapture %}
+
+  {% capture component_style %}--hero-support-text-color: {{ text_color }}; --hero-support-text-size: {{ text_size }}px; --hero-support-heading-color: {{ heading_color | default: text_color }}; --hero-support-heading-size: {{ heading_size | default: text_size }}px; --hero-support-heading-weight: {{ heading_weight | default: 600 }}; --hero-support-description-color: {{ description_color | default: text_color }}; --hero-support-description-size: {{ description_size | default: text_size }}px; --hero-support-description-leading: {{ description_line_height | default: 140 | divided_by: 100.0 }}; --hero-support-icon-color: {{ icon_color }}; --hero-support-icon-size: {{ icon_size }}px; --hero-support-gap: {{ gap }}px; --hero-support-align: {{ alignment }};{% endcapture %}
+
+  {% if url != blank %}
+    <a class="hero-composition__support{% if class != blank %} {{ class | escape }}{% endif %}" href="{{ url }}" style="{{ component_style | strip }}">{{ inner }}</a>
+  {% else %}
+    <div class="hero-composition__support{% if class != blank %} {{ class | escape }}{% endif %}" style="{{ component_style | strip }}">{{ inner }}</div>
+  {% endif %}
+{% endif %}

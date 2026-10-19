@@ -1,0 +1,139 @@
+{% comment %}
+  Editorial news links presented as merchant-managed information cards.
+  @example
+  Add “News information cards” and configure each card block in the theme editor.
+{% endcomment %}
+
+{{ 'news-information-cards.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="news-information-cards news-information-cards--align-{{ section.settings.text_alignment }}"
+  style="--news-section-background: {{ section.settings.background_color }}; --news-section-width: {{ section.settings.content_width }}px; --news-section-padding-top: {{ section.settings.padding_top }}px; --news-section-padding-bottom: {{ section.settings.padding_bottom }}px; --news-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --news-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --news-text-alignment: {{ section.settings.text_alignment }}; --news-eyebrow-heading-gap: {{ section.settings.eyebrow_heading_gap }}px; --news-header-gap: {{ section.settings.header_gap }}px; --news-columns: {{ section.settings.columns }}; --news-mobile-columns: {{ section.settings.mobile_columns }}; --news-card-gap: {{ section.settings.card_gap }}px; --news-card-gap-mobile: {{ section.settings.card_gap_mobile }}px; --news-card-min-height: {{ section.settings.card_min_height }}px; --news-icon-title-gap: {{ section.settings.icon_title_gap }}px; --news-title-description-gap: {{ section.settings.title_description_gap }}px; --news-footer-gap: {{ section.settings.footer_gap }}px;"
+>
+  <div class="news-information-cards__container">
+    <header class="news-information-cards__header">
+      {% if section.settings.show_eyebrow %}
+        {% render 'hero-eyebrow', content: section.settings.eyebrow, color: section.settings.eyebrow_color, font_size: section.settings.eyebrow_size, font_weight: section.settings.eyebrow_weight, text_transform: 'uppercase', class: 'news-information-cards__eyebrow' %}
+      {% endif %}
+
+      {% render 'hero-title', content: section.settings.heading, heading_tag: section.settings.heading_tag, color: section.settings.heading_color, highlight_color: section.settings.heading_highlight_color, desktop_size: section.settings.heading_size, mobile_size: section.settings.heading_size_mobile, font_weight: section.settings.heading_weight, line_height: section.settings.heading_line_height, letter_spacing: section.settings.heading_letter_spacing, max_width: section.settings.heading_max_width, alignment: section.settings.text_alignment %}
+    </header>
+
+    <div class="news-information-cards__grid">
+      {% for block in section.blocks %}
+        <div class="news-information-cards__item" {{ block.shopify_attributes }}>
+          {% render 'news-information-card', icon: block.settings.icon, heading: block.settings.heading, description: block.settings.description, url: block.settings.url, open_in_new_tab: block.settings.open_in_new_tab, background: section.settings.card_background, border_color: section.settings.card_border_color, border_width: section.settings.card_border_width, border_radius: section.settings.card_radius, padding: section.settings.card_padding, icon_color: section.settings.icon_color, icon_size: section.settings.icon_size, heading_color: section.settings.card_heading_color, heading_size: section.settings.card_heading_size, description_color: section.settings.card_description_color, description_size: section.settings.card_description_size %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_button and section.settings.button_label != blank and section.settings.button_url != blank %}
+      <div class="news-information-cards__footer">
+        {% render 'hero-button', label: section.settings.button_label, url: section.settings.button_url, type: section.settings.button_type, background: section.settings.button_background, color: section.settings.button_color, border_color: section.settings.button_border_color, border_width: section.settings.button_border_width, border_radius: section.settings.button_radius, font_size: section.settings.button_size, font_weight: section.settings.button_weight, padding_horizontal: section.settings.button_padding_horizontal, padding_vertical: section.settings.button_padding_vertical, open_in_new_tab: section.settings.button_new_tab, show_arrow: section.settings.button_arrow, arrow_color: section.settings.button_arrow_color, arrow_size: section.settings.button_arrow_size, class: 'news-information-cards__button' %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "News information cards",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Header" },
+    { "type": "checkbox", "id": "show_eyebrow", "label": "Show eyebrow", "default": true },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow", "default": "NECESITO NEWS" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What’s brewing in the neighborhood?" },
+    { "type": "select", "id": "heading_tag", "label": "Heading tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }], "default": "h2" },
+    { "type": "text_alignment", "id": "text_alignment", "label": "Text alignment", "default": "left" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#f6f1e7" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#456553" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#173f35" },
+    { "type": "color", "id": "heading_highlight_color", "label": "Bold heading", "default": "#cf6d3b" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#fffcf6" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#dedbd2" },
+    { "type": "color", "id": "icon_color", "label": "Icon", "default": "#315f53" },
+    { "type": "color", "id": "card_heading_color", "label": "Card heading", "default": "#315f53" },
+    { "type": "color", "id": "card_description_color", "label": "Card description", "default": "#718077" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "eyebrow_weight", "label": "Eyebrow weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "heading_size", "label": "Heading desktop size", "min": 28, "max": 68, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading mobile size", "min": 26, "max": 48, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "heading_weight", "label": "Heading weight", "min": 300, "max": 800, "step": 100, "default": 500 },
+    { "type": "range", "id": "heading_line_height", "label": "Heading line height", "min": 90, "max": 150, "step": 5, "unit": "%", "default": 110 },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -10, "max": 10, "step": 1, "unit": "%", "default": -2 },
+    { "type": "range", "id": "heading_max_width", "label": "Heading maximum width", "min": 400, "max": 1320, "step": 20, "unit": "px", "default": 1000 },
+    { "type": "range", "id": "icon_size", "label": "Card icon size", "min": 16, "max": 40, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "card_heading_size", "label": "Card heading size", "min": 14, "max": 30, "step": 1, "unit": "px", "default": 20 },
+    { "type": "range", "id": "card_description_size", "label": "Card description size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 13 },
+
+    { "type": "header", "content": "Button" },
+    { "type": "checkbox", "id": "show_button", "label": "Show button", "default": true },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Visit Necesito News", "visible_if": "{{ section.settings.show_button }}" },
+    { "type": "url", "id": "button_url", "label": "Button link", "visible_if": "{{ section.settings.show_button }}" },
+    { "type": "select", "id": "button_type", "label": "Button style", "options": [{ "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "custom", "label": "Custom" }], "default": "custom" },
+    { "type": "color", "id": "button_background", "label": "Background", "default": "#fffcf6", "visible_if": "{{ section.settings.button_type == 'custom' }}" },
+    { "type": "color", "id": "button_color", "label": "Text", "default": "#173f35", "visible_if": "{{ section.settings.button_type == 'custom' }}" },
+    { "type": "color", "id": "button_border_color", "label": "Border", "default": "#687a6e", "visible_if": "{{ section.settings.button_type == 'custom' }}" },
+    { "type": "range", "id": "button_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "button_radius", "label": "Corner radius", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 4 },
+    { "type": "range", "id": "button_size", "label": "Font size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "button_weight", "label": "Font weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "button_padding_horizontal", "label": "Horizontal padding", "min": 10, "max": 36, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "button_padding_vertical", "label": "Vertical padding", "min": 6, "max": 20, "step": 1, "unit": "px", "default": 10 },
+    { "type": "checkbox", "id": "button_new_tab", "label": "Open in new tab", "default": false },
+    { "type": "checkbox", "id": "button_arrow", "label": "Show arrow", "default": true },
+    { "type": "color", "id": "button_arrow_color", "label": "Arrow", "default": "#315f53", "visible_if": "{{ section.settings.button_arrow }}" },
+    { "type": "range", "id": "button_arrow_size", "label": "Arrow size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ section.settings.button_arrow }}" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
+    { "type": "range", "id": "columns", "label": "Desktop columns", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "select", "id": "mobile_columns", "label": "Mobile columns", "options": [{ "value": "1", "label": "One" }, { "value": "2", "label": "Two" }], "default": "1" },
+    { "type": "range", "id": "card_gap", "label": "Desktop card gap", "min": 12, "max": 64, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "card_gap_mobile", "label": "Mobile card gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "card_padding", "label": "Card padding", "min": 16, "max": 48, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "card_border_width", "label": "Card border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 6 },
+    { "type": "range", "id": "card_min_height", "label": "Card minimum height", "min": 120, "max": 300, "step": 10, "unit": "px", "default": 180 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "eyebrow_heading_gap", "label": "Eyebrow to heading", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "header_gap", "label": "Heading to cards", "min": 16, "max": 64, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "icon_title_gap", "label": "Icon to card heading", "min": 4, "max": 28, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "title_description_gap", "label": "Card heading to description", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 8 },
+    { "type": "range", "id": "footer_gap", "label": "Cards to button", "min": 12, "max": 56, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "blocks": [
+    {
+      "type": "information_card",
+      "name": "Information card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "none", "label": "None" }, { "value": "chat_bubble", "label": "Chat bubble" }, { "value": "clock", "label": "Clock" }, { "value": "coffee_cup", "label": "Coffee cup" }], "default": "chat_bubble" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Information" },
+        { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Add a short update or helpful description.</p>" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "checkbox", "id": "open_in_new_tab", "label": "Open in new tab", "default": false, "visible_if": "{{ block.settings.url != blank }}" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "News information cards",
+      "blocks": [
+        { "type": "information_card", "settings": { "icon": "chat_bubble", "heading": "Upcoming events", "description": "<p>Neighborhood happenings, coming soon.</p>" } },
+        { "type": "information_card", "settings": { "icon": "clock", "heading": "Ordering & closures", "description": "<p>Online-only. Find the latest updates.</p>" } },
+        { "type": "information_card", "settings": { "icon": "coffee_cup", "heading": "Featured coffees", "description": "<p>A closer look at our signature collection.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Paleisti 3D modelį",
     "play_video": "Paleisti vaizdo įrašą",
-    "unit_price": "Vieneto kaina",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Vieneto kaina",
     "country_results_count": "{{ count }} rezultatai (-ų)",
     "slideshow_pause": "Pristabdyti skaidrių peržiūrą",
     "slideshow_play": "Leisti skaidrių peržiūrą",

@@ -1,0 +1,73 @@
+{% doc %}
+  Renders a reusable testimonial, review, or coming-soon card.
+
+  @param {string} heading - Card heading content.
+  @param {string} description - Card rich-text description.
+  @param {boolean} show_quote - Shows the decorative opening quotation mark.
+  @param {color} quote_color - Quotation mark color.
+  @param {number} quote_size - Quotation mark size in pixels.
+  @param {boolean} show_badge - Shows the status badge.
+  @param {string} badge_text - Status badge text.
+  @param {color} badge_background - Status badge background.
+  @param {color} badge_color - Status badge text color.
+  @param {number} badge_size - Status badge font size in pixels.
+  @param {color} card_background - Card background color.
+  @param {color} card_border_color - Card border color.
+  @param {number} card_border_width - Card border width in pixels.
+  @param {number} card_radius - Card corner radius in pixels.
+  @param {number} card_padding - Card padding in pixels.
+  @param {color} heading_color - Card heading color.
+  @param {number} heading_size - Card heading size in pixels.
+  @param {color} description_color - Card description color.
+  @param {number} description_size - Card description size in pixels.
+  @param {boolean} show_button - Shows the CTA when its label and URL have values.
+  @param {string} button_label - CTA label.
+  @param {string} button_url - CTA destination.
+  @param {string} button_type - Button style: primary, secondary, or custom.
+  @param {color} button_background - Custom button background.
+  @param {color} button_color - Custom button text color.
+  @param {color} button_border_color - Custom button border color.
+  @param {number} button_border_width - Button border width in pixels.
+  @param {number} button_radius - Button corner radius in pixels.
+  @param {number} button_size - Button font size in pixels.
+  @param {number} button_weight - Button font weight.
+  @param {number} button_padding_horizontal - Button inline padding in pixels.
+  @param {number} button_padding_vertical - Button block padding in pixels.
+  @param {boolean} button_new_tab - Opens the CTA in a new tab.
+  @param {boolean} button_arrow - Shows the CTA arrow.
+  @param {color} button_arrow_color - CTA arrow color.
+  @param {number} button_arrow_size - CTA arrow size in pixels.
+
+  @example
+  {% render 'testimonial-card', heading: 'Your first cup. Your first impression.', show_quote: true, show_badge: true, badge_text: 'Coming soon' %}
+{% enddoc %}
+
+<article
+  class="testimonial-coming-soon__card"
+  style="--testimonial-card-background: {{ card_background }}; --testimonial-card-border-color: {{ card_border_color }}; --testimonial-card-border-width: {{ card_border_width }}px; --testimonial-card-radius: {{ card_radius }}px; --testimonial-card-padding: {{ card_padding }}px; --testimonial-card-heading-color: {{ heading_color }}; --testimonial-card-heading-size: {{ heading_size }}px; --testimonial-card-description-color: {{ description_color }}; --testimonial-card-description-size: {{ description_size }}px; --testimonial-quote-color: {{ quote_color }}; --testimonial-quote-size: {{ quote_size }}px; --testimonial-badge-background: {{ badge_background }}; --testimonial-badge-color: {{ badge_color }}; --testimonial-badge-size: {{ badge_size }}px;"
+>
+  {% if show_quote or show_badge and badge_text != blank %}
+    <div class="testimonial-coming-soon__card-header">
+      {% if show_quote %}
+        <span class="testimonial-coming-soon__quote" aria-hidden="true">“</span>
+      {% endif %}
+      {% if show_badge and badge_text != blank %}
+        <span class="testimonial-coming-soon__badge">{{ badge_text | escape }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if heading != blank %}
+    <h3 class="testimonial-coming-soon__card-title">{{ heading }}</h3>
+  {% endif %}
+
+  {% if description != blank %}
+    <div class="testimonial-coming-soon__card-description rte">{{ description }}</div>
+  {% endif %}
+
+  {% if show_button and button_label != blank and button_url != blank %}
+    <div class="testimonial-coming-soon__button-wrap">
+      {% render 'hero-button', label: button_label, url: button_url, type: button_type, background: button_background, color: button_color, border_color: button_border_color, border_width: button_border_width, border_radius: button_radius, font_size: button_size, font_weight: button_weight, padding_horizontal: button_padding_horizontal, padding_vertical: button_padding_vertical, open_in_new_tab: button_new_tab, show_arrow: button_arrow, arrow_color: button_arrow_color, arrow_size: button_arrow_size, class: 'testimonial-coming-soon__button' %}
+    </div>
+  {% endif %}
+</article>

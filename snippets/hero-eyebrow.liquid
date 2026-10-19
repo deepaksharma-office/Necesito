@@ -1,0 +1,22 @@
+{% doc %}
+  Renders inline rich text as a configurable hero eyebrow.
+
+  @param {string} content - Inline rich-text content.
+  @param {color} color - Text color.
+  @param {number} font_size - Font size in pixels.
+  @param {number} font_weight - Font weight.
+  @param {string} text_transform - CSS text-transform value.
+  @param {string} [class] - Additional CSS class.
+
+  @example
+  {% render 'hero-eyebrow', content: section.settings.eyebrow, color: section.settings.eyebrow_color, font_size: 14, font_weight: 600, text_transform: 'uppercase' %}
+{% enddoc %}
+
+{% if content != blank %}
+  <div
+    class="hero-composition__eyebrow{% if class != blank %} {{ class | escape }}{% endif %}"
+    style="--hero-eyebrow-color: {{ color }}; --hero-eyebrow-size: {{ font_size }}px; --hero-eyebrow-weight: {{ font_weight }}; --hero-eyebrow-transform: {{ text_transform }};"
+  >
+    {{ content }}
+  </div>
+{% endif %}

@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "Riproduci modello 3D",
     "play_video": "Riproduci video",
-    "unit_price": "Prezzo unitario",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "Prezzo unitario",
     "country_results_count": "{{ count }} risultati",
     "slideshow_pause": "Metti in pausa presentazione",
     "slideshow_play": "Avvia presentazione",

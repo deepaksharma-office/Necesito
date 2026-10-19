@@ -1,0 +1,174 @@
+{% comment %}
+  Editorial featured products grid using reusable typography, badge, card, and footer snippets.
+  @example
+  Add “Featured products” to a homepage and assign products to its blocks.
+{% endcomment %}
+
+{{ 'featured-products.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="featured-products featured-products--align-{{ section.settings.text_alignment }} featured-products--mobile-{{ section.settings.mobile_columns }}"
+  style="--featured-section-background: {{ section.settings.background_color }}; --featured-section-width: {{ section.settings.content_width }}px; --featured-section-padding-top: {{ section.settings.padding_top }}px; --featured-section-padding-bottom: {{ section.settings.padding_bottom }}px; --featured-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --featured-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --featured-header-alignment: {{ section.settings.text_alignment }}; --featured-header-gap: {{ section.settings.header_gap }}px; --featured-grid-columns: {{ section.settings.columns }}; --featured-grid-gap: {{ section.settings.grid_gap }}px; --featured-card-radius: {{ section.settings.card_radius }}px; --featured-card-title-size: {{ section.settings.card_title_size }}px; --featured-card-title-weight: {{ section.settings.card_title_weight }}; --featured-card-description-size: {{ section.settings.card_description_size }}px;"
+>
+  <div class="featured-products__container">
+    <header class="featured-products__header">
+      {% if section.settings.show_eyebrow %}
+        {% render 'hero-eyebrow', content: section.settings.eyebrow, color: section.settings.eyebrow_color, font_size: section.settings.eyebrow_size, font_weight: section.settings.eyebrow_weight, text_transform: 'uppercase', class: 'featured-products__eyebrow' %}
+      {% endif %}
+
+      {% render 'hero-title', content: section.settings.heading, heading_tag: section.settings.heading_tag, color: section.settings.heading_color, highlight_color: section.settings.heading_highlight_color, desktop_size: section.settings.heading_size, mobile_size: section.settings.heading_size_mobile, font_weight: section.settings.heading_weight, line_height: section.settings.heading_line_height, letter_spacing: section.settings.heading_letter_spacing, max_width: section.settings.heading_max_width, alignment: section.settings.text_alignment %}
+
+      {% if section.settings.show_description %}
+        {% render 'hero-content', content: section.settings.description, color: section.settings.description_color, desktop_size: section.settings.description_size, mobile_size: section.settings.description_size_mobile, line_height: section.settings.description_line_height, max_width: section.settings.description_max_width, font_weight: 400, alignment: section.settings.text_alignment %}
+      {% endif %}
+    </header>
+
+    <div class="featured-products__grid">
+      {% for block in section.blocks %}
+        {% liquid
+          assign card_background = block.settings.background_color
+          if card_background == blank
+            assign card_background = section.settings.card_background
+          endif
+
+          assign image_loading = 'lazy'
+          assign image_fetchpriority = 'auto'
+          if section.index == 1 and forloop.first
+            assign image_loading = 'eager'
+            assign image_fetchpriority = 'high'
+          endif
+
+          assign show_block_price = section.settings.show_prices
+          if block.settings.show_price == false
+            assign show_block_price = false
+          endif
+
+          assign show_block_badge = section.settings.show_badges
+          if block.settings.show_badge == false
+            assign show_block_badge = false
+          endif
+        %}
+
+        <div {{ block.shopify_attributes }}>
+          {% render 'featured-product-card', product: block.settings.product, title_override: block.settings.title_override, description_override: block.settings.description_override, image_override: block.settings.image_override, image_alt: block.settings.image_alt, decoration: block.settings.decoration, card_background: card_background, image_width: block.settings.image_width, image_vertical_alignment: block.settings.image_vertical_alignment, image_horizontal_alignment: block.settings.image_horizontal_alignment, image_padding: block.settings.image_padding, image_aspect_ratio: section.settings.image_aspect_ratio, content_alignment: section.settings.card_alignment, show_description: section.settings.show_card_descriptions, show_badge: show_block_badge, badge_text: block.settings.badge_text, badge_text_color: section.settings.badge_text_color, badge_background: section.settings.badge_background, badge_size: section.settings.badge_size, badge_weight: section.settings.badge_weight, badge_radius: section.settings.badge_radius, badge_padding_horizontal: section.settings.badge_padding_horizontal, badge_padding_vertical: section.settings.badge_padding_vertical, badge_left: section.settings.badge_left, badge_top: section.settings.badge_top, show_price: show_block_price, use_price_placeholder: block.settings.use_price_placeholder, price_placeholder: block.settings.price_placeholder, show_link: section.settings.show_links, cta_label: block.settings.cta_label, cta_url: block.settings.cta_url, show_divider: section.settings.show_divider, title_color: section.settings.card_title_color, description_color: section.settings.card_description_color, price_color: section.settings.price_color, cta_color: section.settings.cta_color, divider_color: section.settings.divider_color, divider_thickness: section.settings.divider_thickness, loading: image_loading, fetchpriority: image_fetchpriority %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "checkbox", "id": "show_eyebrow", "label": "Show eyebrow", "default": true },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow", "default": "THE SIGNATURE COLLECTION" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet your next morning ritual." },
+    { "type": "select", "id": "heading_tag", "label": "Heading tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }], "default": "h2" },
+    { "type": "checkbox", "id": "show_description", "label": "Show description", "default": true },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Three coffees. One neighborhood. The final coffee details are coming soon.</p>" },
+    { "type": "text_alignment", "id": "text_alignment", "label": "Text alignment", "default": "left" },
+
+    { "type": "header", "content": "Section appearance" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#f7f1e7" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#456553" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#173f35" },
+    { "type": "color", "id": "heading_highlight_color", "label": "Bold heading color", "default": "#cf6d3b" },
+    { "type": "color", "id": "description_color", "label": "Description color", "default": "#667a70" },
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320, "info": "Use the same value as the Hero composition and Icon text bar." },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+
+    { "type": "header", "content": "Header typography" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_weight", "label": "Eyebrow weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "heading_size", "label": "Heading desktop size", "min": 32, "max": 80, "step": 2, "unit": "px", "default": 52 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading mobile size", "min": 26, "max": 52, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "heading_weight", "label": "Heading weight", "min": 300, "max": 800, "step": 100, "default": 500 },
+    { "type": "range", "id": "heading_line_height", "label": "Heading line height", "min": 90, "max": 150, "step": 5, "unit": "%", "default": 110 },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -10, "max": 10, "step": 1, "unit": "%", "default": -2 },
+    { "type": "range", "id": "heading_max_width", "label": "Heading maximum width", "min": 320, "max": 1000, "step": 20, "unit": "px", "default": 860 },
+    { "type": "range", "id": "description_size", "label": "Description desktop size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "description_size_mobile", "label": "Description mobile size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "description_line_height", "label": "Description line height", "min": 110, "max": 190, "step": 5, "unit": "%", "default": 150 },
+    { "type": "range", "id": "description_max_width", "label": "Description maximum width", "min": 280, "max": 900, "step": 20, "unit": "px", "default": 700 },
+
+    { "type": "header", "content": "Grid and cards" },
+    { "type": "range", "id": "columns", "label": "Desktop columns", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "select", "id": "mobile_columns", "label": "Mobile columns", "options": [{ "value": "one", "label": "One" }, { "value": "two", "label": "Two" }], "default": "one" },
+    { "type": "range", "id": "grid_gap", "label": "Card gap", "min": 12, "max": 64, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "header_gap", "label": "Header to grid spacing", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 },
+    { "type": "select", "id": "image_aspect_ratio", "label": "Image area aspect ratio", "options": [{ "value": "1 / 1", "label": "Square" }, { "value": "4 / 3", "label": "Landscape" }, { "value": "3 / 4", "label": "Portrait" }], "default": "1 / 1" },
+    { "type": "range", "id": "card_radius", "label": "Image corner radius", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 10 },
+    { "type": "select", "id": "card_alignment", "label": "Card content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "color", "id": "card_background", "label": "Default image background", "default": "#e9e2d2" },
+    { "type": "color", "id": "card_title_color", "label": "Card title color", "default": "#294f43" },
+    { "type": "color", "id": "card_description_color", "label": "Card description color", "default": "#718077" },
+    { "type": "range", "id": "card_title_size", "label": "Card title size", "min": 16, "max": 34, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "card_title_weight", "label": "Card title weight", "min": 400, "max": 800, "step": 100, "default": 500 },
+    { "type": "range", "id": "card_description_size", "label": "Card description size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 13 },
+
+    { "type": "header", "content": "Card elements" },
+    { "type": "checkbox", "id": "show_card_descriptions", "label": "Show card descriptions", "default": true },
+    { "type": "checkbox", "id": "show_prices", "label": "Show prices", "default": true },
+    { "type": "checkbox", "id": "show_links", "label": "Show product links", "default": true },
+    { "type": "checkbox", "id": "show_divider", "label": "Show footer divider", "default": true },
+    { "type": "checkbox", "id": "show_badges", "label": "Show status badges", "default": true },
+    { "type": "color", "id": "price_color", "label": "Price color", "default": "#718077" },
+    { "type": "color", "id": "cta_color", "label": "CTA color", "default": "#173f35" },
+    { "type": "color", "id": "divider_color", "label": "Divider color", "default": "#d8d7ca" },
+    { "type": "range", "id": "divider_thickness", "label": "Divider thickness", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "badge_text_color", "label": "Badge text color", "default": "#173f35" },
+    { "type": "color", "id": "badge_background", "label": "Badge background", "default": "#ffffff" },
+    { "type": "range", "id": "badge_size", "label": "Badge font size", "min": 9, "max": 18, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "badge_weight", "label": "Badge font weight", "min": 400, "max": 800, "step": 100, "default": 600 },
+    { "type": "range", "id": "badge_radius", "label": "Badge radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "badge_padding_horizontal", "label": "Badge horizontal padding", "min": 4, "max": 20, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "badge_padding_vertical", "label": "Badge vertical padding", "min": 2, "max": 12, "step": 1, "unit": "px", "default": 5 },
+    { "type": "range", "id": "badge_left", "label": "Badge left position", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "badge_top", "label": "Badge top position", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 16 }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title_override", "label": "Title override" },
+        { "type": "textarea", "id": "description_override", "label": "Short description override" },
+        { "type": "color", "id": "background_color", "label": "Image background" },
+        { "type": "image_picker", "id": "image_override", "label": "Image override" },
+        { "type": "text", "id": "image_alt", "label": "Override image alt text" },
+        { "type": "image_picker", "id": "decoration", "label": "Decorative image" },
+        { "type": "range", "id": "image_width", "label": "Image maximum width", "min": 30, "max": 100, "step": 2, "unit": "%", "default": 72 },
+        { "type": "range", "id": "image_padding", "label": "Image area padding", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
+        { "type": "select", "id": "image_vertical_alignment", "label": "Vertical alignment", "options": [{ "value": "flex-start", "label": "Top" }, { "value": "center", "label": "Center" }, { "value": "flex-end", "label": "Bottom" }], "default": "center" },
+        { "type": "select", "id": "image_horizontal_alignment", "label": "Horizontal alignment", "options": [{ "value": "flex-start", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "flex-end", "label": "Right" }], "default": "center" },
+        { "type": "checkbox", "id": "show_badge", "label": "Show status badge", "default": false },
+        { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Coming soon", "visible_if": "{{ block.settings.show_badge }}" },
+        { "type": "text", "id": "cta_label", "label": "CTA label", "default": "View coffee" },
+        { "type": "url", "id": "cta_url", "label": "CTA link override" },
+        { "type": "checkbox", "id": "show_price", "label": "Show price", "default": true },
+        { "type": "checkbox", "id": "use_price_placeholder", "label": "Use price placeholder", "default": false },
+        { "type": "text", "id": "price_placeholder", "label": "Price placeholder", "default": "Price TBA", "visible_if": "{{ block.settings.use_price_placeholder }}" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products",
+      "blocks": [
+        { "type": "product_card", "settings": { "title_override": "Morning Blend", "description_override": "Roast and tasting notes TBA", "background_color": "#e9e2d2", "show_badge": true, "use_price_placeholder": true } },
+        { "type": "product_card", "settings": { "title_override": "The Community", "description_override": "Origin and tasting notes TBA", "background_color": "#dce9e3", "show_badge": true, "use_price_placeholder": true } },
+        { "type": "product_card", "settings": { "title_override": "Reserve", "description_override": "Coffee details coming soon", "background_color": "#e7e6da", "show_badge": false, "use_price_placeholder": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

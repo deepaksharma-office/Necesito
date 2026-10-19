@@ -31,7 +31,9 @@
   "accessibility": {
     "play_model": "3D 모델 재생",
     "play_video": "동영상 재생",
-    "unit_price": "단가",
+    "enter_fullscreen": "Enter fullscreen",
+    "exit_fullscreen": "Exit fullscreen",
+"unit_price": "단가",
     "country_results_count": "결과 {{ count }}개",
     "slideshow_pause": "슬라이드 쇼 멈춤",
     "slideshow_play": "슬라이드 쇼 재생",

@@ -1,0 +1,96 @@
+{% doc %}
+  Renders one editorial featured product card.
+
+  @param {product} product - Selected Shopify product.
+  @param {string} title_override - Optional display title.
+  @param {string} description_override - Optional display description.
+  @param {image} image_override - Optional display image.
+  @param {string} image_alt - Alt text for an override image.
+  @param {image} decoration - Optional decorative background image.
+  @param {color} card_background - Media background color.
+  @param {number} image_width - Image maximum width as a percentage.
+  @param {string} image_vertical_alignment - Vertical image alignment.
+  @param {string} image_horizontal_alignment - Horizontal image alignment.
+  @param {number} image_padding - Media padding in pixels.
+  @param {string} image_aspect_ratio - CSS aspect-ratio value.
+  @param {string} content_alignment - Card content alignment.
+  @param {boolean} show_description - Whether descriptions are shown.
+  @param {boolean} show_badge - Whether status badges are shown.
+  @param {string} badge_text - Badge label.
+  @param {color} badge_text_color - Badge text color.
+  @param {color} badge_background - Badge background color.
+  @param {number} badge_size - Badge font size.
+  @param {number} badge_weight - Badge font weight.
+  @param {number} badge_radius - Badge radius.
+  @param {number} badge_padding_horizontal - Badge inline padding.
+  @param {number} badge_padding_vertical - Badge block padding.
+  @param {number} badge_left - Badge left position.
+  @param {number} badge_top - Badge top position.
+  @param {boolean} show_price - Whether price is shown.
+  @param {boolean} use_price_placeholder - Whether price placeholder is used.
+  @param {string} price_placeholder - Price placeholder.
+  @param {boolean} show_link - Whether CTA is shown.
+  @param {string} cta_label - CTA label.
+  @param {string} cta_url - CTA URL override.
+  @param {boolean} show_divider - Whether footer divider is shown.
+  @param {color} title_color - Title color.
+  @param {color} description_color - Description color.
+  @param {color} price_color - Price color.
+  @param {color} cta_color - CTA color.
+  @param {color} divider_color - Divider color.
+  @param {number} divider_thickness - Divider thickness.
+  @param {string} loading - Image loading behavior.
+  @param {string} fetchpriority - Image fetch priority.
+
+  @example
+  {% render 'featured-product-card', product: block.settings.product, card_background: block.settings.background_color, image_aspect_ratio: '1 / 1' %}
+{% enddoc %}
+
+{% liquid
+  assign card_title = title_override | default: product.title
+  assign card_description = description_override
+  if card_description == blank and product != blank
+    assign card_description = product.description | strip_html | truncatewords: 18
+  endif
+
+  assign card_image = image_override | default: product.featured_image
+  assign card_image_alt = image_alt
+  if card_image_alt == blank
+    assign card_image_alt = card_image.alt | default: card_title
+  endif
+
+  assign card_url = cta_url
+  if card_url == blank and product != blank
+    assign card_url = product.url
+  endif
+%}
+
+<article
+  class="featured-products__card featured-products__card--align-{{ content_alignment }}"
+  style="--featured-card-background: {{ card_background }}; --featured-image-width: {{ image_width }}%; --featured-image-padding: {{ image_padding }}px; --featured-image-aspect-ratio: {{ image_aspect_ratio }}; --featured-image-align-x: {{ image_horizontal_alignment }}; --featured-image-align-y: {{ image_vertical_alignment }}; --featured-card-title-color: {{ title_color }}; --featured-card-description-color: {{ description_color }};"
+>
+  <div class="featured-products__media">
+    {% if decoration != blank %}
+      {{ decoration | image_url: width: 800 | image_tag: widths: '240, 400, 600, 800', sizes: '(min-width: 990px) 30vw, 80vw', loading: 'lazy', alt: '', class: 'featured-products__decoration' }}
+    {% endif %}
+
+    {% render 'featured-product-badge', enabled: show_badge, text: badge_text, text_color: badge_text_color, background_color: badge_background, font_size: badge_size, font_weight: badge_weight, border_radius: badge_radius, padding_horizontal: badge_padding_horizontal, padding_vertical: badge_padding_vertical, left: badge_left, top: badge_top %}
+
+    {% if card_image != blank %}
+      {{ card_image | image_url: width: 1400 | image_tag: widths: '240, 360, 480, 640, 800, 1000, 1200, 1400', sizes: '(min-width: 990px) 30vw, (min-width: 750px) 45vw, 90vw', loading: loading, fetchpriority: fetchpriority, alt: card_image_alt, class: 'featured-products__image' }}
+    {% elsif request.design_mode %}
+      {{ 'product-1' | placeholder_svg_tag: 'featured-products__image featured-products__image--placeholder' }}
+    {% endif %}
+  </div>
+
+  <div class="featured-products__details">
+    {% if card_title != blank %}
+      <h3 class="featured-products__card-title">{{ card_title | escape }}</h3>
+    {% endif %}
+    {% if show_description and card_description != blank %}
+      <p class="featured-products__card-description">{{ card_description | escape }}</p>
+    {% endif %}
+  </div>
+
+  {% render 'featured-product-footer', product: product, show_price: show_price, use_price_placeholder: use_price_placeholder, price_placeholder: price_placeholder, price_color: price_color, price_size: 12, show_link: show_link, cta_label: cta_label, url: card_url, cta_color: cta_color, arrow_color: cta_color, arrow_size: 14, show_divider: show_divider, divider_color: divider_color, divider_thickness: divider_thickness, spacing: 18 %}
+</article>

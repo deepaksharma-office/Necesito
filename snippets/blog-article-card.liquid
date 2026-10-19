@@ -1,0 +1,75 @@
+{% doc %}
+  Renders a reusable editorial card for a real Shopify article.
+
+  @param {object} article - Shopify article object.
+  @param {string} [category_label] - Optional category derived by the parent from article metadata.
+  @param {boolean} show_excerpt - Whether to render an article excerpt.
+  @param {boolean} show_link - Whether to render the article CTA.
+  @param {string} link_label - Article CTA label.
+  @param {string} image_aspect_ratio - CSS aspect-ratio value.
+  @param {string} image_fit - CSS object-fit value.
+  @param {number} image_radius - Image corner radius in pixels.
+  @param {color} card_background - Card background color.
+  @param {color} card_border_color - Card border color.
+  @param {number} card_border_width - Card border width in pixels.
+  @param {number} card_radius - Card corner radius in pixels.
+  @param {number} card_padding - Card content padding in pixels.
+  @param {color} category_color - Category label color.
+  @param {number} category_size - Category label size in pixels.
+  @param {color} title_color - Article title color.
+  @param {number} title_size - Article title size in pixels.
+  @param {color} excerpt_color - Excerpt color.
+  @param {number} excerpt_size - Excerpt size in pixels.
+  @param {color} link_color - Article CTA color.
+  @param {color} arrow_color - Article CTA arrow color.
+  @param {string} [loading] - Native image loading behavior.
+  @param {string} [fetchpriority] - Image fetch priority.
+
+  @example
+  {% render 'blog-article-card', article: article, show_excerpt: true, show_link: true, link_label: 'Read story' %}
+{% enddoc %}
+
+{% liquid
+  assign article_excerpt = article.excerpt
+  if article_excerpt == blank
+    assign article_excerpt = article.content | strip_html | truncatewords: 22
+  endif
+
+  assign image_alt = article.image.alt | default: article.title
+%}
+
+<article
+  class="blog-article-card{% if article.image == blank %} blog-article-card--no-image{% endif %}"
+  style="--blog-card-background: {{ card_background }}; --blog-card-border-color: {{ card_border_color }}; --blog-card-border-width: {{ card_border_width }}px; --blog-card-radius: {{ card_radius }}px; --blog-card-padding: {{ card_padding }}px; --blog-card-image-ratio: {{ image_aspect_ratio }}; --blog-card-image-fit: {{ image_fit }}; --blog-card-image-radius: {{ image_radius }}px; --blog-card-category-color: {{ category_color }}; --blog-card-category-size: {{ category_size }}px; --blog-card-title-color: {{ title_color }}; --blog-card-title-size: {{ title_size }}px; --blog-card-excerpt-color: {{ excerpt_color }}; --blog-card-excerpt-size: {{ excerpt_size }}px; --blog-card-link-color: {{ link_color }}; --blog-card-arrow-color: {{ arrow_color }};"
+>
+  <div class="blog-article-card__media">
+    {% if article.image != blank %}
+      {{ article.image | image_url: width: 1200 | image_tag: widths: '360, 480, 720, 960, 1200', sizes: '(min-width: 990px) calc((min(100vw - 40px, 1320px) - 56px) / 3), (min-width: 750px) calc((100vw - 68px) / 2), calc(100vw - 32px)', loading: loading, fetchpriority: fetchpriority, alt: image_alt, class: 'blog-article-card__image' }}
+    {% else %}
+      <div class="blog-article-card__image-placeholder" aria-hidden="true"></div>
+    {% endif %}
+  </div>
+
+  <div class="blog-article-card__content">
+    {% if category_label != blank %}
+      <div class="blog-article-card__category">{{ category_label | escape }}</div>
+    {% endif %}
+
+    <h3 class="blog-article-card__title">{{ article.title | escape }}</h3>
+
+    {% if show_excerpt and article_excerpt != blank %}
+      <div class="blog-article-card__excerpt">{{ article_excerpt | strip_html | truncatewords: 22 }}</div>
+    {% endif %}
+
+    {% if show_link and link_label != blank and article.url != blank %}
+      <div class="blog-article-card__footer">
+        <a class="blog-article-card__link" href="{{ article.url }}">
+          <span>{{ link_label | escape }}</span>
+          <svg class="blog-article-card__arrow" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+            {% render 'icon', icon: 'arrow' %}
+          </svg>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</article>

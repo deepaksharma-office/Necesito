@@ -1,0 +1,38 @@
+{% doc %}
+  Renders an accessible hero CTA with optional inline arrow.
+
+  @param {string} label - Button label.
+  @param {string} url - Button destination.
+  @param {string} type - primary, secondary, or custom.
+  @param {color} background - Custom background color.
+  @param {color} color - Custom text color.
+  @param {color} border_color - Custom border color.
+  @param {number} border_width - Border width in pixels.
+  @param {number} border_radius - Border radius in pixels.
+  @param {number} font_size - Font size in pixels.
+  @param {number} font_weight - Font weight.
+  @param {number} padding_horizontal - Inline padding in pixels.
+  @param {number} padding_vertical - Block padding in pixels.
+  @param {boolean} open_in_new_tab - Opens link in a new tab.
+  @param {boolean} show_arrow - Shows the arrow icon.
+  @param {color} arrow_color - Arrow color.
+  @param {number} arrow_size - Arrow size in pixels.
+  @param {string} [class] - Additional CSS class.
+
+  @example
+  {% render 'hero-button', label: 'Shop coffee', url: routes.all_products_collection_url, type: 'primary', show_arrow: true %}
+{% enddoc %}
+
+{% if label != blank and url != blank %}
+  <a
+    class="hero-composition__button hero-composition__button--{{ type }}{% if class != blank %} {{ class | escape }}{% endif %}"
+    href="{{ url }}"
+    style="--hero-button-background: {{ background }}; --hero-button-color: {{ color }}; --hero-button-border-color: {{ border_color }}; --hero-button-border-width: {{ border_width }}px; --hero-button-radius: {{ border_radius }}px; --hero-button-font-size: {{ font_size }}px; --hero-button-font-weight: {{ font_weight }}; --hero-button-padding-inline: {{ padding_horizontal }}px; --hero-button-padding-block: {{ padding_vertical }}px; --hero-button-arrow-color: {{ arrow_color }}; --hero-button-arrow-size: {{ arrow_size }}px;"
+    {% if open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+  >
+    <span>{{ label | escape }}</span>
+    {% if show_arrow %}
+      <svg class="hero-composition__button-arrow" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path></svg>
+    {% endif %}
+  </a>
+{% endif %}
