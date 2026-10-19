@@ -348,10 +348,147 @@
         "padding_bottom_mobile": 24,
         "item_padding_mobile": 18
       }
+    },
+    "featured_products_6caYpm": {
+      "type": "featured-products",
+      "blocks": {
+        "product_card_hDrbUw": {
+          "type": "product_card",
+          "settings": {
+            "product": "morning-blend",
+            "title_override": "Morning Blend",
+            "description_override": "Roast and tasting notes TBA",
+            "background_color": "#e9e2d2",
+            "image_alt": "",
+            "image_width": 72,
+            "image_padding": 20,
+            "image_vertical_alignment": "center",
+            "image_horizontal_alignment": "center",
+            "show_badge": true,
+            "badge_text": "Coming soon",
+            "cta_label": "View coffee",
+            "cta_url": "",
+            "show_price": true,
+            "use_price_placeholder": true,
+            "price_placeholder": "Price TBA"
+          }
+        },
+        "product_card_phJMKc": {
+          "type": "product_card",
+          "settings": {
+            "product": "community-blend",
+            "title_override": "The Community",
+            "description_override": "Origin and tasting notes TBA",
+            "background_color": "#dce9e3",
+            "image_alt": "",
+            "image_width": 72,
+            "image_padding": 20,
+            "image_vertical_alignment": "center",
+            "image_horizontal_alignment": "center",
+            "show_badge": true,
+            "badge_text": "Coming soon",
+            "cta_label": "View coffee",
+            "cta_url": "",
+            "show_price": true,
+            "use_price_placeholder": true,
+            "price_placeholder": "Price TBA"
+          }
+        },
+        "product_card_G4d6FF": {
+          "type": "product_card",
+          "settings": {
+            "product": "nature-reserve",
+            "title_override": "Reserve",
+            "description_override": "Coffee details coming soon",
+            "background_color": "#e7e6da",
+            "image_alt": "",
+            "image_width": 72,
+            "image_padding": 20,
+            "image_vertical_alignment": "center",
+            "image_horizontal_alignment": "center",
+            "show_badge": false,
+            "badge_text": "Coming soon",
+            "cta_label": "View coffee",
+            "cta_url": "",
+            "show_price": true,
+            "use_price_placeholder": true,
+            "price_placeholder": "Price TBA"
+          }
+        }
+      },
+      "block_order": [
+        "product_card_hDrbUw",
+        "product_card_phJMKc",
+        "product_card_G4d6FF"
+      ],
+      "name": "Featured products",
+      "settings": {
+        "show_eyebrow": true,
+        "eyebrow": "THE SIGNATURE COLLECTION",
+        "heading": "Meet your next morning ritual.",
+        "heading_tag": "h2",
+        "show_description": true,
+        "description": "<p>Three coffees. One neighborhood. The final coffee details are coming soon.</p>",
+        "text_alignment": "left",
+        "background_color": "#f7f1e7",
+        "eyebrow_color": "#456553",
+        "heading_color": "#173f35",
+        "heading_highlight_color": "#cf6d3b",
+        "description_color": "#667a70",
+        "content_width": 1320,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "eyebrow_size": 12,
+        "eyebrow_weight": 600,
+        "heading_size": 52,
+        "heading_size_mobile": 36,
+        "heading_weight": 500,
+        "heading_line_height": 110,
+        "heading_letter_spacing": -2,
+        "heading_max_width": 860,
+        "description_size": 15,
+        "description_size_mobile": 14,
+        "description_line_height": 150,
+        "description_max_width": 700,
+        "columns": 3,
+        "mobile_columns": "one",
+        "grid_gap": 28,
+        "header_gap": 36,
+        "image_aspect_ratio": "1 / 1",
+        "card_radius": 10,
+        "card_alignment": "left",
+        "card_background": "#e9e2d2",
+        "card_title_color": "#294f43",
+        "card_description_color": "#718077",
+        "card_title_size": 24,
+        "card_title_weight": 500,
+        "card_description_size": 13,
+        "show_card_descriptions": true,
+        "show_prices": true,
+        "show_links": true,
+        "show_divider": true,
+        "show_badges": true,
+        "price_color": "#718077",
+        "cta_color": "#173f35",
+        "divider_color": "#d8d7ca",
+        "divider_thickness": 1,
+        "badge_text_color": "#173f35",
+        "badge_background": "#ffffff",
+        "badge_size": 11,
+        "badge_weight": 600,
+        "badge_radius": 16,
+        "badge_padding_horizontal": 10,
+        "badge_padding_vertical": 5,
+        "badge_left": 16,
+        "badge_top": 16
+      }
     }
   },
   "order": [
     "hero_image_with_text_xDNXJA",
-    "icon_text_bar_KEBQD6"
+    "icon_text_bar_KEBQD6",
+    "featured_products_6caYpm"
   ]
 }
