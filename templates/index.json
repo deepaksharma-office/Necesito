@@ -266,8 +266,9 @@
         "information_item_rP67hM": {
           "type": "information_item",
           "settings": {
-            "icon_source": "theme",
+            "icon_source": "custom",
             "icon": "leaf",
+            "custom_image": "shopify://shop_images/21-Icon-cup_c858c61d-47a2-4549-9327-11d1e0024d35.png",
             "heading": "Small-batch roasting",
             "description": "Care in every batch.",
             "heading_color": "#173f35",
