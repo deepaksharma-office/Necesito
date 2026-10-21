@@ -153,12 +153,44 @@
   ],
   "presets": [
     {
-      "name": "FAQ",
+      "name": "Necesito FAQ",
+      "category": "Text",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "description": "<p>Everything you need to know about our coffee, roasting, freshness, grinding, and neighborhood delivery.</p>",
+        "contact_heading": "Still have a question?",
+        "contact_text": "<p>We're a neighborhood coffee roaster, which means there's a real person behind every bag.</p><p>If you have a question about our coffee, your order, grinding, brewing, or local delivery, please get in touch. We'd be happy to help.</p>",
+        "contact_link_label": "Get in touch",
+        "contact_link": "shopify://pages/contact",
+        "signature": "<p>Necesito Coffee Roasters LLC<br>Your Neighborhood Roaster<br>Estero, Florida</p>"
+      },
       "blocks": [
-        { "type": "category", "settings": { "heading": "Category" } },
-        { "type": "faq" }
+        { "type": "category", "settings": { "heading": "Our Coffee" } },
+        { "type": "faq", "settings": { "question": "Where is Necesito coffee roasted?", "answer": "<p>Every bag of Necesito Coffee is small-batch roasted right here in Estero, Florida. We're your neighborhood roaster—our goal is simple: roast great coffee locally and get it into your hands while it's fresh.</p>" } },
+        { "type": "faq", "settings": { "question": "Is your coffee freshly roasted?", "answer": "<p>Absolutely. Freshness is one of the biggest advantages of buying from a local roaster. We roast in small batches, package our coffee fresh, and deliver it directly to our customers rather than letting roasted coffee sit on a retail shelf for months.</p>" } },
+        { "type": "faq", "settings": { "question": "Where do your coffee beans come from?", "answer": "<p>We source quality green coffee beans from respected specialty-coffee importers and suppliers. Origin will vary depending on the coffee and seasonal availability. As our coffees and roast profiles are finalized, we'll provide specific origin information on each coffee's product page.</p>" } },
+        { "type": "faq", "settings": { "question": "Is your coffee high-altitude grown?", "answer": "<p>High-altitude coffee is an important part of our sourcing strategy. We look for quality specialty-grade coffees where elevation, origin, processing, freshness, traceability and, most importantly, how the coffee tastes all work together.</p>" } },
+        { "type": "faq", "settings": { "question": "Is your coffee organic?", "answer": "<p>We actively look for high-quality organic coffees when sourcing our green coffee. Because certifications can vary by individual coffee and crop, we'll clearly identify coffees that are Certified Organic rather than making a blanket claim about every coffee we roast.</p>" } },
+        { "type": "faq", "settings": { "question": "Is your coffee single origin?", "answer": "<p>Not necessarily. Some Necesito coffees may be blends while others may feature coffee from a single origin. We select coffees based first on quality and flavor. Each product page will identify the coffee appropriately once our final sourcing is established.</p>" } },
+        { "type": "category", "settings": { "heading": "Freshness & Grinding" } },
+        { "type": "faq", "settings": { "question": "Should I order Whole Bean or Medium Ground (Drip)?", "answer": "<p>Choose Whole Bean if you have a coffee grinder at home. Grinding immediately before brewing generally gives you the freshest flavor.</p><p>Choose Medium Ground (Drip) if you use a traditional automatic drip coffee maker and want your coffee ready to brew when it arrives.</p>" } },
+        { "type": "faq", "settings": { "question": "How should I store my coffee?", "answer": "<p>Keep your coffee sealed in its original bag in a cool, dry place away from direct sunlight, heat, moisture, and strong odors. Avoid storing your everyday coffee in the refrigerator, where moisture and odors can affect its flavor.</p>" } },
+        { "type": "faq", "settings": { "question": "How much coffee is in each bag?", "answer": "<p>Each bag contains 12 oz of freshly roasted coffee.</p>" } },
+        { "type": "faq", "settings": { "question": "What is the best way to brew Necesito coffee?", "answer": "<p>There isn't one perfect method. Automatic drip, pour-over, French press, AeroPress, and other brewing methods can all produce excellent coffee when paired with the appropriate grind size and coffee-to-water ratio.</p><p>As we finalize each roast, we'll add brewing recommendations to help you get the best from each coffee.</p>" } },
+        { "type": "category", "settings": { "heading": "Ordering & Local Delivery" } },
+        { "type": "faq", "settings": { "question": "Do you offer free local delivery?", "answer": "<p>Yes. We offer FREE local delivery to eligible addresses within our designated neighborhood delivery area.</p>" } },
+        { "type": "faq", "settings": { "question": "When will my coffee be delivered?", "answer": "<p>Eligible local orders are typically delivered within 1–2 business days.</p>" } },
+        { "type": "faq", "settings": { "question": "How do I know if my address qualifies for local delivery?", "answer": "<p>Simply enter your delivery address during checkout. Our website will automatically determine whether your address is within our current local delivery area.</p>" } },
+        { "type": "faq", "settings": { "question": "What happens if I live outside the local delivery area?", "answer": "<p>At this time, we're focused on serving our immediate neighborhood. If your address falls outside our current delivery area, checkout will let you know that delivery is unavailable.</p><p>We're starting local intentionally and plan to broaden our delivery area as Necesito Coffee Roasters grows.</p>" } },
+        { "type": "faq", "settings": { "question": "Is there a charge for local delivery?", "answer": "<p>No. Eligible neighborhood delivery is FREE.</p>" } },
+        { "type": "category", "settings": { "heading": "Returns & Order Problems" } },
+        { "type": "faq", "settings": { "question": "Can I return coffee?", "answer": "<p>Because coffee is a perishable food product, we generally cannot accept returns of opened coffee or coffee purchased in error.</p>" } },
+        { "type": "faq", "settings": { "question": "What if there is a problem with my order?", "answer": "<p>We want you to be happy with every Necesito order. If your coffee arrives damaged, you receive the wrong item, or there's another problem with your order, please contact us and we'll work to make it right.</p>" } }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  }
 }
 {% endschema %}
