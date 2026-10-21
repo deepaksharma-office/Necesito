@@ -1127,6 +1127,7 @@
         "input_size": 15,
         "button_size": 15,
         "show_decoration": true,
+        "decoration_image": "shopify://shop_images/103-Botanical-sprig.png",
         "decoration_color": "#94aea0",
         "decoration_opacity": 20,
         "decoration_size": 240
