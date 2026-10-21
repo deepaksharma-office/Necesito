@@ -997,6 +997,54 @@
     },
     "instagram_posts_FmBR7R": {
       "type": "instagram-posts",
+      "blocks": {
+        "instagram_image_BFzEkA": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/Group_10.png",
+            "alt_text": "",
+            "url": "",
+            "link_label": "",
+            "open_in_new_tab": true
+          }
+        },
+        "instagram_image_4My6EU": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/91-Original-editorial-artwork.png",
+            "alt_text": "",
+            "url": "",
+            "link_label": "",
+            "open_in_new_tab": true
+          }
+        },
+        "instagram_image_LGBtie": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/Group_11.png",
+            "alt_text": "",
+            "url": "",
+            "link_label": "",
+            "open_in_new_tab": true
+          }
+        },
+        "instagram_image_wBQPrJ": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/Group_12.png",
+            "alt_text": "",
+            "url": "",
+            "link_label": "",
+            "open_in_new_tab": true
+          }
+        }
+      },
+      "block_order": [
+        "instagram_image_BFzEkA",
+        "instagram_image_4My6EU",
+        "instagram_image_LGBtie",
+        "instagram_image_wBQPrJ"
+      ],
       "name": "Instagram posts",
       "settings": {
         "display_mode": "manual",
