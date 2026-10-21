@@ -24,6 +24,10 @@
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
 
+    {% if template.name == 'product' and request.design_mode == false %}
+      {{ 'product-transitions.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
     {% endif %}
@@ -156,7 +160,15 @@
         data-product-transition="{{ settings.transition_to_main_product }}"
         data-template="{{ template }}"
       >
-        {{ content_for_layout }}
+        {% if template.name == 'product' and request.design_mode == false %}
+          <div class="product-transition-wrapper" data-barba="wrapper">
+            <div class="product-transition-container" data-barba="container" data-barba-namespace="product">
+              {{ content_for_layout }}
+            </div>
+          </div>
+        {% else %}
+          {{ content_for_layout }}
+        {% endif %}
       </main>
 
       <footer>
@@ -171,6 +183,11 @@
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
+    {% endif %}
+
+    {% if template.name == 'product' and request.design_mode == false %}
+      <script src="{{ 'barba.umd.js' | asset_url }}" defer></script>
+      <script src="{{ 'product-transitions.js' | asset_url }}" defer></script>
     {% endif %}
   </body>
 </html>

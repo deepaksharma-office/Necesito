@@ -18,7 +18,11 @@
 {% if only_when_first_section %}
   <script>
     const section = document.currentScript.closest('.shopify-section');
-    if (section && section === section.closest('#MainContent')?.firstElementChild) {
+    const mainContent = section?.closest('#MainContent');
+    const firstContentSection = mainContent?.querySelector(
+      ':scope > .shopify-section, :scope > .product-transition-wrapper > [data-barba="container"] > .shopify-section'
+    );
+    if (section && section === firstContentSection) {
       window.measureHeaderHeights?.();
     }
   </script>

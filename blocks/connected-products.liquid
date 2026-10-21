@@ -28,6 +28,7 @@
         <a
           class="connected-products__card{% if is_active %} connected-products__card--active{% endif %}"
           href="{{ connected_product.url }}"
+          data-connected-product-link
           aria-label="{{ connected_product.title | escape }}"
           {% if is_active %}
             aria-current="page"
