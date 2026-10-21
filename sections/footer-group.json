@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "t:names.footer",
@@ -6,10 +15,11 @@
       "type": "footer",
       "name": "Necesito footer",
       "settings": {
-        "logo_size": 56,
+        "logo": "shopify://shop_images/Group_13.png",
+        "logo_size": 70,
         "brand_name": "Necesito",
         "tagline": "Your Neighborhood Roaster.",
-        "description": "<p>Small-batch coffee, rooted in Estero.<br>Local delivery to The Place at Corkscrew.</p>",
+        "description": "<p>Small-batch coffee, rooted in Estero.<br/>Local delivery to The Place at Corkscrew.</p>",
         "brand_text_color": "#fffaf0",
         "description_color": "#c0cdc7",
         "explore_heading": "Explore",
@@ -17,6 +27,7 @@
         "help_heading": "Here to help",
         "help_menu": "here-to-help",
         "online_heading": "Find us online",
+        "online_menu": "",
         "online_fallback": "<p>Estero, Florida</p><p>Online-only business</p><p>Launch coming soon</p>",
         "copyright_name": "Necesito Coffee Roasters LLC.",
         "show_copyright": true,
@@ -39,5 +50,7 @@
       }
     }
   },
-  "order": ["footer_m9NzUG"]
+  "order": [
+    "footer_m9NzUG"
+  ]
 }

@@ -1,0 +1,127 @@
+{% doc %}
+  Renders image links for products selected in the current product's custom.connected product-list metafield.
+
+  @example
+  {% content_for 'block', type: 'connected-products', id: 'connected-products', closest.product: product %}
+{% enddoc %}
+
+{% liquid
+  assign current_product = closest.product
+  assign connected_products = current_product.metafields.custom.connected.value
+%}
+
+{% if connected_products != blank %}
+  <div
+    class="connected-products"
+    style="--connected-product-width: {{ block.settings.card_width }}px; --connected-product-gap: {{ block.settings.gap }}px;"
+    {{ block.shopify_attributes }}
+  >
+    {% for connected_product in connected_products %}
+      {% if connected_product != blank and connected_product.featured_image != blank %}
+        {% liquid
+          assign is_active = false
+          if connected_product.id == current_product.id
+            assign is_active = true
+          endif
+          assign image_alt = connected_product.featured_image.alt | default: connected_product.title
+        %}
+        <a
+          class="connected-products__card{% if is_active %} connected-products__card--active{% endif %}"
+          href="{{ connected_product.url }}"
+          aria-label="{{ connected_product.title | escape }}"
+          {% if is_active %}
+            aria-current="page"
+          {% endif %}
+        >
+          {{
+            connected_product.featured_image
+            | image_url: width: 360
+            | image_tag:
+              class: 'connected-products__image',
+              loading: 'lazy',
+              widths: '80, 120, 160, 240, 360',
+              sizes: '(min-width: 750px) 96px, 80px',
+              alt: image_alt
+          }}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .connected-products {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: var(--connected-product-gap);
+  }
+
+  .connected-products__card {
+    display: block;
+    width: var(--connected-product-width);
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--color-background);
+    transition: border-color var(--animation-speed-fast) var(--animation-easing);
+  }
+
+  .connected-products__card:hover {
+    border-color: rgb(24 60 48 / 40%);
+  }
+
+  .connected-products__card--active,
+  .connected-products__card--active:hover {
+    border-color: #183c30;
+  }
+
+  .connected-products__card:focus-visible {
+    outline: 2px solid #183c30;
+    outline-offset: 3px;
+  }
+
+  .connected-products__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Connected products",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Image width",
+      "min": 56,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Spacing",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Connected products"
+    }
+  ]
+}
+{% endschema %}

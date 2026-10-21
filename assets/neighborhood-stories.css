@@ -1,0 +1,497 @@
+.neighborhood-stories {
+  width: 100%;
+  min-height: var(--ns-min-height);
+  padding-block: var(--ns-padding-top) var(--ns-padding-bottom);
+  background: var(--ns-background);
+}
+
+.neighborhood-stories__inner {
+  display: grid;
+  grid-template-columns:
+    minmax(0, var(--ns-left-ratio))
+    minmax(0, var(--ns-right-ratio));
+  align-items: center;
+  gap: var(--ns-column-gap);
+
+  width: min(calc(100% - 48px), var(--ns-content-width));
+  min-height: inherit;
+  margin-inline: auto;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.neighborhood-stories__intro {
+  min-width: 0;
+}
+
+.neighborhood-stories__intro--left {
+  text-align: left;
+}
+
+.neighborhood-stories__intro--center {
+  text-align: center;
+}
+
+.neighborhood-stories__intro--right {
+  text-align: right;
+}
+
+
+/* Eyebrow */
+
+.neighborhood-stories__eyebrow {
+  margin: 0 0 26px;
+
+  color: var(--ns-eyebrow-color);
+
+  font-size: var(--ns-eyebrow-size);
+  font-weight: var(--ns-eyebrow-weight);
+  line-height: 1.2;
+  letter-spacing: var(--ns-eyebrow-spacing);
+
+  text-transform: uppercase;
+}
+
+.neighborhood-stories__eyebrow > * {
+  margin: 0;
+}
+
+
+/* Heading */
+
+.neighborhood-stories__heading {
+  max-width: var(--ns-heading-max-width);
+  margin: 0;
+
+  color: var(--ns-heading-color);
+
+  font-size: var(--ns-heading-size);
+  font-weight: var(--ns-heading-weight);
+  line-height: var(--ns-heading-leading);
+  letter-spacing: var(--ns-heading-tracking);
+
+  text-wrap: balance;
+}
+
+.neighborhood-stories__intro--center .neighborhood-stories__heading,
+.neighborhood-stories__intro--center .neighborhood-stories__description {
+  margin-inline: auto;
+}
+
+.neighborhood-stories__intro--right .neighborhood-stories__heading,
+.neighborhood-stories__intro--right .neighborhood-stories__description {
+  margin-left: auto;
+}
+
+
+/* Description */
+
+.neighborhood-stories__description {
+  max-width: var(--ns-description-max-width);
+  margin-top: 28px;
+
+  color: var(--ns-description-color);
+
+  font-size: var(--ns-description-size);
+  font-weight: var(--ns-description-weight);
+  line-height: var(--ns-description-leading);
+}
+
+.neighborhood-stories__description > * {
+  margin: 0;
+}
+
+.neighborhood-stories__description > * + * {
+  margin-top: 0.8em;
+}
+
+.neighborhood-stories__description a {
+  color: inherit;
+}
+
+
+/* =========================================================
+   RIGHT CARDS
+========================================================= */
+
+.neighborhood-stories__cards {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ns-card-gap);
+
+  min-width: 0;
+}
+
+.neighborhood-story-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--ns-card-max-width);
+
+  padding:
+    var(--ns-card-padding-y)
+    var(--ns-card-padding-x);
+
+  overflow: hidden;
+
+  background: var(--story-background);
+  border-radius: var(--ns-card-radius);
+
+  color: var(--story-text-color);
+}
+
+
+/* Alignment */
+
+.neighborhood-story-card--left {
+  text-align: left;
+}
+
+.neighborhood-story-card--center {
+  text-align: center;
+}
+
+.neighborhood-story-card--right {
+  text-align: right;
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.neighborhood-story-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  min-height: 72px;
+}
+
+
+/* Quote */
+
+.neighborhood-story-card__quote {
+  display: block;
+
+  height: 38px;
+
+  color: var(--story-quote-color);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--story-quote-size);
+  font-weight: 700;
+  line-height: 0.85;
+}
+
+
+/* Badge */
+
+.neighborhood-story-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: none;
+
+  padding: 7px 15px;
+
+  background: var(--story-badge-bg);
+  border-radius: var(--story-badge-radius);
+
+  color: var(--story-badge-color);
+
+  font-size: var(--story-badge-size);
+  font-weight: var(--story-badge-weight);
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.neighborhood-story-card__content {
+  margin-top: 8px;
+}
+
+
+/* Title */
+
+.neighborhood-story-card__title {
+  max-width: var(--story-title-max-width);
+  margin: 0;
+
+  color: var(--story-title-color);
+
+  font-size: var(--story-title-size);
+  font-weight: var(--story-title-weight);
+  line-height: var(--story-title-leading);
+
+  text-wrap: balance;
+}
+
+.neighborhood-story-card--center .neighborhood-story-card__title,
+.neighborhood-story-card--center .neighborhood-story-card__body {
+  margin-inline: auto;
+}
+
+.neighborhood-story-card--right .neighborhood-story-card__title,
+.neighborhood-story-card--right .neighborhood-story-card__body {
+  margin-left: auto;
+}
+
+
+/* Body */
+
+.neighborhood-story-card__body {
+  max-width: var(--story-body-max-width);
+  margin-top: 24px;
+
+  color: var(--story-body-color);
+
+  font-size: var(--story-body-size);
+  font-weight: var(--story-body-weight);
+  line-height: var(--story-body-leading);
+}
+
+.neighborhood-story-card__body > * {
+  margin: 0;
+}
+
+.neighborhood-story-card__body > * + * {
+  margin-top: 0.75em;
+}
+
+.neighborhood-story-card__body a {
+  color: inherit;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.neighborhood-story-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+
+  min-width: 212px;
+  margin-top: 30px;
+
+  padding:
+    var(--story-button-py)
+    var(--story-button-px);
+
+  background: var(--story-button-bg);
+
+  border:
+    var(--story-button-border-width)
+    solid
+    var(--story-button-border);
+
+  border-radius: var(--story-button-radius);
+
+  color: var(--story-button-color);
+
+  font-size: var(--story-button-size);
+  font-weight: var(--story-button-weight);
+  line-height: 1;
+
+  text-decoration: none;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.neighborhood-story-card__arrow {
+  display: block;
+
+  width: var(--story-arrow-size);
+  height: var(--story-arrow-size);
+
+  flex: none;
+
+  transition: transform 0.25s ease;
+}
+
+.neighborhood-story-card__button:hover
+.neighborhood-story-card__arrow {
+  transform: translateX(4px);
+}
+
+.neighborhood-story-card__button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+
+/* Center / Right button alignment */
+
+.neighborhood-story-card--center
+.neighborhood-story-card__button {
+  margin-inline: auto;
+}
+
+.neighborhood-story-card--right
+.neighborhood-story-card__button {
+  margin-left: auto;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media screen and (max-width: 989px) {
+
+  .neighborhood-stories__inner {
+    gap: max(40px, calc(var(--ns-column-gap) * 0.6));
+  }
+
+  .neighborhood-stories__heading {
+    font-size: clamp(
+      var(--ns-heading-size-mobile),
+      5vw,
+      var(--ns-heading-size)
+    );
+  }
+
+  .neighborhood-story-card__title {
+    font-size: clamp(
+      var(--story-title-size-mobile),
+      3vw,
+      var(--story-title-size)
+    );
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media screen and (max-width: 749px) {
+
+  .neighborhood-stories {
+    min-height: 0;
+
+    padding-block:
+      var(--ns-padding-top-mobile)
+      var(--ns-padding-bottom-mobile);
+  }
+
+  .neighborhood-stories__inner {
+    grid-template-columns: minmax(0, 1fr);
+
+    width: min(
+      calc(100% - 32px),
+      var(--ns-content-width)
+    );
+
+    gap: var(--ns-mobile-gap);
+  }
+
+
+  /* Left content */
+
+  .neighborhood-stories__heading {
+    font-size: var(--ns-heading-size-mobile);
+  }
+
+  .neighborhood-stories__description {
+    margin-top: 20px;
+
+    font-size: var(--ns-description-size-mobile);
+  }
+
+  .neighborhood-stories__eyebrow {
+    margin-bottom: 18px;
+  }
+
+
+  /* Cards */
+
+  .neighborhood-stories__cards {
+    align-items: stretch;
+  }
+
+  .neighborhood-story-card {
+    max-width: none;
+
+    padding:
+      var(--ns-card-padding-y-mobile)
+      var(--ns-card-padding-x-mobile);
+  }
+
+  .neighborhood-story-card__top {
+    min-height: 58px;
+  }
+
+  .neighborhood-story-card__title {
+    font-size: var(--story-title-size-mobile);
+  }
+
+  .neighborhood-story-card__body {
+    margin-top: 18px;
+
+    font-size: var(--story-body-size-mobile);
+  }
+
+  .neighborhood-story-card__button {
+    margin-top: 24px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media screen and (max-width: 430px) {
+
+  .neighborhood-story-card__top {
+    gap: 12px;
+  }
+
+  .neighborhood-story-card__badge {
+    padding: 6px 12px;
+  }
+
+  .neighborhood-story-card__button {
+    width: 100%;
+    min-width: 0;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .neighborhood-story-card__button,
+  .neighborhood-story-card__arrow {
+    transition: none;
+  }
+
+  .neighborhood-story-card__button:hover
+  .neighborhood-story-card__arrow {
+    transform: none;
+  }
+
+}

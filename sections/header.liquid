@@ -330,8 +330,8 @@
     "@context": "http://schema.org",
     "@type": "Organization",
     "name": {{ shop.name | json }},
-    {% if settings.logo %}
-      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% if section.settings.logo %}
+      "logo": {{ section.settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
     "url": {{ request.origin | append: page.url | json }}
   }
@@ -1262,6 +1262,53 @@
     {
       "type": "header",
       "content": "t:content.logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:settings.logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_inverse",
+      "label": "t:settings.inverse_logo",
+      "info": "t:content.inverse_logo_info"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "t:settings.desktop_height",
+      "min": 12,
+      "max": 112,
+      "step": 1,
+      "unit": "px",
+      "default": 61
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "t:settings.mobile_height",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 51
+    },
+    {
+      "type": "text",
+      "id": "logo_title",
+      "label": "t:settings.title"
+    },
+    {
+      "type": "text",
+      "id": "logo_label",
+      "label": "t:settings.label"
+    },
+    {
+      "type": "color",
+      "id": "logo_text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "select",

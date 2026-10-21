@@ -1,0 +1,1009 @@
+{{ 'neighborhood-stories.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign right_ratio = 100 | minus: section.settings.left_ratio
+%}
+
+<section
+  id="NeighborhoodStories-{{ section.id }}"
+  class="neighborhood-stories"
+  style="
+    --ns-background: {{ section.settings.background_color }};
+    --ns-content-width: {{ section.settings.content_width }}px;
+    --ns-left-ratio: {{ section.settings.left_ratio }}fr;
+    --ns-right-ratio: {{ right_ratio }}fr;
+    --ns-column-gap: {{ section.settings.column_gap }}px;
+    --ns-min-height: {{ section.settings.min_height }}px;
+
+    --ns-padding-top: {{ section.settings.padding_top }}px;
+    --ns-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --ns-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ns-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+
+    --ns-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --ns-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --ns-eyebrow-weight: {{ section.settings.eyebrow_weight }};
+    --ns-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | divided_by: 100.0 }}em;
+
+    --ns-heading-color: {{ section.settings.heading_color }};
+    --ns-heading-size: {{ section.settings.heading_size }}px;
+    --ns-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ns-heading-weight: {{ section.settings.heading_weight }};
+    --ns-heading-leading: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    --ns-heading-tracking: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    --ns-heading-max-width: {{ section.settings.heading_max_width }}px;
+
+    --ns-description-color: {{ section.settings.description_color }};
+    --ns-description-size: {{ section.settings.description_size }}px;
+    --ns-description-size-mobile: {{ section.settings.description_size_mobile }}px;
+    --ns-description-weight: {{ section.settings.description_weight }};
+    --ns-description-leading: {{ section.settings.description_line_height | divided_by: 100.0 }};
+    --ns-description-max-width: {{ section.settings.description_max_width }}px;
+
+    --ns-card-gap: {{ section.settings.card_gap }}px;
+    --ns-card-radius: {{ section.settings.card_radius }}px;
+    --ns-card-padding-x: {{ section.settings.card_padding_horizontal }}px;
+    --ns-card-padding-y: {{ section.settings.card_padding_vertical }}px;
+    --ns-card-padding-x-mobile: {{ section.settings.card_padding_horizontal_mobile }}px;
+    --ns-card-padding-y-mobile: {{ section.settings.card_padding_vertical_mobile }}px;
+    --ns-card-max-width: {{ section.settings.card_max_width }}px;
+
+    --ns-mobile-gap: {{ section.settings.mobile_gap }}px;
+  "
+>
+  <div class="neighborhood-stories__inner">
+
+    <div
+      class="neighborhood-stories__intro neighborhood-stories__intro--{{ section.settings.content_alignment }}"
+    >
+      {% if section.settings.eyebrow != blank %}
+        <div class="neighborhood-stories__eyebrow">
+          {{ section.settings.eyebrow }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <{{ section.settings.heading_tag }} class="neighborhood-stories__heading">
+          {{ section.settings.heading }}
+        </{{ section.settings.heading_tag }}>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="neighborhood-stories__description rte">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="neighborhood-stories__cards">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'story' %}
+            <article
+              class="neighborhood-story-card neighborhood-story-card--{{ block.settings.content_alignment }}"
+              style="
+                --story-background: {{ block.settings.background_color }};
+                --story-text-color: {{ block.settings.text_color }};
+
+                --story-quote-color: {{ block.settings.quote_color }};
+                --story-quote-size: {{ block.settings.quote_size }}px;
+
+                --story-title-color: {{ block.settings.title_color }};
+                --story-title-size: {{ block.settings.title_size }}px;
+                --story-title-size-mobile: {{ block.settings.title_size_mobile }}px;
+                --story-title-weight: {{ block.settings.title_weight }};
+                --story-title-leading: {{ block.settings.title_line_height | divided_by: 100.0 }};
+                --story-title-max-width: {{ block.settings.title_max_width }}px;
+
+                --story-body-color: {{ block.settings.body_color }};
+                --story-body-size: {{ block.settings.body_size }}px;
+                --story-body-size-mobile: {{ block.settings.body_size_mobile }}px;
+                --story-body-weight: {{ block.settings.body_weight }};
+                --story-body-leading: {{ block.settings.body_line_height | divided_by: 100.0 }};
+                --story-body-max-width: {{ block.settings.body_max_width }}px;
+
+                --story-badge-bg: {{ block.settings.badge_background }};
+                --story-badge-color: {{ block.settings.badge_color }};
+                --story-badge-size: {{ block.settings.badge_size }}px;
+                --story-badge-weight: {{ block.settings.badge_weight }};
+                --story-badge-radius: {{ block.settings.badge_radius }}px;
+
+                --story-button-bg: {{ block.settings.button_background }};
+                --story-button-color: {{ block.settings.button_color }};
+                --story-button-border: {{ block.settings.button_border_color }};
+                --story-button-border-width: {{ block.settings.button_border_width }}px;
+                --story-button-radius: {{ block.settings.button_radius }}px;
+                --story-button-size: {{ block.settings.button_size }}px;
+                --story-button-weight: {{ block.settings.button_weight }};
+                --story-button-px: {{ block.settings.button_padding_horizontal }}px;
+                --story-button-py: {{ block.settings.button_padding_vertical }}px;
+                --story-arrow-size: {{ block.settings.arrow_size }}px;
+              "
+              {{ block.shopify_attributes }}
+            >
+
+              <div class="neighborhood-story-card__top">
+                {% if block.settings.show_quote %}
+                  <div
+                    class="neighborhood-story-card__quote"
+                    aria-hidden="true"
+                  >
+                    “
+                  </div>
+                {% endif %}
+
+                {% if block.settings.badge != blank %}
+                  <div class="neighborhood-story-card__badge">
+                    {{ block.settings.badge }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="neighborhood-story-card__content">
+                {% if block.settings.title != blank %}
+                  <{{ block.settings.title_tag }} class="neighborhood-story-card__title">
+                    {{ block.settings.title }}
+                  </{{ block.settings.title_tag }}>
+                {% endif %}
+
+                {% if block.settings.body != blank %}
+                  <div class="neighborhood-story-card__body rte">
+                    {{ block.settings.body }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.button_label != blank %}
+                  <a
+                    class="neighborhood-story-card__button"
+                    href="{{ block.settings.button_link | default: '#' }}"
+                    {% if block.settings.open_new_tab %}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    {% endif %}
+                  >
+                    <span>{{ block.settings.button_label }}</span>
+
+                    {% if block.settings.show_arrow %}
+                      <svg
+                        class="neighborhood-story-card__arrow"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M5 12H19M19 12L13.5 6.5M19 12L13.5 17.5"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    {% endif %}
+                  </a>
+                {% endif %}
+              </div>
+
+            </article>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Neighborhood stories",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#173f35"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content maximum width",
+      "min": 960,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1340
+    },
+    {
+      "type": "range",
+      "id": "left_ratio",
+      "label": "Left column width",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 47
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 470
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Left content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile content gap",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Text",
+      "default": "NEIGHBORHOOD STORIES"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Color",
+      "default": "#f7f3eb"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Font size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_weight",
+      "label": "Font weight",
+      "min": 300,
+      "max": 800,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "default": 0
+    },
+
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Good coffee.<br>Even better company."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#f7f3eb"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop font size",
+      "min": 28,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 54
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Mobile font size",
+      "min": 24,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Font weight",
+      "min": 300,
+      "max": 800,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 105
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Maximum width",
+      "min": 280,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 520
+    },
+
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Text",
+      "default": "<p>One neighborhood, so many coffee stories. We can’t wait to hear yours.</p>"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color",
+      "default": "#f0ece3"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "description_weight",
+      "label": "Font weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "label": "Line height",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "description_max_width",
+      "label": "Maximum width",
+      "min": 240,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "default": 500
+    },
+
+    {
+      "type": "header",
+      "content": "Story cards"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "label": "Maximum card width",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 630
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal",
+      "label": "Desktop horizontal padding",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "card_padding_vertical",
+      "label": "Desktop vertical padding",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal_mobile",
+      "label": "Mobile horizontal padding",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_padding_vertical_mobile",
+      "label": "Mobile vertical padding",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Card"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background",
+          "default": "#faf7f0"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment",
+          "label": "Content alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+
+        {
+          "type": "header",
+          "content": "Quote mark"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_quote",
+          "label": "Show quote mark",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "quote_color",
+          "label": "Quote color",
+          "default": "#88672e"
+        },
+        {
+          "type": "range",
+          "id": "quote_size",
+          "label": "Quote size",
+          "min": 24,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 48
+        },
+
+        {
+          "type": "header",
+          "content": "Badge"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text",
+          "default": "Coming soon"
+        },
+        {
+          "type": "color",
+          "id": "badge_background",
+          "label": "Badge background",
+          "default": "#dce9e2"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge text color",
+          "default": "#173f35"
+        },
+        {
+          "type": "range",
+          "id": "badge_size",
+          "label": "Badge font size",
+          "min": 9,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "badge_weight",
+          "label": "Badge font weight",
+          "min": 300,
+          "max": 800,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "badge_radius",
+          "label": "Badge radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+
+        {
+          "type": "header",
+          "content": "Title"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "Your first cup. Your first impression."
+        },
+        {
+          "type": "select",
+          "id": "title_tag",
+          "label": "Heading tag",
+          "options": [
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            }
+          ],
+          "default": "h3"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color",
+          "default": "#173f35"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Desktop font size",
+          "min": 20,
+          "max": 52,
+          "step": 1,
+          "unit": "px",
+          "default": 34
+        },
+        {
+          "type": "range",
+          "id": "title_size_mobile",
+          "label": "Mobile font size",
+          "min": 18,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "title_weight",
+          "label": "Font weight",
+          "min": 300,
+          "max": 800,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "title_line_height",
+          "label": "Line height",
+          "min": 90,
+          "max": 160,
+          "step": 5,
+          "unit": "%",
+          "default": 115
+        },
+        {
+          "type": "range",
+          "id": "title_max_width",
+          "label": "Maximum width",
+          "min": 240,
+          "max": 700,
+          "step": 20,
+          "unit": "px",
+          "default": 600
+        },
+
+        {
+          "type": "header",
+          "content": "Body"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Text",
+          "default": "<p>Our neighbors’ coffee stories will appear here after launch. Tried a cup? We’d love to hear from you.</p>"
+        },
+        {
+          "type": "color",
+          "id": "body_color",
+          "label": "Color",
+          "default": "#747269"
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Desktop font size",
+          "min": 12,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "body_size_mobile",
+          "label": "Mobile font size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_weight",
+          "label": "Font weight",
+          "min": 300,
+          "max": 700,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "body_line_height",
+          "label": "Line height",
+          "min": 100,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "range",
+          "id": "body_max_width",
+          "label": "Maximum width",
+          "min": 240,
+          "max": 700,
+          "step": 20,
+          "unit": "px",
+          "default": 580
+        },
+
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Label",
+          "default": "Leave a review"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Background",
+          "default": "#faf7f0"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Text color",
+          "default": "#173f35"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Border color",
+          "default": "#315b50"
+        },
+        {
+          "type": "range",
+          "id": "button_border_width",
+          "label": "Border width",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "unit": "px",
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "button_radius",
+          "label": "Border radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 6
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Font size",
+          "min": 11,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "button_weight",
+          "label": "Font weight",
+          "min": 300,
+          "max": 800,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "button_padding_horizontal",
+          "label": "Horizontal padding",
+          "min": 12,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "button_padding_vertical",
+          "label": "Vertical padding",
+          "min": 8,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "checkbox",
+          "id": "show_arrow",
+          "label": "Show arrow",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "arrow_size",
+          "label": "Arrow size",
+          "min": 12,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Neighborhood stories",
+      "blocks": [
+        {
+          "type": "story"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

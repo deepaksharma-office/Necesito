@@ -1,0 +1,29 @@
+.faq-section { display: block; background: var(--faq-background); color: var(--faq-text-color); }
+.faq-section__inner { width: min(calc(100% - (2 * var(--page-margin))), var(--faq-max-width)); margin-inline: auto; padding-block: var(--faq-section-padding-top) var(--faq-section-padding-bottom); }
+.faq-section__header { max-width: 760px; margin-block-end: clamp(48px, 7vw, 88px); }
+.faq-section__heading { margin: 0; color: var(--faq-heading-color); font-family: var(--font-heading--family); font-size: clamp(32px, 6vw, var(--faq-heading-size)); font-weight: var(--font-heading--weight); line-height: 1.05; text-wrap: balance; }
+.faq-section__description { margin-block-start: 20px; color: var(--faq-muted-color); font-size: var(--faq-description-size); line-height: 1.65; }
+.faq-section__category { margin: clamp(44px, 7vw, 76px) 0 12px; color: var(--faq-heading-color); font-family: var(--font-heading--family); font-size: var(--faq-category-size); font-weight: 700; letter-spacing: 0.08em; line-height: 1.2; text-transform: uppercase; }
+.faq-section__category:first-child { margin-block-start: 0; }
+.faq-section__item { border-block-end: 1px solid var(--faq-border-color); }
+.faq-section__content > .faq-section__item:first-child,
+.faq-section__category + .faq-section__item { border-block-start: 1px solid var(--faq-border-color); }
+.faq-section__summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; min-height: 44px; padding-block: var(--faq-row-padding); color: var(--faq-heading-color); cursor: pointer; list-style: none; }
+.faq-section__summary::-webkit-details-marker { display: none; }
+.faq-section__summary:focus-visible { outline: 2px solid var(--faq-accent-color); outline-offset: 4px; }
+.faq-section__question { min-width: 0; font-family: var(--font-heading--family); font-size: var(--faq-question-size); font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+.faq-section__icon { display: grid; width: var(--faq-icon-size); height: var(--faq-icon-size); flex: none; color: var(--faq-accent-color); place-items: center; }
+.faq-section__icon svg { grid-area: 1 / 1; width: 100%; height: 100%; transition: opacity var(--animation-speed-fast) var(--animation-easing), transform var(--animation-speed-fast) var(--animation-easing); }
+.faq-section__icon-minus, .faq-section__item[open] .faq-section__icon-plus { opacity: 0; transform: rotate(-90deg); }
+.faq-section__item[open] .faq-section__icon-minus { opacity: 1; transform: rotate(0); }
+.faq-section__answer-wrap { overflow: hidden; }
+.faq-section__answer { max-width: 800px; padding-block: 0 calc(var(--faq-row-padding) + 4px); color: var(--faq-text-color); font-size: var(--faq-answer-size); line-height: 1.7; }
+.faq-section__description > :first-child, .faq-section__answer > :first-child, .faq-section__contact-text > :first-child, .faq-section__signature > :first-child { margin-block-start: 0; }
+.faq-section__description > :last-child, .faq-section__answer > :last-child, .faq-section__contact-text > :last-child, .faq-section__signature > :last-child { margin-block-end: 0; }
+.faq-section__contact { max-width: 760px; margin-block-start: clamp(64px, 9vw, 112px); padding-block-start: clamp(32px, 5vw, 52px); border-block-start: 1px solid var(--faq-border-color); }
+.faq-section__contact-heading { margin: 0; color: var(--faq-heading-color); font-family: var(--font-heading--family); font-size: var(--faq-category-size); letter-spacing: 0.08em; text-transform: uppercase; }
+.faq-section__contact-text, .faq-section__signature { margin-block-start: 18px; color: var(--faq-muted-color); font-size: var(--faq-answer-size); line-height: 1.7; }
+.faq-section__contact-link { display: inline-flex; margin-block-start: 22px; color: var(--faq-accent-color); font-weight: 600; text-underline-offset: 0.2em; }
+.faq-section__contact-link:hover { color: var(--faq-heading-color); }
+@media screen and (max-width: 749px) { .faq-section__summary { gap: 16px; } }
+@media (prefers-reduced-motion: reduce) { .faq-section__icon svg { transition: none; } }

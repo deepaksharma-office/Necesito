@@ -1,0 +1,164 @@
+{% comment %}
+  Merchant-editable FAQ page with ordered category and question blocks.
+  @example
+  Add this section to a page template and arrange category and FAQ blocks in the desired order.
+{% endcomment %}
+
+{{ 'faq-section.css' | asset_url | stylesheet_tag }}
+
+<faq-section-component
+  class="faq-section"
+  style="
+    --faq-max-width: {{ section.settings.max_width }}px;
+    --faq-heading-size: {{ section.settings.heading_size }}px;
+    --faq-description-size: {{ section.settings.description_size }}px;
+    --faq-category-size: {{ section.settings.category_size }}px;
+    --faq-question-size: {{ section.settings.question_size }}px;
+    --faq-answer-size: {{ section.settings.answer_size }}px;
+    --faq-icon-size: {{ section.settings.icon_size }}px;
+    --faq-row-padding: {{ section.settings.row_padding }}px;
+    --faq-section-padding-top: {{ section.settings.padding_top }}px;
+    --faq-section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --faq-background: {{ section.settings.background_color }};
+    --faq-heading-color: {{ section.settings.heading_color }};
+    --faq-text-color: {{ section.settings.text_color }};
+    --faq-muted-color: {{ section.settings.muted_color }};
+    --faq-border-color: {{ section.settings.border_color }};
+    --faq-accent-color: {{ section.settings.accent_color }};
+  "
+>
+  <div class="faq-section__inner">
+    {% if section.settings.heading != blank or section.settings.description != blank %}
+      <header class="faq-section__header">
+        {% if section.settings.heading != blank %}
+          <h1 class="faq-section__heading">{{ section.settings.heading | escape }}</h1>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="faq-section__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </header>
+    {% endif %}
+
+    <div class="faq-section__content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'category' %}
+            {% if block.settings.heading != blank %}
+              <h2 class="faq-section__category" {{ block.shopify_attributes }}>
+                {{ block.settings.heading | escape }}
+              </h2>
+            {% endif %}
+          {% when 'faq' %}
+            {% if block.settings.question != blank %}
+              <details
+                class="faq-section__item"
+                {% if block.settings.open_by_default %}open{% endif %}
+                {{ block.shopify_attributes }}
+              >
+                <summary class="faq-section__summary" on:click="/handleSummaryClick">
+                  <span class="faq-section__question">{{ block.settings.question | escape }}</span>
+                  <span class="faq-section__icon" aria-hidden="true">
+                    <svg class="faq-section__icon-plus" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="faq-section__icon-minus" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12H19" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </summary>
+                <div class="faq-section__answer-wrap">
+                  <div class="faq-section__answer rte">{{ block.settings.answer }}</div>
+                </div>
+              </details>
+            {% endif %}
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.contact_heading != blank or section.settings.contact_text != blank %}
+      <div class="faq-section__contact">
+        {% if section.settings.contact_heading != blank %}
+          <h2 class="faq-section__contact-heading">{{ section.settings.contact_heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.contact_text != blank %}
+          <div class="faq-section__contact-text rte">{{ section.settings.contact_text }}</div>
+        {% endif %}
+        {% if section.settings.contact_link_label != blank and section.settings.contact_link != blank %}
+          <a class="faq-section__contact-link" href="{{ section.settings.contact_link }}">
+            {{ section.settings.contact_link_label | escape }}
+          </a>
+        {% endif %}
+        {% if section.settings.signature != blank %}
+          <div class="faq-section__signature rte">{{ section.settings.signature }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</faq-section-component>
+
+<script src="{{ 'faq-section.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "faq-section-wrapper",
+  "settings": [
+    { "type": "header", "content": "Introduction" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Everything you need to know about our coffee, roasting, freshness, grinding, and neighborhood delivery.</p>" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_heading", "label": "Heading", "default": "Still have a question?" },
+    { "type": "richtext", "id": "contact_text", "label": "Text", "default": "<p>We're a neighborhood coffee roaster, which means there's a real person behind every bag.</p>" },
+    { "type": "text", "id": "contact_link_label", "label": "Link label", "default": "Get in touch" },
+    { "type": "url", "id": "contact_link", "label": "Link" },
+    { "type": "richtext", "id": "signature", "label": "Signature", "default": "<p>Necesito Coffee Roasters LLC<br>Your Neighborhood Roaster<br>Estero, Florida</p>" },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size", "label": "Page heading size", "min": 28, "max": 72, "step": 1, "unit": "px", "default": 52 },
+    { "type": "range", "id": "description_size", "label": "Introduction text size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 17 },
+    { "type": "range", "id": "category_size", "label": "Category title size", "min": 12, "max": 32, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "question_size", "label": "Accordion title size", "min": 12, "max": 32, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "answer_size", "label": "Accordion text size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 16, "max": 40, "step": 1, "unit": "px", "default": 24 },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "max_width", "label": "Content width", "min": 600, "max": 1400, "step": 20, "unit": "px", "default": 960 },
+    { "type": "range", "id": "row_padding", "label": "Accordion row spacing", "min": 12, "max": 40, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "padding_top", "label": "Top spacing", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom spacing", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F7F1E7" },
+    { "type": "color", "id": "heading_color", "label": "Headings", "default": "#173F33" },
+    { "type": "color", "id": "text_color", "label": "Accordion text", "default": "#294A40" },
+    { "type": "color", "id": "muted_color", "label": "Introduction and contact text", "default": "#5D6E67" },
+    { "type": "color", "id": "border_color", "label": "Dividers", "default": "#C9C9BE" },
+    { "type": "color", "id": "accent_color", "label": "Icons and links", "default": "#8B6936" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Category" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Add an answer here.</p>" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "category", "settings": { "heading": "Category" } },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}

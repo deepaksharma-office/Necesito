@@ -191,6 +191,14 @@
               },
               "blocks": {}
             },
+            "connected_products": {
+              "type": "connected-products",
+              "settings": {
+                "card_width": 80,
+                "gap": 10
+              },
+              "blocks": {}
+            },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -303,6 +311,7 @@
           "block_order": [
             "group_icgrde",
             "divider_VJhene",
+            "connected_products",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "text_aEtTtq"
