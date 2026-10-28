@@ -354,39 +354,29 @@
                   "type": "_accordion-row",
                   "settings": {
                     "heading": "Additional Informations",
-                    "open_by_default": true,
+                    "open_by_default": false,
                     "icon": "none",
                     "width": 20
                   },
                   "blocks": {
-                    "text_pMV3J4": {
-                      "type": "text",
+                    "additional_info_Ag77LQ": {
+                      "type": "additional-info",
+                      "name": "Additional Information",
                       "settings": {
-                        "text": "{{ closest.product.description }}",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "text_color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
+                        "heading": "",
+                        "heading_size": 18,
+                        "label_size": 16,
+                        "value_size": 14,
+                        "heading_color": "",
+                        "label_color": "",
+                        "value_color": "",
+                        "divider_color": ""
                       },
                       "blocks": {}
                     }
                   },
                   "block_order": [
-                    "text_pMV3J4"
+                    "additional_info_Ag77LQ"
                   ]
                 }
               },
