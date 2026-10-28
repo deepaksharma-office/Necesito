@@ -284,32 +284,10 @@
               },
               "block_order": []
             },
-            "giftnote_gift_card_button_LjaYzx": {
-              "type": "shopify://apps/giftnote/blocks/gift-card-button/37eb4f2f-4979-41f3-a677-fa25a2a97659",
+            "wrapped_app_block_product_gmnQez": {
+              "type": "shopify://apps/wrapped/blocks/app-block.product/1714fc7d-e525-4a14-8c3e-1b6ed95734c5",
               "settings": {
-                "button_label": "Send as a gift 🎁",
-                "font_size": 16,
-                "font": "inter_n4",
-                "letter_spacing": 1,
-                "button_type": "button",
-                "background_color": "#ffffff",
-                "border_color": "#000000",
-                "font_color": "#000000",
-                "border_radius": 6,
-                "alignment": "center",
-                "height": 50,
-                "width": 250,
-                "full_width": true,
-                "margin_top": 0,
-                "margin_bottom": 0,
-                "breakpoint": 740,
-                "mobile_alignment": "center",
-                "mobile_height": 50,
-                "mobile_width": 250,
-                "mobile_full_width": false,
-                "mobile_margin_top": 0,
-                "mobile_margin_bottom": 0,
-                "custom_styles": ""
+                "launcher_variant": "button"
               }
             },
             "accordion_DzT3UD": {
@@ -384,7 +362,7 @@
             "connected_products",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "giftnote_gift_card_button_LjaYzx",
+            "wrapped_app_block_product_gmnQez",
             "accordion_DzT3UD"
           ]
         }

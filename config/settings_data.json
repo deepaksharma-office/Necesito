@@ -164,30 +164,10 @@
         "disabled": true,
         "settings": {}
       },
-      "18412211718521571910": {
-        "type": "shopify://apps/giftnote/blocks/core/37eb4f2f-4979-41f3-a677-fa25a2a97659",
+      "15014643352720781508": {
+        "type": "shopify://apps/wrapped/blocks/app-embed/1714fc7d-e525-4a14-8c3e-1b6ed95734c5",
         "disabled": false,
-        "settings": {
-          "title": "Gifting has never been easier",
-          "description": "<p>Perfect if you're short on time or are unable to deliver your gift yourself. Enter your message and select when to send it.</p>",
-          "logo_height": 60,
-          "theme": "light",
-          "modal_background": "#f9fafb",
-          "primary_color": "#3f83f8",
-          "title_color": "#000000",
-          "button_color": "#FFFFFF",
-          "font": "inter_n4",
-          "design_override": "",
-          "order_default_method": "tracked",
-          "giftcard_default_method": "instant",
-          "hide_delivery": false,
-          "hide_phone": false,
-          "disable_focus": false,
-          "force_open": false,
-          "order_event": "",
-          "voucher_event": "gn_reload",
-          "custom_styles": ""
-        }
+        "settings": {}
       }
     },
     "color_palette": {
