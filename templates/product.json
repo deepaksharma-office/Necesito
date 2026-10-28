@@ -297,7 +297,7 @@
                 "icon": "caret",
                 "dividers": true,
                 "divider_color": "",
-                "type_preset": "h6",
+                "type_preset": "h5",
                 "background_color": "",
                 "text_color": "",
                 "border": "none",
@@ -353,7 +353,7 @@
                 "accordion_row_HYF9dg": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Description",
+                    "heading": "Additional Informations",
                     "open_by_default": true,
                     "icon": "none",
                     "width": 20
