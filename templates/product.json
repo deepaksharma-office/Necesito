@@ -298,7 +298,7 @@
                 "icon": "caret",
                 "dividers": true,
                 "divider_color": "",
-                "type_preset": "h5",
+                "type_preset": "h4",
                 "background_color": "",
                 "text_color": "",
                 "border": "none",
@@ -355,6 +355,47 @@
               "block_order": [
                 "accordion_row_n8j8Rz"
               ]
+            },
+            "text_nYM4DY": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Additional Information</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "additional_info_KnkmWj": {
+              "type": "additional-info",
+              "name": "Additional Information",
+              "settings": {
+                "heading": "",
+                "heading_size": 16,
+                "label_size": 14,
+                "value_size": 14,
+                "heading_color": "",
+                "label_color": "",
+                "value_color": "",
+                "divider_color": ""
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -364,7 +405,9 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "wrapped_app_block_product_gmnQez",
-            "accordion_DzT3UD"
+            "accordion_DzT3UD",
+            "text_nYM4DY",
+            "additional_info_KnkmWj"
           ]
         }
       },
@@ -379,58 +422,6 @@
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "section_BGLNAn": {
-      "type": "section",
-      "blocks": {
-        "additional_info_AQppnP": {
-          "type": "additional-info",
-          "name": "Additional Information",
-          "settings": {
-            "heading": "",
-            "heading_size": 18,
-            "label_size": 16,
-            "value_size": 14,
-            "heading_color": "",
-            "label_color": "",
-            "value_color": "",
-            "divider_color": ""
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "additional_info_AQppnP"
-      ],
-      "name": "t:names.custom_section",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "small",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -580,7 +571,6 @@
   },
   "order": [
     "main",
-    "section_BGLNAn",
     "product_recommendations_qggXJq"
   ]
 }
