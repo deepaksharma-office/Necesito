@@ -356,38 +356,12 @@
                 "accordion_row_n8j8Rz"
               ]
             },
-            "text_nYM4DY": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>Additional Information</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "additional_info_KnkmWj": {
               "type": "additional-info",
               "name": "Additional Information",
               "settings": {
-                "heading": "",
-                "heading_size": 16,
+                "heading": "Additional Information",
+                "heading_size": 20,
                 "label_size": 14,
                 "value_size": 14,
                 "heading_color": "",
@@ -406,7 +380,6 @@
             "buy_buttons_eYQEYi",
             "wrapped_app_block_product_gmnQez",
             "accordion_DzT3UD",
-            "text_nYM4DY",
             "additional_info_KnkmWj"
           ]
         }
