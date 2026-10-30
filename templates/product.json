@@ -196,6 +196,7 @@
             },
             "connected_products": {
               "type": "connected-products",
+              "disabled": true,
               "settings": {
                 "card_width": 80,
                 "gap": 10
