@@ -1,8 +1,9 @@
 
 {% comment %}
   Additional Information — Shopify Theme Block
-  Product metafield namespace: custom
-  Automatically hides empty metafields.
+  Namespace: custom
+  Supports 19 product metafields.
+  Automatically hides empty fields.
 {% endcomment %}
 
 {% liquid
@@ -16,10 +17,53 @@
   assign farm = current_product.metafields.custom.farm
   assign tasting_notes = current_product.metafields.custom.tasting_notes
 
+  assign roast_level = current_product.metafields.custom.roast_level
+  assign cup_character = current_product.metafields.custom.cup_character
+  assign cupping_score = current_product.metafields.custom.cupping_score
+  assign coffee_reference = current_product.metafields.custom.coffee_reference
+  assign origin = current_product.metafields.custom.origin
+  assign producer = current_product.metafields.custom.producer
+  assign blend_composition = current_product.metafields.custom.blend_composition
+  assign acidity = current_product.metafields.custom.acidity
+  assign supplier = current_product.metafields.custom.supplier
+  assign brazil_component = current_product.metafields.custom.brazil_component
+  assign peru_component = current_product.metafields.custom.peru_component
+  assign papua_new_guinea_component = current_product.metafields.custom.papua_new_guinea_component
+
   assign visible_count = 0
 %}
 
 {% capture information_content %}
+
+  {% if roast_level.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Roast Level</span>
+      <div class="additional-info__value">
+        {{ roast_level | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if tasting_notes.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Tasting Notes</span>
+      <div class="additional-info__value">
+        {{ tasting_notes | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cup_character.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Cup Character</span>
+      <div class="additional-info__value">
+        {{ cup_character | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
 
   {% if process.value != blank %}
     {% assign visible_count = visible_count | plus: 1 %}
@@ -37,6 +81,16 @@
       <span class="additional-info__label">Score</span>
       <div class="additional-info__value">
         {{ score | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cupping_score.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Cupping Score</span>
+      <div class="additional-info__value">
+        {{ cupping_score | metafield_tag }}
       </div>
     </div>
   {% endif %}
@@ -81,12 +135,92 @@
     </div>
   {% endif %}
 
-  {% if tasting_notes.value != blank %}
+  {% if origin.value != blank %}
     {% assign visible_count = visible_count | plus: 1 %}
     <div class="additional-info__item">
-      <span class="additional-info__label">Tasting Notes</span>
+      <span class="additional-info__label">Origin</span>
       <div class="additional-info__value">
-        {{ tasting_notes | metafield_tag }}
+        {{ origin | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if producer.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Producer</span>
+      <div class="additional-info__value">
+        {{ producer | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if coffee_reference.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Coffee Reference</span>
+      <div class="additional-info__value">
+        {{ coffee_reference | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if acidity.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Acidity</span>
+      <div class="additional-info__value">
+        {{ acidity | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if blend_composition.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Blend Composition</span>
+      <div class="additional-info__value">
+        {{ blend_composition | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if brazil_component.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Brazil Component</span>
+      <div class="additional-info__value">
+        {{ brazil_component | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if peru_component.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Peru Component</span>
+      <div class="additional-info__value">
+        {{ peru_component | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if papua_new_guinea_component.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Papua New Guinea Component</span>
+      <div class="additional-info__value">
+        {{ papua_new_guinea_component | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if supplier.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Supplier</span>
+      <div class="additional-info__value">
+        {{ supplier | metafield_tag }}
       </div>
     </div>
   {% endif %}
@@ -99,10 +233,10 @@
     class="additional-info"
     {{ block.shopify_attributes }}
     style="
-      --ai-heading-color: {{ block.settings.heading_color }};
-      --ai-label-color: {{ block.settings.label_color }};
-      --ai-value-color: {{ block.settings.value_color }};
-      --ai-divider-color: {{ block.settings.divider_color }};
+      --ai-heading-color: {{ block.settings.heading_color | default: '#222222' }};
+      --ai-label-color: {{ block.settings.label_color | default: '#222222' }};
+      --ai-value-color: {{ block.settings.value_color | default: '#555555' }};
+      --ai-divider-color: {{ block.settings.divider_color | default: '#E5E5E5' }};
       --ai-heading-size: {{ block.settings.heading_size }}px;
       --ai-label-size: {{ block.settings.label_size }}px;
       --ai-value-size: {{ block.settings.value_size }}px;
@@ -181,6 +315,17 @@
   #AdditionalInfo-{{ block.id }} .additional-info__value .metafield-rich_text_field {
     font: inherit;
     color: inherit;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value ul,
+  #AdditionalInfo-{{ block.id }} .additional-info__value ol {
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value .metafield-list {
+    padding-left: 18px;
+    margin: 0;
   }
 
   @media (max-width: 749px) {
@@ -271,11 +416,6 @@
       "type": "color",
       "id": "divider_color",
       "label": "Separator color"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Additional Information",
     }
   ]
 }
