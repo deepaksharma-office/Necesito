@@ -20,7 +20,7 @@
             "label_2": "",
             "use_article_title": true,
             "title": "A complete guide",
-            "summary": "",
+            "summary": "<p>Oily dark roast beans are the number one cause of Jura grinder clogs and declining coffee quality. Here is exactly what happens inside the machine, which beans are safe, and how to recover if you have already been using oily beans.</p>",
             "use_article_image": true,
             "image_radius": 8,
             "background": "#F7F5F2",
@@ -32,7 +32,7 @@
         "intro": {
           "type": "editorial-rich-text",
           "settings": {
-            "content": "<p><strong>Short answer:</strong> Lead with the most useful conclusion, then explain the context readers need to understand it.</p><p>Use a second paragraph for an important supporting point.</p>",
+            "content": "<p><strong>Short answer: you can use dark roast beans in a Jura, but only if they are dry to the touch.</strong> The issue is not the roast level itself - it is the oil. Oily beans coat the grinder burrs, clog the coffee chute, and gum up the brew unit. Over time, this leads to weak coffee, grinder jams, and expensive repairs.</p><p>This is the number one preventable maintenance issue on Jura machines, and the manual barely mentions it.</p>",
             "font_size": 16,
             "color": "#3f3029"
           },
@@ -41,7 +41,7 @@
         "heading_1": {
           "type": "editorial-heading",
           "settings": {
-            "heading": "What you need to know",
+            "heading": "What Happens When You Use Oily Beans",
             "heading_tag": "h2",
             "show_rule": true,
             "color": "#25130d",
@@ -52,7 +52,7 @@
         "content_1": {
           "type": "editorial-rich-text",
           "settings": {
-            "content": "<p>Introduce the topic and break complex details into a readable list:</p><ol><li><strong>First consideration</strong> — explain why it matters.</li><li><strong>Second consideration</strong> — add the practical detail.</li><li><strong>Third consideration</strong> — describe the likely outcome.</li></ol><p>Close this section with the main takeaway.</p>",
+            "content": "<p>When beans have visible oil on their surface, that oil transfers to every surface it touches inside the machine:</p><ol><li><strong>Grinder burrs</strong> - oil coats the burrs, reducing their ability to grip and shatter beans consistently. Grind quality drops.</li><li><strong>Coffee chute</strong> - the narrow passage between grinder and brew unit collects oil residue. Over weeks, this builds up and narrows the chute, eventually blocking it.</li><li><strong>Brew unit</strong> - oil deposits on the piston, seals, and chamber walls. This produces rancid, stale flavors even with fresh beans.</li><li><strong>Bean hopper</strong> - oily residue accumulates on the hopper walls and the funnel opening, attracting old grounds and creating a sticky film.</li></ol><p>The damage is cumulative. You will not notice a problem after one bag. After 3-4 bags of oily beans, grind consistency drops. After 6+ bags, you may start getting weak coffee, grinder errors, or a complete chute blockage.</p>",
             "font_size": 16,
             "color": "#3f3029"
           },
@@ -61,7 +61,7 @@
         "heading_2": {
           "type": "editorial-heading",
           "settings": {
-            "heading": "A quick comparison",
+            "heading": "How to Tell If Your Beans Are Too Oily",
             "heading_tag": "h2",
             "show_rule": true,
             "color": "#25130d",
@@ -73,22 +73,22 @@
           "type": "editorial-table",
           "settings": {
             "accessible_label": "Guide comparison",
-            "caption": "Use this table to help readers compare the available options.",
+            "caption": "Pick up a few beans and look at them:",
             "header_1": "What you see",
-            "header_2": "Recommended",
+            "header_2": "Safe for Jura?",
             "header_3": "Examples",
-            "row_1_1": "First option",
+            "row_1_1": "Dry, matte surface",
             "row_1_2": "Yes",
-            "row_1_3": "Add examples here",
-            "row_2_1": "Second option",
-            "row_2_2": "Borderline",
-            "row_2_3": "Add examples here",
-            "row_3_1": "Third option",
+            "row_1_3": "Most medium roasts, illy Classico, Lavazza Super Crema",
+            "row_2_1": "Slight sheen, barely visible",
+            "row_2_2": "Yes (borderline)",
+            "row_2_3": "Some medium-dark roasts, Lavazza Gran Selezione",
+            "row_3_1": "Visible oil, shiny surface",
             "row_3_2": "No",
-            "row_3_3": "Add examples here",
-            "row_4_1": "",
-            "row_4_2": "",
-            "row_4_3": "",
+            "row_3_3": "Starbucks French Roast, Peet’s Major Dickason’s, most “Italian” and “French” roasts",
+            "row_4_1": "Oil pooling in the bag",
+            "row_4_2": "Definitely no",
+            "row_4_3": "Ultra-dark roasts, some single-origin dark roasts",
             "row_5_1": "",
             "row_5_2": "",
             "row_5_3": "",
