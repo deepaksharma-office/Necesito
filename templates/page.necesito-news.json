@@ -157,7 +157,7 @@
       "settings": {
         "blog": "news",
         "article_limit": 9,
-        "show_pagination": true,
+        "show_pagination": false,
         "category_source": "first_tag",
         "show_excerpts": true,
         "show_article_links": true,
