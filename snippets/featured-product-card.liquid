@@ -50,7 +50,7 @@
   assign card_title = title_override | default: product.title
   assign card_description = description_override
   if card_description == blank and product != blank
-    assign card_description = product.description | strip_html | truncatewords: 18
+    assign card_description = product.description | strip_html | truncatewords: 8
   endif
 
   assign card_image = image_override | default: product.featured_image
