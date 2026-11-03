@@ -86,7 +86,7 @@
           "settings": {
             "object_name": "Left product",
             "role": "product",
-            "image": "shopify://shop_images/imageleft.png",
+            "image": "shopify://shop_images/IMG_7951_8edb84ad-d93a-41c3-9784-c76f80a67083.jpg",
             "alt_text": "",
             "circle_color": "#dce8d3",
             "left": 28,
@@ -109,7 +109,7 @@
           "settings": {
             "object_name": "Center product",
             "role": "product",
-            "image": "shopify://shop_images/imagemiddle.png",
+            "image": "shopify://shop_images/IMG_7941_e0913dec-aec3-4313-bc2f-60a32e4995dc.jpg",
             "alt_text": "",
             "circle_color": "#dce8d3",
             "left": 50,
@@ -132,7 +132,7 @@
           "settings": {
             "object_name": "Right product",
             "role": "product",
-            "image": "shopify://shop_images/imageright.png",
+            "image": "shopify://shop_images/IMG_7946_3a9a94fe-72db-4db5-8f71-52ebcdcca7ea.jpg",
             "alt_text": "",
             "circle_color": "#dce8d3",
             "left": 73,
