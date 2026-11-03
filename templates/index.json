@@ -556,7 +556,7 @@
         "supporting_text_size": 11,
         "show_button": true,
         "button_label": "How local delivery works",
-        "button_url": "shopify://pages/frequently-asked-questions",
+        "button_url": "shopify://pages/local-delivery",
         "button_type": "custom",
         "button_background": "#ffffff",
         "button_color": "#173f35",
