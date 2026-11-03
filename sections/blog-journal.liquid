@@ -29,8 +29,8 @@
     </header>
 
     {% if selected_blog != blank and selected_blog.articles_count > 0 %}
-      <div class="blog-journal__grid">
-        {% paginate selected_blog.articles by section.settings.article_limit %}
+      {% paginate selected_blog.articles by section.settings.article_limit %}
+        <div class="blog-journal__grid">
           {% for article in selected_blog.articles %}
             {% liquid
               assign category_label = blank
@@ -50,8 +50,12 @@
             %}
             {% render 'blog-article-card', article: article, category_label: category_label, show_excerpt: section.settings.show_excerpts, show_link: section.settings.show_article_links, link_label: section.settings.article_link_label, image_aspect_ratio: section.settings.image_aspect_ratio, image_fit: section.settings.image_fit, image_radius: section.settings.image_radius, card_background: section.settings.card_background, card_border_color: section.settings.card_border_color, card_border_width: section.settings.card_border_width, card_radius: section.settings.card_radius, card_padding: section.settings.card_padding, category_color: section.settings.category_color, category_size: section.settings.category_size, title_color: section.settings.article_title_color, title_size: section.settings.article_title_size, excerpt_color: section.settings.excerpt_color, excerpt_size: section.settings.excerpt_size, link_color: section.settings.article_link_color, arrow_color: section.settings.article_arrow_color, loading: image_loading, fetchpriority: image_fetchpriority %}
           {% endfor %}
-        {% endpaginate %}
-      </div>
+        </div>
+
+        {% if section.settings.show_pagination %}
+          {% render 'pagination-controls', paginate: paginate %}
+        {% endif %}
+      {% endpaginate %}
     {% elsif request.design_mode %}
       <div class="blog-journal__empty">Select a blog containing published articles to populate this section.</div>
     {% endif %}
@@ -72,7 +76,8 @@
   "settings": [
     { "type": "header", "content": "Article source" },
     { "type": "blog", "id": "blog", "label": "Blog" },
-    { "type": "range", "id": "article_limit", "label": "Articles to show", "min": 3, "max": 6, "step": 1, "default": 3 },
+    { "type": "range", "id": "article_limit", "label": "Articles per page", "min": 3, "max": 24, "step": 3, "default": 9 },
+    { "type": "checkbox", "id": "show_pagination", "label": "Show pagination", "default": true },
     { "type": "select", "id": "category_source", "label": "Category label", "options": [{ "value": "none", "label": "Hidden" }, { "value": "first_tag", "label": "First article tag" }, { "value": "blog_title", "label": "Blog title" }], "default": "first_tag" },
     { "type": "checkbox", "id": "show_excerpts", "label": "Show excerpts", "default": true },
     { "type": "checkbox", "id": "show_article_links", "label": "Show article links", "default": true },

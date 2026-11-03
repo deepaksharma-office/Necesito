@@ -1,0 +1,37 @@
+{% doc %}
+  Renders a highlighted article callout with an optional button.
+  @example
+  {% content_for 'block', type: 'editorial-callout', id: 'callout' %}
+{% enddoc %}
+
+<aside class="editorial-callout" style="--callout-background: {{ block.settings.background }}; --callout-border: {{ block.settings.border }};" {{ block.shopify_attributes }}>
+  {% if block.settings.eyebrow != blank %}<span>{{ block.settings.eyebrow | escape }}</span>{% endif %}
+  <h3>{{ block.settings.heading | escape }}</h3>
+  <div class="rte">{{ block.settings.content }}</div>
+  {% if block.settings.link != blank and block.settings.link_label != blank %}<a href="{{ block.settings.link }}">{{ block.settings.link_label | escape }} <span aria-hidden="true">→</span></a>{% endif %}
+</aside>
+
+{% stylesheet %}
+  .editorial-callout { padding: clamp(22px, 4vw, 34px); border: 1px solid var(--callout-border); border-radius: 12px; background: var(--callout-background); }
+  .editorial-callout > span { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .editorial-callout h3 { margin: 8px 0 0; font-size: 22px; }
+  .editorial-callout .rte { margin-top: 10px; font-size: 14px; line-height: 1.6; }
+  .editorial-callout .rte > * { margin-block: 0; }
+  .editorial-callout a { display: inline-flex; min-height: 44px; margin-top: 18px; padding: 10px 18px; align-items: center; color: var(--color-background); border-radius: 7px; background: var(--color-foreground); font-size: 13px; font-weight: 700; text-decoration: none; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article callout",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Recommended" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A helpful next step" },
+    { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Use this panel to highlight an important recommendation.</p>" },
+    { "type": "text", "id": "link_label", "label": "Button label", "default": "Learn more" },
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#eeeae6" },
+    { "type": "color", "id": "border", "label": "Border", "default": "#d8d0ca" }
+  ],
+  "presets": [{ "name": "Article callout" }]
+}
+{% endschema %}

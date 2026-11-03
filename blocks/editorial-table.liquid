@@ -1,0 +1,60 @@
+{% doc %}
+  Renders an editable three-column comparison table.
+  @example
+  {% content_for 'block', type: 'editorial-table', id: 'table' %}
+{% enddoc %}
+
+<div class="editorial-table-wrap" {{ block.shopify_attributes }}>
+  {% if block.settings.caption != blank %}<p class="editorial-table__intro">{{ block.settings.caption | escape }}</p>{% endif %}
+  <div class="editorial-table-scroll" tabindex="0" role="region" aria-label="{{ block.settings.accessible_label | escape }}">
+    <table class="editorial-table">
+      <thead><tr><th scope="col">{{ block.settings.header_1 | escape }}</th><th scope="col">{{ block.settings.header_2 | escape }}</th><th scope="col">{{ block.settings.header_3 | escape }}</th></tr></thead>
+      <tbody>
+        {% for index in (1..6) %}
+          {% liquid
+            assign cell_1_key = 'row_' | append: index | append: '_1'
+            assign cell_2_key = 'row_' | append: index | append: '_2'
+            assign cell_3_key = 'row_' | append: index | append: '_3'
+          %}
+          {% if block.settings[cell_1_key] != blank or block.settings[cell_2_key] != blank or block.settings[cell_3_key] != blank %}<tr><td>{{ block.settings[cell_1_key] | escape }}</td><td>{{ block.settings[cell_2_key] | escape }}</td><td>{{ block.settings[cell_3_key] | escape }}</td></tr>{% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% stylesheet %}
+  .editorial-table__intro { margin: 0 0 16px; line-height: 1.65; }
+  .editorial-table-scroll { overflow-x: auto; outline-offset: 3px; }
+  .editorial-table { width: 100%; min-width: 620px; border-collapse: collapse; color: var(--color-foreground); font-size: 14px; line-height: 1.5; }
+  .editorial-table :is(th, td) { padding: 14px 16px; border-bottom: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15)); text-align: start; vertical-align: top; }
+  .editorial-table th { font-weight: 700; }
+  .editorial-table td:first-child { font-weight: 600; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article table",
+  "settings": [
+    { "type": "text", "id": "accessible_label", "label": "Accessible label", "default": "Article comparison table" },
+    { "type": "text", "id": "caption", "label": "Intro text", "default": "Compare the options below." },
+    { "type": "header", "content": "Column headings" },
+    { "type": "text", "id": "header_1", "label": "Column 1", "default": "What you see" },
+    { "type": "text", "id": "header_2", "label": "Column 2", "default": "Recommended" },
+    { "type": "text", "id": "header_3", "label": "Column 3", "default": "Examples" },
+    { "type": "header", "content": "Row 1" },
+    { "type": "text", "id": "row_1_1", "label": "Column 1", "default": "First option" }, { "type": "text", "id": "row_1_2", "label": "Column 2", "default": "Yes" }, { "type": "text", "id": "row_1_3", "label": "Column 3", "default": "Example details" },
+    { "type": "header", "content": "Row 2" },
+    { "type": "text", "id": "row_2_1", "label": "Column 1", "default": "Second option" }, { "type": "text", "id": "row_2_2", "label": "Column 2", "default": "Maybe" }, { "type": "text", "id": "row_2_3", "label": "Column 3", "default": "Example details" },
+    { "type": "header", "content": "Row 3" },
+    { "type": "text", "id": "row_3_1", "label": "Column 1", "default": "Third option" }, { "type": "text", "id": "row_3_2", "label": "Column 2", "default": "No" }, { "type": "text", "id": "row_3_3", "label": "Column 3", "default": "Example details" },
+    { "type": "header", "content": "Row 4" },
+    { "type": "text", "id": "row_4_1", "label": "Column 1" }, { "type": "text", "id": "row_4_2", "label": "Column 2" }, { "type": "text", "id": "row_4_3", "label": "Column 3" },
+    { "type": "header", "content": "Row 5" },
+    { "type": "text", "id": "row_5_1", "label": "Column 1" }, { "type": "text", "id": "row_5_2", "label": "Column 2" }, { "type": "text", "id": "row_5_3", "label": "Column 3" },
+    { "type": "header", "content": "Row 6" },
+    { "type": "text", "id": "row_6_1", "label": "Column 1" }, { "type": "text", "id": "row_6_2", "label": "Column 2" }, { "type": "text", "id": "row_6_3", "label": "Column 3" }
+  ],
+  "presets": [{ "name": "Article table" }]
+}
+{% endschema %}

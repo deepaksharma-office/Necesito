@@ -1,0 +1,193 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "editorial_article": {
+      "type": "editorial-article",
+      "blocks": {
+        "hero": {
+          "type": "editorial-article-hero",
+          "settings": {
+            "show_breadcrumbs": true,
+            "label_1": "Guides",
+            "label_2": "Necesito News",
+            "use_article_title": true,
+            "summary": "<p>Add a clear, compelling summary that tells readers exactly what this guide covers.</p>",
+            "use_article_image": true,
+            "image_radius": 8,
+            "background": "#2f160d",
+            "foreground": "#fffaf4",
+            "accent": "#d7b77d"
+          },
+          "blocks": {}
+        },
+        "intro": {
+          "type": "editorial-rich-text",
+          "settings": {
+            "content": "<p><strong>Short answer:</strong> Lead with the most useful conclusion, then explain the context readers need to understand it.</p><p>Use a second paragraph for an important supporting point.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
+          "blocks": {}
+        },
+        "heading_1": {
+          "type": "editorial-heading",
+          "settings": { "heading": "What you need to know", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "content_1": {
+          "type": "editorial-rich-text",
+          "settings": {
+            "content": "<p>Introduce the topic and break complex details into a readable list:</p><ol><li><strong>First consideration</strong> — explain why it matters.</li><li><strong>Second consideration</strong> — add the practical detail.</li><li><strong>Third consideration</strong> — describe the likely outcome.</li></ol><p>Close this section with the main takeaway.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
+          "blocks": {}
+        },
+        "heading_2": {
+          "type": "editorial-heading",
+          "settings": { "heading": "A quick comparison", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "comparison_table": {
+          "type": "editorial-table",
+          "settings": {
+            "accessible_label": "Guide comparison",
+            "caption": "Use this table to help readers compare the available options.",
+            "header_1": "What you see",
+            "header_2": "Recommended",
+            "header_3": "Examples",
+            "row_1_1": "First option",
+            "row_1_2": "Yes",
+            "row_1_3": "Add examples here",
+            "row_2_1": "Second option",
+            "row_2_2": "Borderline",
+            "row_2_3": "Add examples here",
+            "row_3_1": "Third option",
+            "row_3_2": "No",
+            "row_3_3": "Add examples here"
+          },
+          "blocks": {}
+        },
+        "content_2": {
+          "type": "editorial-rich-text",
+          "settings": { "content": "<p><strong>Practical test:</strong> Add a short method readers can use to make the right choice.</p>", "font_size": 16, "color": "#3f3029" },
+          "blocks": {}
+        },
+        "cards": {
+          "type": "editorial-card-row",
+          "settings": { "columns": 2, "gap": 16 },
+          "blocks": {
+            "card_1": {
+              "type": "editorial-link-card",
+              "settings": { "eyebrow": "Recommended", "title": "First helpful resource", "text": "Explain what readers will find after clicking.", "link_label": "See our picks", "link": "", "background": "#ffffff", "border": "#d8c6ab" },
+              "blocks": {}
+            },
+            "card_2": {
+              "type": "editorial-link-card",
+              "settings": { "eyebrow": "Our pick", "title": "Second helpful resource", "text": "Explain why this recommendation is useful.", "link_label": "Learn more", "link": "", "background": "#ffffff", "border": "#ded7d1" },
+              "blocks": {}
+            }
+          },
+          "block_order": ["card_1", "card_2"]
+        },
+        "heading_3": {
+          "type": "editorial-heading",
+          "settings": { "heading": "Detailed recommendations", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "content_3": {
+          "type": "editorial-rich-text",
+          "settings": { "content": "<p>Use separate content blocks for each major part of the guide. This keeps every passage editable and reorderable.</p><ul><li><strong>Recommendation one</strong> — supporting explanation.</li><li><strong>Recommendation two</strong> — supporting explanation.</li><li><strong>Recommendation three</strong> — supporting explanation.</li></ul>", "font_size": 16, "color": "#3f3029" },
+          "blocks": {}
+        },
+        "heading_steps": {
+          "type": "editorial-heading",
+          "settings": { "heading": "A step-by-step process", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "step_1": {
+          "type": "editorial-heading",
+          "settings": { "heading": "Step 1: Start with the essentials", "heading_tag": "h3", "show_rule": false, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "step_1_content": {
+          "type": "editorial-rich-text",
+          "settings": { "content": "<p>Explain the first action in a concise paragraph.</p>", "font_size": 16, "color": "#3f3029" },
+          "blocks": {}
+        },
+        "step_2": {
+          "type": "editorial-heading",
+          "settings": { "heading": "Step 2: Complete the next action", "heading_tag": "h3", "show_rule": false, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "step_2_content": {
+          "type": "editorial-rich-text",
+          "settings": { "content": "<p>Explain the second action and any important cautions.</p>", "font_size": 16, "color": "#3f3029" },
+          "blocks": {}
+        },
+        "faq_heading": {
+          "type": "editorial-heading",
+          "settings": { "heading": "FAQ", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "faq_1": {
+          "type": "editorial-faq-item",
+          "settings": { "question": "Add the first common question", "answer": "<p>Give readers a direct and useful answer.</p>", "open": true },
+          "blocks": {}
+        },
+        "faq_2": {
+          "type": "editorial-faq-item",
+          "settings": { "question": "Add another common question", "answer": "<p>Give readers a direct and useful answer.</p>", "open": false },
+          "blocks": {}
+        },
+        "bottom_heading": {
+          "type": "editorial-heading",
+          "settings": { "heading": "The bottom line", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "bottom_content": {
+          "type": "editorial-rich-text",
+          "settings": { "content": "<p>Summarize the answer and leave readers with one clear action to take next.</p>", "font_size": 16, "color": "#3f3029" },
+          "blocks": {}
+        },
+        "callout": {
+          "type": "editorial-callout",
+          "settings": { "eyebrow": "Recommended next step", "heading": "Continue with a related guide", "content": "<p>Highlight the best resource or commercial recommendation for readers.</p>", "link_label": "See the recommendation", "link": "", "background": "#eeeae6", "border": "#d8d0ca" },
+          "blocks": {}
+        },
+        "related_heading": {
+          "type": "editorial-heading",
+          "settings": { "heading": "Related", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "blocks": {}
+        },
+        "related_links": {
+          "type": "editorial-rich-text",
+          "settings": { "content": "<ul><li><a href=\"/blogs/news\">Related article or buying guide</a></li><li><a href=\"/blogs/news\">Another useful article</a></li><li><a href=\"/blogs/news\">Maintenance and care guide</a></li></ul>", "font_size": 16, "color": "#8a6735" },
+          "blocks": {}
+        },
+        "divider": {
+          "type": "editorial-divider",
+          "settings": { "color": "#ded7d1", "thickness": 1, "spacing": 8 },
+          "blocks": {}
+        }
+      },
+      "block_order": ["hero", "intro", "heading_1", "content_1", "heading_2", "comparison_table", "content_2", "cards", "heading_3", "content_3", "heading_steps", "step_1", "step_1_content", "step_2", "step_2_content", "faq_heading", "faq_1", "faq_2", "bottom_heading", "bottom_content", "callout", "related_heading", "related_links", "divider"],
+      "settings": {
+        "content_width": 760,
+        "block_gap": 24,
+        "background_color": "#f7f5f2",
+        "padding_top": 0,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": ["editorial_article"]
+}

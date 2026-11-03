@@ -1,0 +1,412 @@
+
+{% comment %}
+  Additional Information — Shopify Theme Block
+  Namespace: custom
+  Supports 19 product metafields.
+  Automatically hides empty fields.
+{% endcomment %}
+
+{% liquid
+  assign current_product = closest.product | default: product
+
+  assign process = current_product.metafields.custom.process
+  assign score = current_product.metafields.custom.score
+  assign altitude = current_product.metafields.custom.altitude
+  assign variety = current_product.metafields.custom.variety
+  assign region = current_product.metafields.custom.region
+  assign farm = current_product.metafields.custom.farm
+  assign tasting_notes = current_product.metafields.custom.tasting_notes
+
+  assign roast_level = current_product.metafields.custom.roast_level
+  assign cup_character = current_product.metafields.custom.cup_character
+  assign cupping_score = current_product.metafields.custom.cupping_score
+  assign origin = current_product.metafields.custom.origin
+  assign producer = current_product.metafields.custom.producer
+  assign blend_composition = current_product.metafields.custom.blend_composition
+  assign acidity = current_product.metafields.custom.acidity
+  assign supplier = current_product.metafields.custom.supplier
+  assign brazil_component = current_product.metafields.custom.brazil_component
+  assign peru_component = current_product.metafields.custom.peru_component
+  assign papua_new_guinea_component = current_product.metafields.custom.papua_new_guinea_component
+
+  assign visible_count = 0
+%}
+
+{% capture information_content %}
+
+  {% if roast_level.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Roast Level</span>
+      <div class="additional-info__value">
+        {{ roast_level | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if tasting_notes.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Tasting Notes</span>
+      <div class="additional-info__value">
+        {{ tasting_notes | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cup_character.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Cup Character</span>
+      <div class="additional-info__value">
+        {{ cup_character | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if process.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Process</span>
+      <div class="additional-info__value">
+        {{ process | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if score.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Score</span>
+      <div class="additional-info__value">
+        {{ score | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cupping_score.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Cupping Score</span>
+      <div class="additional-info__value">
+        {{ cupping_score | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if altitude.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Altitude</span>
+      <div class="additional-info__value">
+        {{ altitude | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if variety.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Variety</span>
+      <div class="additional-info__value">
+        {{ variety | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if region.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Region</span>
+      <div class="additional-info__value">
+        {{ region | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if farm.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Farm</span>
+      <div class="additional-info__value">
+        {{ farm | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if origin.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Origin</span>
+      <div class="additional-info__value">
+        {{ origin | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if producer.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Producer</span>
+      <div class="additional-info__value">
+        {{ producer | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+
+  {% if acidity.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Acidity</span>
+      <div class="additional-info__value">
+        {{ acidity | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if blend_composition.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Blend Composition</span>
+      <div class="additional-info__value">
+        {{ blend_composition | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if brazil_component.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Brazil Component</span>
+      <div class="additional-info__value">
+        {{ brazil_component | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if peru_component.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Peru Component</span>
+      <div class="additional-info__value">
+        {{ peru_component | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if papua_new_guinea_component.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Papua New Guinea Component</span>
+      <div class="additional-info__value">
+        {{ papua_new_guinea_component | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if supplier.value != blank %}
+    {% assign visible_count = visible_count | plus: 1 %}
+    <div class="additional-info__item">
+      <span class="additional-info__label">Supplier</span>
+      <div class="additional-info__value">
+        {{ supplier | metafield_tag }}
+      </div>
+    </div>
+  {% endif %}
+
+{% endcapture %}
+
+{% if visible_count > 0 %}
+  <div
+    id="AdditionalInfo-{{ block.id }}"
+    class="additional-info"
+    {{ block.shopify_attributes }}
+    style="
+      --ai-heading-color: {{ block.settings.heading_color | default: '#222222' }};
+      --ai-label-color: {{ block.settings.label_color | default: '#222222' }};
+      --ai-value-color: {{ block.settings.value_color | default: '#555555' }};
+      --ai-divider-color: {{ block.settings.divider_color | default: '#E5E5E5' }};
+      --ai-heading-size: {{ block.settings.heading_size }}px;
+      --ai-label-size: {{ block.settings.label_size }}px;
+      --ai-value-size: {{ block.settings.value_size }}px;
+    "
+  >
+    {% if block.settings.heading != blank %}
+      <h2 class="additional-info__heading">
+        {{ block.settings.heading | escape }}
+      </h2>
+    {% endif %}
+
+    <div class="additional-info__grid">
+      {{ information_content }}
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  #AdditionalInfo-{{ block.id }} {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__heading {
+    margin: 0 0 28px;
+    font-size: var(--ai-heading-size);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    color: var(--ai-heading-color);
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+    row-gap: 22px;
+    width: 100%;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 16px;
+    min-width: 0;
+    border-bottom: 1px solid var(--ai-divider-color);
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__label {
+    display: block;
+    font-size: var(--ai-label-size);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ai-label-color);
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value {
+    font-size: var(--ai-value-size);
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--ai-value-color);
+    overflow-wrap: anywhere;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value p {
+    margin: 0;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value p + p {
+    margin-top: 8px;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value .metafield-rich_text_field {
+    font: inherit;
+    color: inherit;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value ul,
+  #AdditionalInfo-{{ block.id }} .additional-info__value ol {
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  #AdditionalInfo-{{ block.id }} .additional-info__value .metafield-list {
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  @media (max-width: 749px) {
+    #AdditionalInfo-{{ block.id }} .additional-info__heading {
+      margin-bottom: 22px;
+    }
+
+    #AdditionalInfo-{{ block.id }} .additional-info__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 16px;
+      row-gap: 18px;
+    }
+
+    #AdditionalInfo-{{ block.id }} .additional-info__item {
+      gap: 6px;
+      padding-bottom: 14px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Additional Information",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "value_size",
+      "label": "Value font size",
+      "min": 12,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color"
+    },
+    {
+      "type": "color",
+      "id": "value_color",
+      "label": "Value color"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Separator color"
+    }
+  ]
+}
+{% endschema %}

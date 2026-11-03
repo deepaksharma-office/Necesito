@@ -1,0 +1,24 @@
+{% doc %}
+  Groups independently editable article link cards into a responsive row.
+  @example
+  {% content_for 'block', type: 'editorial-card-row', id: 'cards' %}
+{% enddoc %}
+
+<div class="editorial-card-row" style="--card-row-columns: {{ block.settings.columns }}; --card-row-gap: {{ block.settings.gap }}px;" {{ block.shopify_attributes }}>{% content_for 'blocks' %}</div>
+
+{% stylesheet %}
+  .editorial-card-row { display: grid; grid-template-columns: repeat(var(--card-row-columns), minmax(0, 1fr)); gap: var(--card-row-gap); }
+  @media screen and (max-width: 749px) { .editorial-card-row { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clickable card row",
+  "blocks": [{ "type": "editorial-link-card" }],
+  "settings": [
+    { "type": "range", "id": "columns", "label": "Desktop columns", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 8, "max": 40, "step": 4, "unit": "px", "default": 16 }
+  ],
+  "presets": [{ "name": "Clickable card row", "blocks": [{ "type": "editorial-link-card" }, { "type": "editorial-link-card" }] }]
+}
+{% endschema %}

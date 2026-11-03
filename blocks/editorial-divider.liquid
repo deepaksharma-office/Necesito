@@ -1,0 +1,23 @@
+{% doc %}
+  Renders a configurable article divider.
+  @example
+  {% content_for 'block', type: 'editorial-divider', id: 'divider' %}
+{% enddoc %}
+
+<hr class="editorial-divider" style="--divider-color: {{ block.settings.color }}; --divider-thickness: {{ block.settings.thickness }}px; --divider-space: {{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>
+
+{% stylesheet %}
+  .editorial-divider { width: 100%; height: var(--divider-thickness); margin-block: var(--divider-space); border: 0; background: var(--divider-color); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article divider",
+  "settings": [
+    { "type": "color", "id": "color", "label": "Color", "default": "#ded7d1" },
+    { "type": "range", "id": "thickness", "label": "Thickness", "min": 1, "max": 6, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "spacing", "label": "Vertical spacing", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 8 }
+  ],
+  "presets": [{ "name": "Article divider" }]
+}
+{% endschema %}

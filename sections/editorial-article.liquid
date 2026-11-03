@@ -1,0 +1,64 @@
+{% comment %}
+  Block-composed editorial article layout for long-form guides.
+  @example
+  Assign the Editorial article template to a blog post and arrange its content blocks.
+{% endcomment %}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"></div>
+<article
+  class="editorial-article{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+  style="--editorial-width: {{ section.settings.content_width }}px; --editorial-gap: {{ section.settings.block_gap }}px; --editorial-padding-top: {{ section.settings.padding_top }}px; --editorial-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="editorial-article__content">
+    {% content_for 'blocks' %}
+  </div>
+</article>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% stylesheet %}
+  .editorial-article {
+    padding-block: var(--editorial-padding-top) var(--editorial-padding-bottom);
+  }
+
+  .editorial-article__content {
+    display: flex;
+    width: min(calc(100% - 40px), var(--editorial-width));
+    margin-inline: auto;
+    flex-direction: column;
+    gap: var(--editorial-gap);
+  }
+
+  @media screen and (max-width: 749px) {
+    .editorial-article__content { width: min(calc(100% - 32px), var(--editorial-width)); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Editorial article",
+  "tag": "section",
+  "class": "section-wrapper",
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "@app" }
+  ],
+  "settings": [
+    { "type": "range", "id": "content_width", "label": "Content maximum width", "min": 640, "max": 1100, "step": 20, "unit": "px", "default": 760 },
+    { "type": "range", "id": "block_gap", "label": "Space between blocks", "min": 0, "max": 64, "step": 4, "unit": "px", "default": 24 },
+    { "type": "color", "id": "background_color", "label": "Background color", "placeholder": "Default" },
+    { "type": "header", "content": "Section spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "presets": [{ "name": "Editorial article" }]
+}
+{% endschema %}

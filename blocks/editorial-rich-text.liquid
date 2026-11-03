@@ -1,0 +1,28 @@
+{% doc %}
+  Renders one independently editable long-form content passage.
+  @example
+  {% content_for 'block', type: 'editorial-rich-text', id: 'content' %}
+{% enddoc %}
+
+<div class="editorial-copy rte" style="--copy-size: {{ block.settings.font_size }}px; --copy-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>{{ block.settings.content }}</div>
+
+{% stylesheet %}
+  .editorial-copy { color: var(--copy-color); font-size: var(--copy-size); line-height: 1.75; overflow-wrap: anywhere; }
+  .editorial-copy > :first-child { margin-top: 0; }
+  .editorial-copy > :last-child { margin-bottom: 0; }
+  .editorial-copy :is(ul, ol) { padding-inline-start: 1.45em; }
+  .editorial-copy li + li { margin-top: 0.55em; }
+  .editorial-copy a { color: inherit; text-decoration-color: currentColor; text-underline-offset: 0.18em; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article content",
+  "settings": [
+    { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Add an independently editable paragraph, list, or formatted passage.</p>" },
+    { "type": "range", "id": "font_size", "label": "Font size", "min": 13, "max": 22, "step": 1, "unit": "px", "default": 16 },
+    { "type": "color", "id": "color", "label": "Text color", "default": "#3f3029" }
+  ],
+  "presets": [{ "name": "Article content" }]
+}
+{% endschema %}

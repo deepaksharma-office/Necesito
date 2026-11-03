@@ -1,0 +1,40 @@
+{% doc %}
+  Renders one fully clickable editorial recommendation card.
+  @example
+  {% content_for 'block', type: 'editorial-link-card', id: 'card' %}
+{% enddoc %}
+
+{% if block.settings.link != blank %}<a class="editorial-link-card" href="{{ block.settings.link }}" style="--link-card-background: {{ block.settings.background }}; --link-card-border: {{ block.settings.border }};" {{ block.shopify_attributes }}>
+{% else %}<div class="editorial-link-card" style="--link-card-background: {{ block.settings.background }}; --link-card-border: {{ block.settings.border }};" {{ block.shopify_attributes }}>
+{% endif %}
+  {% if block.settings.eyebrow != blank %}<span class="editorial-link-card__eyebrow">{{ block.settings.eyebrow | escape }}</span>{% endif %}
+  <strong>{{ block.settings.title | escape }}</strong>
+  {% if block.settings.text != blank %}<p>{{ block.settings.text | escape }}</p>{% endif %}
+  {% if block.settings.link_label != blank %}<span class="editorial-link-card__action">{{ block.settings.link_label | escape }} <span aria-hidden="true">→</span></span>{% endif %}
+{% if block.settings.link != blank %}</a>{% else %}</div>{% endif %}
+
+{% stylesheet %}
+  .editorial-link-card { display: flex; min-width: 0; min-height: 170px; padding: 20px; color: var(--color-foreground); border: 1px solid var(--link-card-border); border-radius: 10px; background: var(--link-card-background); flex-direction: column; text-decoration: none; transition: transform var(--animation-speed) ease, box-shadow var(--animation-speed) ease; }
+  a.editorial-link-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgb(0 0 0 / 8%); }
+  .editorial-link-card__eyebrow { margin-bottom: 8px; color: rgb(var(--color-foreground-rgb) / var(--opacity-60)); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .editorial-link-card strong { font-size: 18px; line-height: 1.25; }
+  .editorial-link-card p { margin: 8px 0 0; font-size: 13px; line-height: 1.5; }
+  .editorial-link-card__action { margin-top: auto; padding-top: 18px; font-size: 13px; font-weight: 650; }
+  @media (prefers-reduced-motion: reduce) { .editorial-link-card { transition: none; } a.editorial-link-card:hover { transform: none; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clickable card",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Recommended" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Helpful recommendation" },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "Add a short explanation for this recommendation." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Learn more" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "border", "label": "Border", "default": "#d8c6ab" }
+  ],
+  "presets": [{ "name": "Clickable card" }]
+}
+{% endschema %}

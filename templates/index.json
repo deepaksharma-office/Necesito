@@ -86,7 +86,7 @@
           "settings": {
             "object_name": "Left product",
             "role": "product",
-            "image": "shopify://shop_images/imageleft.png",
+            "image": "shopify://shop_images/IMG_7951_8edb84ad-d93a-41c3-9784-c76f80a67083.jpg",
             "alt_text": "",
             "circle_color": "#dce8d3",
             "left": 28,
@@ -109,7 +109,7 @@
           "settings": {
             "object_name": "Center product",
             "role": "product",
-            "image": "shopify://shop_images/imagemiddle.png",
+            "image": "shopify://shop_images/IMG_7941_e0913dec-aec3-4313-bc2f-60a32e4995dc.jpg",
             "alt_text": "",
             "circle_color": "#dce8d3",
             "left": 50,
@@ -132,7 +132,7 @@
           "settings": {
             "object_name": "Right product",
             "role": "product",
-            "image": "shopify://shop_images/imageright.png",
+            "image": "shopify://shop_images/IMG_7946_3a9a94fe-72db-4db5-8f71-52ebcdcca7ea.jpg",
             "alt_text": "",
             "circle_color": "#dce8d3",
             "left": 73,
@@ -357,7 +357,7 @@
           "settings": {
             "product": "morning-blend",
             "title_override": "Morning Blend",
-            "description_override": "Roast and tasting notes TBA",
+            "description_override": "",
             "background_color": "#e9e2d2",
             "image_alt": "",
             "image_width": 72,
@@ -365,12 +365,12 @@
             "image_vertical_alignment": "center",
             "image_horizontal_alignment": "center",
             "show_badge": true,
-            "badge_text": "Coming soon",
+            "badge_text": "",
             "cta_label": "View coffee",
             "cta_url": "",
             "show_price": true,
             "use_price_placeholder": true,
-            "price_placeholder": "Price TBA"
+            "price_placeholder": ""
           }
         },
         "product_card_phJMKc": {
@@ -378,7 +378,7 @@
           "settings": {
             "product": "community-blend",
             "title_override": "The Community",
-            "description_override": "Origin and tasting notes TBA",
+            "description_override": "",
             "background_color": "#dce9e3",
             "image_alt": "",
             "image_width": 72,
@@ -386,12 +386,12 @@
             "image_vertical_alignment": "center",
             "image_horizontal_alignment": "center",
             "show_badge": true,
-            "badge_text": "Coming soon",
+            "badge_text": "",
             "cta_label": "View coffee",
             "cta_url": "",
             "show_price": true,
             "use_price_placeholder": true,
-            "price_placeholder": "Price TBA"
+            "price_placeholder": ""
           }
         },
         "product_card_G4d6FF": {
@@ -399,7 +399,7 @@
           "settings": {
             "product": "nature-reserve",
             "title_override": "Reserve",
-            "description_override": "Coffee details coming soon",
+            "description_override": "",
             "background_color": "#e7e6da",
             "image_alt": "",
             "image_width": 72,
@@ -412,6 +412,27 @@
             "cta_url": "",
             "show_price": true,
             "use_price_placeholder": true,
+            "price_placeholder": ""
+          }
+        },
+        "product_card_fNJpkT": {
+          "type": "product_card",
+          "settings": {
+            "product": "espresso-blend",
+            "title_override": "",
+            "description_override": "",
+            "background_color": "",
+            "image_alt": "",
+            "image_width": 72,
+            "image_padding": 20,
+            "image_vertical_alignment": "center",
+            "image_horizontal_alignment": "center",
+            "show_badge": false,
+            "badge_text": "Coming soon",
+            "cta_label": "View coffee",
+            "cta_url": "",
+            "show_price": true,
+            "use_price_placeholder": false,
             "price_placeholder": "Price TBA"
           }
         }
@@ -419,7 +440,8 @@
       "block_order": [
         "product_card_hDrbUw",
         "product_card_phJMKc",
-        "product_card_G4d6FF"
+        "product_card_G4d6FF",
+        "product_card_fNJpkT"
       ],
       "name": "Featured products",
       "settings": {
@@ -452,7 +474,7 @@
         "description_size_mobile": 14,
         "description_line_height": 150,
         "description_max_width": 700,
-        "columns": 3,
+        "columns": 4,
         "mobile_columns": "one",
         "grid_gap": 28,
         "header_gap": 36,
@@ -534,7 +556,7 @@
         "supporting_text_size": 11,
         "show_button": true,
         "button_label": "How local delivery works",
-        "button_url": "shopify://pages/frequently-asked-questions",
+        "button_url": "shopify://pages/local-delivery",
         "button_type": "custom",
         "button_background": "#ffffff",
         "button_color": "#173f35",

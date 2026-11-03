@@ -1,0 +1,33 @@
+{% doc %}
+  Renders one independently editable article FAQ item.
+  @example
+  {% content_for 'block', type: 'editorial-faq-item', id: 'faq' %}
+{% enddoc %}
+
+<details class="editorial-faq"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
+  <summary><span>{{ block.settings.question | escape }}</span><span class="editorial-faq__icon" aria-hidden="true">+</span></summary>
+  <div class="editorial-faq__answer rte">{{ block.settings.answer }}</div>
+</details>
+
+{% stylesheet %}
+  .editorial-faq { border-bottom: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15)); }
+  .editorial-faq summary { display: flex; min-height: 52px; padding-block: 14px; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; font-weight: 700; list-style: none; }
+  .editorial-faq summary::-webkit-details-marker { display: none; }
+  .editorial-faq__icon { font-size: 22px; font-weight: 400; transition: transform var(--animation-speed) ease; }
+  .editorial-faq[open] .editorial-faq__icon { transform: rotate(45deg); }
+  .editorial-faq__answer { padding: 0 36px 18px 0; font-size: 15px; line-height: 1.7; }
+  .editorial-faq__answer > * { margin-block: 0; }
+  @media (prefers-reduced-motion: reduce) { .editorial-faq__icon { transition: none; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article FAQ item",
+  "settings": [
+    { "type": "text", "id": "question", "label": "Question", "default": "Frequently asked question" },
+    { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Add a clear and helpful answer.</p>" },
+    { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+  ],
+  "presets": [{ "name": "Article FAQ item" }]
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+{% doc %}
+  Renders an article heading with an optional rule.
+  @example
+  {% content_for 'block', type: 'editorial-heading', id: 'heading' %}
+{% enddoc %}
+
+<div class="editorial-heading" style="--heading-color: {{ block.settings.color }}; --rule-color: {{ block.settings.rule_color }};" {{ block.shopify_attributes }}>
+  <{{ block.settings.heading_tag }}>{{ block.settings.heading | escape }}</{{ block.settings.heading_tag }}>
+  {% if block.settings.show_rule %}<hr>{% endif %}
+</div>
+
+{% stylesheet %}
+  .editorial-heading h2, .editorial-heading h3, .editorial-heading h4 { margin: 0; color: var(--heading-color); font-size: clamp(25px, 3vw, 34px); line-height: 1.15; letter-spacing: -0.025em; text-wrap: balance; }
+  .editorial-heading h3 { font-size: clamp(21px, 2.4vw, 27px); }
+  .editorial-heading h4 { font-size: clamp(18px, 2vw, 22px); }
+  .editorial-heading hr { height: 1px; margin: 10px 0 0; border: 0; background: var(--rule-color); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article heading",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Article section heading" },
+    { "type": "select", "id": "heading_tag", "label": "Heading level", "options": [{ "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }], "default": "h2" },
+    { "type": "checkbox", "id": "show_rule", "label": "Show divider", "default": true },
+    { "type": "color", "id": "color", "label": "Heading color", "default": "#25130d" },
+    { "type": "color", "id": "rule_color", "label": "Divider color", "default": "#ded7d1", "visible_if": "{{ block.settings.show_rule }}" }
+  ],
+  "presets": [{ "name": "Article heading" }]
+}
+{% endschema %}
