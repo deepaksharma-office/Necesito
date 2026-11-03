@@ -356,7 +356,7 @@
           "type": "product_card",
           "settings": {
             "product": "morning-blend",
-            "title_override": "",
+            "title_override": "Morning Blend",
             "description_override": "",
             "background_color": "#e9e2d2",
             "image_alt": "",
@@ -377,7 +377,7 @@
           "type": "product_card",
           "settings": {
             "product": "community-blend",
-            "title_override": "",
+            "title_override": "The Community",
             "description_override": "",
             "background_color": "#dce9e3",
             "image_alt": "",
@@ -398,7 +398,7 @@
           "type": "product_card",
           "settings": {
             "product": "nature-reserve",
-            "title_override": "",
+            "title_override": "Reserve",
             "description_override": "",
             "background_color": "#e7e6da",
             "image_alt": "",
