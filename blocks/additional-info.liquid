@@ -20,7 +20,6 @@
   assign roast_level = current_product.metafields.custom.roast_level
   assign cup_character = current_product.metafields.custom.cup_character
   assign cupping_score = current_product.metafields.custom.cupping_score
-  assign coffee_reference = current_product.metafields.custom.coffee_reference
   assign origin = current_product.metafields.custom.origin
   assign producer = current_product.metafields.custom.producer
   assign blend_composition = current_product.metafields.custom.blend_composition
@@ -155,15 +154,6 @@
     </div>
   {% endif %}
 
-  {% if coffee_reference.value != blank %}
-    {% assign visible_count = visible_count | plus: 1 %}
-    <div class="additional-info__item">
-      <span class="additional-info__label">Coffee Reference</span>
-      <div class="additional-info__value">
-        {{ coffee_reference | metafield_tag }}
-      </div>
-    </div>
-  {% endif %}
 
   {% if acidity.value != blank %}
     {% assign visible_count = visible_count | plus: 1 %}
