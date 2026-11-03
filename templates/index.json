@@ -356,8 +356,8 @@
           "type": "product_card",
           "settings": {
             "product": "morning-blend",
-            "title_override": "Morning Blend",
-            "description_override": "Roast and tasting notes TBA",
+            "title_override": "",
+            "description_override": "",
             "background_color": "#e9e2d2",
             "image_alt": "",
             "image_width": 72,
@@ -377,8 +377,8 @@
           "type": "product_card",
           "settings": {
             "product": "community-blend",
-            "title_override": "The Community",
-            "description_override": "Origin and tasting notes TBA",
+            "title_override": "",
+            "description_override": "",
             "background_color": "#dce9e3",
             "image_alt": "",
             "image_width": 72,
@@ -398,8 +398,8 @@
           "type": "product_card",
           "settings": {
             "product": "nature-reserve",
-            "title_override": "Reserve",
-            "description_override": "Coffee details coming soon",
+            "title_override": "",
+            "description_override": "",
             "background_color": "#e7e6da",
             "image_alt": "",
             "image_width": 72,
@@ -420,7 +420,7 @@
           "settings": {
             "product": "espresso-blend",
             "title_override": "",
-            "description_override": "A rich, full-bodied espresso blend.",
+            "description_override": "",
             "background_color": "",
             "image_alt": "",
             "image_width": 72,
