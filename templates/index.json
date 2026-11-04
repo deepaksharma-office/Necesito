@@ -842,7 +842,7 @@
           "type": "information_card",
           "settings": {
             "icon": "clock",
-            "heading": "Ordering & closures",
+            "heading": "Scheduled Closures.",
             "description": "<p>Online-only. Find the latest updates.</p>",
             "url": "",
             "open_in_new_tab": false
