@@ -9,6 +9,118 @@
  */
 {
   "sections": {
+    "editorial_article_yXk3XU": {
+      "type": "editorial-article",
+      "blocks": {
+        "group_X3wYgb": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_HhMe9b": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>For Necesito Coffee Roasters LLC, a new home roastery in Estero, Florida, coffee is an opportunity to bring neighbors together. Serving The Place at Corkscrew, a gated community along Corkscrew Road, the business is taking shape around small-batch roasting and neighborhood connections. Owners Jeff and Sydne McKechnie are excited to begin this venture and look forward to meeting their neighbors over a cup of coffee.<br/>At the center of Necesito’s operation is a Mill City Roasters MCR-2E electric roaster. The manufacturer describes the 2-kilogram machine as designed for small-batch production, with digital controls and RoastPATH connectivity. For Necesito, the machine anchors the owners’ new home roasting operation. [1]<br/></p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "image_c7QTdK": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "{{ closest.article.image }}",
+                "link": "",
+                "image_ratio": "adapt",
+                "width": "custom",
+                "custom_width": 60,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_HhMe9b",
+            "image_c7QTdK"
+          ]
+        }
+      },
+      "block_order": [
+        "group_X3wYgb"
+      ],
+      "name": "Editorial article",
+      "settings": {
+        "content_width": 800,
+        "block_gap": 24,
+        "background_color": "",
+        "padding_top": 56,
+        "padding_bottom": 80
+      }
+    },
     "section": {
       "type": "main-blog-post",
       "blocks": {
@@ -138,6 +250,7 @@
         "group_Kt9wyY",
         "blog-post-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -148,6 +261,7 @@
     }
   },
   "order": [
+    "editorial_article_yXk3XU",
     "section"
   ]
 }
