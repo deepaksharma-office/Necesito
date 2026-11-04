@@ -277,11 +277,22 @@
             "text_Fe6Pbp",
             "text_RA3BEW"
           ]
+        },
+        "editorial_divider_LCVMra": {
+          "type": "editorial-divider",
+          "name": "Article divider",
+          "settings": {
+            "color": "#ded7d1",
+            "thickness": 1,
+            "spacing": 8
+          },
+          "blocks": {}
         }
       },
       "block_order": [
         "group_X3wYgb",
-        "group_ErYcnE"
+        "group_ErYcnE",
+        "editorial_divider_LCVMra"
       ],
       "name": "Editorial article",
       "settings": {
