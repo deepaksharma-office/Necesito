@@ -86,8 +86,8 @@
           "settings": {
             "object_name": "Left product",
             "role": "product",
-            "image": "shopify://shop_images/IMG_7951_8edb84ad-d93a-41c3-9784-c76f80a67083.jpg",
-            "alt_text": "",
+            "image": "shopify://shop_images/morningblend_4a48ae7b-5fa9-4b6f-8637-49cad3d4d345.png",
+            "alt_text": "Morning Blend",
             "circle_color": "#dce8d3",
             "left": 28,
             "top": 61,
@@ -109,8 +109,8 @@
           "settings": {
             "object_name": "Center product",
             "role": "product",
-            "image": "shopify://shop_images/IMG_7941_e0913dec-aec3-4313-bc2f-60a32e4995dc.jpg",
-            "alt_text": "",
+            "image": "shopify://shop_images/reserve_957097f6-bd33-4196-a4db-7d3c7d285955.png",
+            "alt_text": "The Reserve",
             "circle_color": "#dce8d3",
             "left": 50,
             "top": 48,
@@ -132,8 +132,8 @@
           "settings": {
             "object_name": "Right product",
             "role": "product",
-            "image": "shopify://shop_images/IMG_7946_3a9a94fe-72db-4db5-8f71-52ebcdcca7ea.jpg",
-            "alt_text": "",
+            "image": "shopify://shop_images/thecommunity_6e512ece-be42-4d7c-8865-8ea056d5a92f.png",
+            "alt_text": "The Community",
             "circle_color": "#dce8d3",
             "left": 73,
             "top": 62,
@@ -934,6 +934,7 @@
       "settings": {
         "blog": "news",
         "article_limit": 3,
+        "show_pagination": true,
         "category_source": "first_tag",
         "show_excerpts": true,
         "show_article_links": true,
