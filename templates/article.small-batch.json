@@ -286,7 +286,7 @@
       "name": "Editorial article",
       "settings": {
         "content_width": 800,
-        "block_gap": 24,
+        "block_gap": 12,
         "background_color": "",
         "padding_top": 56,
         "padding_bottom": 80
