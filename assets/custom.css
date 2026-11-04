@@ -5,3 +5,8 @@
     align-items: start !important;
     margin: 1rem 0 !important;
 }
+
+.jm-action-buttons[data-v-1f1d8788]>* {
+    flex-grow: 2;
+    text-align: left !important;
+}
