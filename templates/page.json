@@ -243,7 +243,7 @@
                 "product_card_gallery_HEnDie": {
                   "type": "_product-card-gallery",
                   "settings": {
-                    "image_ratio": "adapt",
+                    "image_ratio": "portrait",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
@@ -385,7 +385,7 @@
                 "product_card_gallery_nXHnTA": {
                   "type": "_product-card-gallery",
                   "settings": {
-                    "image_ratio": "adapt",
+                    "image_ratio": "portrait",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
@@ -565,7 +565,7 @@
                 "product_card_gallery_n6WpXN": {
                   "type": "_product-card-gallery",
                   "settings": {
-                    "image_ratio": "adapt",
+                    "image_ratio": "portrait",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
@@ -707,7 +707,7 @@
                 "product_card_gallery_wFbagc": {
                   "type": "_product-card-gallery",
                   "settings": {
-                    "image_ratio": "adapt",
+                    "image_ratio": "portrait",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
