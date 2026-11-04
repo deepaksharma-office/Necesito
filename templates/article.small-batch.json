@@ -19,7 +19,7 @@
             "content_direction": "row",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
+            "vertical_alignment": "flex-start",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
@@ -56,7 +56,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>For Necesito Coffee Roasters LLC, a new home roastery in Estero, Florida, coffee is an opportunity to bring neighbors together. Serving The Place at Corkscrew, a gated community along Corkscrew Road, the business is taking shape around small-batch roasting and neighborhood connections. Owners Jeff and Sydne McKechnie are excited to begin this venture and look forward to meeting their neighbors over a cup of coffee.<br/>At the center of Necesito’s operation is a Mill City Roasters MCR-2E electric roaster. The manufacturer describes the 2-kilogram machine as designed for small-batch production, with digital controls and RoastPATH connectivity. For Necesito, the machine anchors the owners’ new home roasting operation. [1]<br/></p>",
+                "text": "<p>For Necesito Coffee Roasters LLC, a new home roastery in Estero, Florida, coffee is an opportunity to bring neighbors together. Serving The Place at Corkscrew, a gated community along Corkscrew Road, the business is taking shape around small-batch roasting and neighborhood connections. Owners Jeff and Sydne McKechnie are excited to begin this venture and look forward to meeting their neighbors over a cup of coffee.<br/><br/>At the center of Necesito’s operation is a Mill City Roasters MCR-2E electric roaster. The manufacturer describes the 2-kilogram machine as designed for small-batch production, with digital controls and RoastPATH connectivity. For Necesito, the machine anchors the owners’ new home roasting operation.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -179,10 +179,109 @@
             "text_HhMe9b",
             "group_je8mcT"
           ]
+        },
+        "group_ErYcnE": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_Fe6Pbp": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>For independent coffee businesses, the relationship with an equipment manufacturer can influence the purchase. Ant Walach, co-owner of Snowdrift Coffee in Roscoe, Illinois, selected a Mill City machine after working with several competing brands. In an interview published by Mill City, he cited accessibility for small businesses and openness to feedback. “The team was very receptive to our needs,” Walach said.</p><p>Education and room to grow also feature in the story of Happy Home Coffee Roasters in Des Moines, Iowa. According to a 2023 Mill City profile, Carlos Sims Jr. discovered the company’s educational material while learning to roast. He launched the business with an MCR-500 in 2019, later moving production to an MCR-3 and retaining the smaller machine for sample roasting.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_RA3BEW": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Support continues after delivery. Mill City says new roaster purchases include a setup and seasoning-roast video service, connecting owners with technical and roasting staff as they begin using their equipment. It's Minneapolis team also assists with troubleshooting and replacement parts, giving small operators a resource for maintaining their machines.</p><p>For Necesito, the work ahead is rooted in the neighborhood it hopes to serve. The McKechnies are eager to share their<br/>enthusiasm for coffee as they develop their new home roastery. They look forward to getting to know the people of The Place at Corkscrew, exchanging stories and building friendships over a freshly brewed cup.</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_Fe6Pbp",
+            "text_RA3BEW"
+          ]
         }
       },
       "block_order": [
-        "group_X3wYgb"
+        "group_X3wYgb",
+        "group_ErYcnE"
       ],
       "name": "Editorial article",
       "settings": {
