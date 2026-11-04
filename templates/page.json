@@ -125,7 +125,7 @@
     "section_Gn8UJJ": {
       "type": "section",
       "blocks": {
-        "group_dUMrJb": {
+        "group_zPrEEh": {
           "type": "group",
           "name": "t:names.group",
           "settings": {
@@ -137,8 +137,8 @@
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
             "gap": 12,
-            "width": "custom",
-            "custom_width": 30,
+            "width": "fill",
+            "custom_width": 100,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fit",
@@ -165,45 +165,70 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "judge_me_reviews_review_widget_homepage_XHAARV": {
-              "type": "shopify://apps/judge-me-reviews/blocks/review_widget_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+            "group_m8LJbz": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "custom",
+                "custom_width": 30,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "judge_me_reviews_review_widget_homepage_XHAARV": {
+                  "type": "shopify://apps/judge-me-reviews/blocks/review_widget_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+                  "settings": {
+                    "product": "morning-blend",
+                    "review_data": "sample_data",
+                    "max_width": 1200
+                  }
+                }
+              },
+              "block_order": [
+                "judge_me_reviews_review_widget_homepage_XHAARV"
+              ]
+            },
+            "product_card_hzhVJm": {
+              "type": "product-card",
+              "name": "t:names.product_card",
               "settings": {
                 "product": "morning-blend",
-                "review_data": "sample_data",
-                "max_width": 1200
-              }
-            }
-          },
-          "block_order": [
-            "judge_me_reviews_review_widget_homepage_XHAARV"
-          ]
-        },
-        "product_card_GJzrcN": {
-          "type": "product-card",
-          "name": "t:names.product_card",
-          "settings": {
-            "product": "morning-blend",
-            "product_card_gap": 4,
-            "width": "custom",
-            "custom_width": 20,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_HEnDie": {
-              "type": "_product-card-gallery",
-              "settings": {
-                "image_ratio": "adapt",
+                "product_card_gap": 4,
+                "width": "custom",
+                "custom_width": 20,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "background_color": "",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -214,17 +239,37 @@
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
-              "blocks": {}
+              "blocks": {
+                "product_card_gallery_HEnDie": {
+                  "type": "_product-card-gallery",
+                  "settings": {
+                    "image_ratio": "adapt",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_color": "",
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "product_card_gallery_HEnDie"
+              ]
             }
           },
           "block_order": [
-            "product_card_gallery_HEnDie"
+            "group_m8LJbz",
+            "product_card_hzhVJm"
           ]
         }
       },
       "block_order": [
-        "group_dUMrJb",
-        "product_card_GJzrcN"
+        "group_zPrEEh"
       ],
       "name": "t:names.custom_section",
       "settings": {
