@@ -1114,6 +1114,7 @@
     },
     "newsletter_signup_NpmNGA": {
       "type": "newsletter-signup",
+      "disabled": true,
       "name": "Newsletter signup",
       "settings": {
         "eyebrow": "SUBSCRIBE TO OUR NEWSLETTER",
