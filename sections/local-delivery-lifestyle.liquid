@@ -1,0 +1,40 @@
+<section class="delivery-lifestyle" style="--dl-bg:{{ section.settings.background_color }};--dl-width:{{ section.settings.page_width }}px;--dl-gutter:{{ section.settings.padding_inline }}px;--dl-top:{{ section.settings.padding_top }}px;--dl-bottom:{{ section.settings.padding_bottom }}px;--dl-gap:{{ section.settings.column_gap }}px;--dl-image-width:{{ section.settings.image_width }}%;--dl-radius:{{ section.settings.image_radius }}px;">
+  <div class="delivery-lifestyle__inner">
+    <div class="delivery-lifestyle__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1800 | image_tag: widths: '480, 720, 960, 1200, 1500, 1800', sizes: '(min-width: 750px) 56vw, 92vw', loading: 'lazy', alt: section.settings.image_alt, class: 'delivery-lifestyle__image' }}
+      {% elsif request.design_mode %}{{ 'lifestyle-2' | placeholder_svg_tag: 'delivery-lifestyle__placeholder' }}{% endif %}
+    </div>
+    <div class="delivery-lifestyle__content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'heading' %}{% if block.settings.text != blank %}<h2 class="delivery-lifestyle__heading" style="--b-color:{{ block.settings.color }};--b-size:{{ block.settings.size }}px;--b-mobile:{{ block.settings.size_mobile }}px;--b-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.text | escape | newline_to_br }}</h2>{% endif %}
+          {% when 'text' %}{% if block.settings.text != blank %}<div class="delivery-lifestyle__text" style="--b-color:{{ block.settings.color }};--b-size:{{ block.settings.size }}px;--b-width:{{ block.settings.max_width }}px;--b-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>{% endif %}
+          {% when 'link' %}{% if block.settings.label != blank %}<a class="delivery-lifestyle__link" href="{{ block.settings.link | default: '#' }}" style="--b-color:{{ block.settings.color }};--b-size:{{ block.settings.size }}px;--b-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>{% endif %}
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .delivery-lifestyle{padding-block:var(--dl-top) var(--dl-bottom);background:var(--dl-bg)}
+  .delivery-lifestyle__inner{display:grid;grid-template-columns:minmax(0,var(--dl-image-width)) minmax(0,1fr);align-items:center;gap:var(--dl-gap);width:min(calc(100% - 2 * var(--dl-gutter)),var(--dl-width));margin-inline:auto}
+  .delivery-lifestyle__media{overflow:hidden;min-width:0;border-radius:var(--dl-radius)}.delivery-lifestyle__image,.delivery-lifestyle__placeholder{display:block;width:100%;height:auto;aspect-ratio:1.54;object-fit:cover}
+  .delivery-lifestyle__content{min-width:0}.delivery-lifestyle__content>*{margin-block-start:var(--b-space,24px);margin-block-end:0}.delivery-lifestyle__content>:first-child{margin-block-start:0}
+  .delivery-lifestyle__heading{color:var(--b-color);font-size:var(--b-size);font-weight:400;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+  .delivery-lifestyle__text{max-width:var(--b-width);color:var(--b-color);font-size:var(--b-size);line-height:1.45}.delivery-lifestyle__text>*{margin:0}
+  .delivery-lifestyle__link{display:inline-block;color:var(--b-color);font-size:var(--b-size);font-weight:700;line-height:1.2;text-underline-offset:7px;text-decoration-thickness:1px}
+  .delivery-lifestyle__link:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+  @media(max-width:749px){.delivery-lifestyle__inner{grid-template-columns:1fr;gap:34px}.delivery-lifestyle__heading{font-size:var(--b-mobile)}}
+{% endstylesheet %}
+
+{% schema %}
+{"name":"Local delivery lifestyle","tag":"section","class":"section-wrapper","max_blocks":3,
+"settings":[{"type":"image_picker","id":"image","label":"Image"},{"type":"text","id":"image_alt","label":"Image alt text","default":"Neighbors enjoying Necesito coffee outdoors"},{"type":"color","id":"background_color","label":"Background color","default":"#f5efe5"},{"type":"range","id":"image_width","label":"Image column width","min":40,"max":70,"step":1,"unit":"%","default":57},{"type":"range","id":"image_radius","label":"Image corner radius","min":0,"max":40,"step":2,"unit":"px","default":14},{"type":"range","id":"column_gap","label":"Column gap","min":20,"max":120,"step":4,"unit":"px","default":56},{"type":"range","id":"page_width","label":"Maximum width","min":720,"max":1600,"step":20,"unit":"px","default":1320},{"type":"range","id":"padding_inline","label":"Horizontal padding","min":16,"max":80,"step":4,"unit":"px","default":40},{"type":"header","content":"Spacing"},{"type":"range","id":"padding_top","label":"Padding top","min":0,"max":200,"step":4,"unit":"px","default":64},{"type":"range","id":"padding_bottom","label":"Padding bottom","min":0,"max":200,"step":4,"unit":"px","default":48}],
+"blocks":[
+{"type":"heading","name":"Heading","settings":[{"type":"textarea","id":"text","label":"Text","default":"Good mornings\nstart close\nto home."},{"type":"color","id":"color","label":"Color","default":"#174c3b"},{"type":"range","id":"size","label":"Desktop size","min":24,"max":64,"step":2,"unit":"px","default":44},{"type":"range","id":"size_mobile","label":"Mobile size","min":22,"max":46,"step":2,"unit":"px","default":34},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":80,"step":2,"unit":"px","default":0}]},
+{"type":"text","name":"Text","settings":[{"type":"richtext","id":"text","label":"Text","default":"<p>Freshly roasted coffee. A friendly neighborhood delivery. A little more joy in your daily ritual.</p>"},{"type":"color","id":"color","label":"Color","default":"#68452f"},{"type":"range","id":"size","label":"Font size","min":12,"max":24,"step":1,"unit":"px","default":16},{"type":"range","id":"max_width","label":"Maximum width","min":220,"max":700,"step":20,"unit":"px","default":380},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":100,"step":2,"unit":"px","default":58}]},
+{"type":"link","name":"Link","settings":[{"type":"text","id":"label","label":"Label","default":"Find your next favorite"},{"type":"url","id":"link","label":"Link"},{"type":"color","id":"color","label":"Color","default":"#174c3b"},{"type":"range","id":"size","label":"Font size","min":12,"max":22,"step":1,"unit":"px","default":16},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":80,"step":2,"unit":"px","default":36}]}
+],"presets":[{"name":"Local delivery lifestyle","blocks":[{"type":"heading"},{"type":"text"},{"type":"link"}]}]}
+{% endschema %}

@@ -1,0 +1,64 @@
+<section class="delivery-area" style="--da-page-width:{{ section.settings.page_width }}px;--da-gutter:{{ section.settings.padding_inline }}px;--da-top:{{ section.settings.padding_top }}px;--da-bottom:{{ section.settings.padding_bottom }}px;--da-card:{{ section.settings.card_color }};--da-text:{{ section.settings.text_color }};--da-accent:{{ section.settings.accent_color }};--da-divider:{{ section.settings.divider_color }};--da-radius:{{ section.settings.corner_radius }}px;--da-gap:{{ section.settings.column_gap }}px;--da-card-padding:{{ section.settings.card_padding }}px;">
+  <div class="delivery-area__inner">
+    <div class="delivery-area__card">
+      <div class="delivery-area__media">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 1400 | image_tag: widths: '360, 540, 720, 960, 1200, 1400', sizes: '(min-width: 750px) 46vw, 92vw', loading: 'lazy', alt: section.settings.image_alt, class: 'delivery-area__image' }}
+        {% elsif request.design_mode %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'delivery-area__placeholder' }}
+        {% endif %}
+      </div>
+
+      <div class="delivery-area__content">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'eyebrow' %}
+              {% if block.settings.text != blank %}<p class="delivery-area__eyebrow" style="--block-size:{{ block.settings.size }}px;--block-color:{{ block.settings.color }};--block-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</p>{% endif %}
+            {% when 'heading' %}
+              {% if block.settings.text != blank %}<h2 class="delivery-area__heading" style="--block-size:{{ block.settings.size }}px;--block-size-mobile:{{ block.settings.size_mobile }}px;--block-color:{{ block.settings.color }};--block-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.text | escape | newline_to_br }}</h2>{% endif %}
+            {% when 'text' %}
+              {% if block.settings.text != blank %}<div class="delivery-area__text" style="--block-size:{{ block.settings.size }}px;--block-color:{{ block.settings.color }};--block-width:{{ block.settings.max_width }}px;--block-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>{% endif %}
+            {% when 'button' %}
+              {% if block.settings.label != blank %}<a class="delivery-area__button" href="{{ block.settings.link | default: '#' }}" style="--button-size:{{ block.settings.size }}px;--button-color:{{ block.settings.color }};--button-border:{{ block.settings.border_color }};--button-radius:{{ block.settings.radius }}px;--block-space:{{ block.settings.spacing }}px;" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}<span aria-hidden="true">&rarr;</span></a>{% endif %}
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .delivery-area{padding-block:var(--da-top) var(--da-bottom);background:#f5efe5}
+  .delivery-area__inner{width:min(calc(100% - 2 * var(--da-gutter)),var(--da-page-width));margin-inline:auto}
+  .delivery-area__card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--da-gap);padding:var(--da-card-padding);border-radius:var(--da-radius);background:var(--da-card);color:var(--da-text)}
+  .delivery-area__media{display:grid;place-items:center;min-width:0;min-height:280px;padding-inline-end:var(--da-gap);border-inline-end:1px solid var(--da-divider)}
+  .delivery-area__image,.delivery-area__placeholder{display:block;width:100%;height:auto;max-height:360px;object-fit:contain}
+  .delivery-area__content{align-self:center;min-width:0}.delivery-area__content>*{margin-block-start:var(--block-space,18px);margin-block-end:0}.delivery-area__content>:first-child{margin-block-start:0}
+  .delivery-area__eyebrow{color:var(--block-color);font-size:var(--block-size);font-weight:700;line-height:1.2;letter-spacing:.03em;text-transform:uppercase}
+  .delivery-area__heading{color:var(--block-color);font-size:var(--block-size);font-weight:400;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+  .delivery-area__text{max-width:var(--block-width);color:var(--block-color);font-size:var(--block-size);line-height:1.45}.delivery-area__text>*{margin:0}
+  .delivery-area__button{display:inline-flex;align-items:center;justify-content:space-between;gap:34px;min-width:250px;min-height:48px;padding:12px 16px;border:1px solid var(--button-border);border-radius:var(--button-radius);color:var(--button-color);font-size:var(--button-size);font-weight:700;line-height:1;text-decoration:none;transition:background-color var(--animation-speed) ease,color var(--animation-speed) ease}
+  .delivery-area__button:hover{color:var(--da-card);background:var(--button-color)}.delivery-area__button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+  @media(max-width:749px){.delivery-area__card{grid-template-columns:1fr;padding:calc(var(--da-card-padding)*.65)}.delivery-area__media{min-height:0;padding:0 0 28px;border-inline-end:0;border-block-end:1px solid var(--da-divider)}.delivery-area__heading{font-size:var(--block-size-mobile)}.delivery-area__button{width:100%;min-width:0}}
+  @media(prefers-reduced-motion:reduce){.delivery-area__button{transition:none}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Local delivery area","tag":"section","class":"section-wrapper","max_blocks":4,
+  "settings":[
+    {"type":"image_picker","id":"image","label":"Map image"},{"type":"text","id":"image_alt","label":"Image alt text","default":"Map of The Place at Corkscrew delivery area"},
+    {"type":"color","id":"card_color","label":"Card background","default":"#104832"},{"type":"color","id":"text_color","label":"Text color","default":"#f9f5e9"},{"type":"color","id":"accent_color","label":"Accent color","default":"#becd72"},{"type":"color","id":"divider_color","label":"Divider color","default":"#62816f"},
+    {"type":"range","id":"corner_radius","label":"Corner radius","min":0,"max":40,"step":2,"unit":"px","default":18},{"type":"range","id":"card_padding","label":"Card padding","min":20,"max":80,"step":4,"unit":"px","default":48},{"type":"range","id":"column_gap","label":"Column gap","min":20,"max":100,"step":4,"unit":"px","default":52},
+    {"type":"range","id":"page_width","label":"Maximum width","min":720,"max":1600,"step":20,"unit":"px","default":1320},{"type":"range","id":"padding_inline","label":"Horizontal padding","min":16,"max":80,"step":4,"unit":"px","default":40},
+    {"type":"header","content":"Spacing"},{"type":"range","id":"padding_top","label":"Padding top","min":0,"max":200,"step":4,"unit":"px","default":64},{"type":"range","id":"padding_bottom","label":"Padding bottom","min":0,"max":200,"step":4,"unit":"px","default":64}
+  ],
+  "blocks":[
+    {"type":"eyebrow","name":"Eyebrow","settings":[{"type":"text","id":"text","label":"Text","default":"KEEPING IT LOCAL"},{"type":"color","id":"color","label":"Color","default":"#becd72"},{"type":"range","id":"size","label":"Font size","min":8,"max":22,"step":1,"unit":"px","default":11},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":60,"step":2,"unit":"px","default":0}]},
+    {"type":"heading","name":"Heading","settings":[{"type":"textarea","id":"text","label":"Text","default":"Made in Estero.\nDelivered in The Place."},{"type":"color","id":"color","label":"Color","default":"#f9f5e9"},{"type":"range","id":"size","label":"Desktop size","min":24,"max":64,"step":2,"unit":"px","default":42},{"type":"range","id":"size_mobile","label":"Mobile size","min":22,"max":46,"step":2,"unit":"px","default":32},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":60,"step":2,"unit":"px","default":18}]},
+    {"type":"text","name":"Text","settings":[{"type":"richtext","id":"text","label":"Text","default":"<p>Local delivery is available exclusively within The Place at Corkscrew. Eligible addresses will see local delivery at checkout.</p>"},{"type":"color","id":"color","label":"Color","default":"#f9f5e9"},{"type":"range","id":"size","label":"Font size","min":12,"max":24,"step":1,"unit":"px","default":16},{"type":"range","id":"max_width","label":"Maximum width","min":240,"max":700,"step":20,"unit":"px","default":440},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":80,"step":2,"unit":"px","default":34}]},
+    {"type":"button","name":"Button","settings":[{"type":"text","id":"label","label":"Label","default":"Shop for Local Delivery"},{"type":"url","id":"link","label":"Link"},{"type":"color","id":"color","label":"Text color","default":"#f9f5e9"},{"type":"color","id":"border_color","label":"Border color","default":"#f9f5e9"},{"type":"range","id":"size","label":"Font size","min":12,"max":22,"step":1,"unit":"px","default":15},{"type":"range","id":"radius","label":"Corner radius","min":0,"max":30,"step":2,"unit":"px","default":4},{"type":"range","id":"spacing","label":"Spacing above","min":0,"max":80,"step":2,"unit":"px","default":24}]}
+  ],
+  "presets":[{"name":"Local delivery area","blocks":[{"type":"eyebrow"},{"type":"heading"},{"type":"text"},{"type":"button"}]}]
+}
+{% endschema %}

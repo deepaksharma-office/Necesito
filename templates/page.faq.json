@@ -72,14 +72,6 @@
             "heading": "Freshness & Grinding"
           }
         },
-        "grind_choice": {
-          "type": "faq",
-          "settings": {
-            "question": "Should I order Whole Bean or Medium Ground (Drip)?",
-            "answer": "<p>Choose Whole Bean if you have a coffee grinder at home. Grinding immediately before brewing generally gives you the freshest flavor.</p><p>Choose Medium Ground (Drip) if you use a traditional automatic drip coffee maker and want your coffee ready to brew when it arrives.</p>",
-            "open_by_default": false
-          }
-        },
         "coffee_storage": {
           "type": "faq",
           "settings": {
@@ -138,7 +130,7 @@
           "type": "faq",
           "settings": {
             "question": "What happens if I live outside the local delivery area?",
-            "answer": "<p>At this time, we're focused on serving our immediate neighborhood. If your address falls outside our current delivery area, checkout will let you know that delivery is unavailable.</p><p>We're starting local intentionally and plan to broaden our delivery area as Necesito Coffee Roasters grows.</p>",
+            "answer": "<p>Your coffee will be happily shipped to your address via USPS, UPS, or another shipping service.</p>",
             "open_by_default": false
           }
         },
@@ -196,7 +188,6 @@
         "coffee_organic",
         "coffee_single_origin",
         "category_freshness",
-        "grind_choice",
         "coffee_storage",
         "bag_size",
         "brewing",

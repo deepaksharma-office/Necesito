@@ -15,15 +15,16 @@
         "hero": {
           "type": "editorial-article-hero",
           "settings": {
-            "show_breadcrumbs": true,
-            "label_1": "Guides",
-            "label_2": "Necesito News",
+            "show_breadcrumbs": false,
+            "label_1": "",
+            "label_2": "",
             "use_article_title": true,
-            "summary": "<p>Add a clear, compelling summary that tells readers exactly what this guide covers.</p>",
+            "title": "A complete guide",
+            "summary": "<p>Oily dark roast beans are the number one cause of Jura grinder clogs and declining coffee quality. Here is exactly what happens inside the machine, which beans are safe, and how to recover if you have already been using oily beans.</p>",
             "use_article_image": true,
             "image_radius": 8,
-            "background": "#2f160d",
-            "foreground": "#fffaf4",
+            "background": "#F7F5F2",
+            "foreground": "{{ settings.color_palette.foreground }}",
             "accent": "#d7b77d"
           },
           "blocks": {}
@@ -31,7 +32,7 @@
         "intro": {
           "type": "editorial-rich-text",
           "settings": {
-            "content": "<p><strong>Short answer:</strong> Lead with the most useful conclusion, then explain the context readers need to understand it.</p><p>Use a second paragraph for an important supporting point.</p>",
+            "content": "<p><strong>Short answer: you can use dark roast beans in a Jura, but only if they are dry to the touch.</strong> The issue is not the roast level itself - it is the oil. Oily beans coat the grinder burrs, clog the coffee chute, and gum up the brew unit. Over time, this leads to weak coffee, grinder jams, and expensive repairs.</p><p>This is the number one preventable maintenance issue on Jura machines, and the manual barely mentions it.</p>",
             "font_size": 16,
             "color": "#3f3029"
           },
@@ -39,13 +40,19 @@
         },
         "heading_1": {
           "type": "editorial-heading",
-          "settings": { "heading": "What you need to know", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "What Happens When You Use Oily Beans",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "content_1": {
           "type": "editorial-rich-text",
           "settings": {
-            "content": "<p>Introduce the topic and break complex details into a readable list:</p><ol><li><strong>First consideration</strong> — explain why it matters.</li><li><strong>Second consideration</strong> — add the practical detail.</li><li><strong>Third consideration</strong> — describe the likely outcome.</li></ol><p>Close this section with the main takeaway.</p>",
+            "content": "<p>When beans have visible oil on their surface, that oil transfers to every surface it touches inside the machine:</p><ol><li><strong>Grinder burrs</strong> - oil coats the burrs, reducing their ability to grip and shatter beans consistently. Grind quality drops.</li><li><strong>Coffee chute</strong> - the narrow passage between grinder and brew unit collects oil residue. Over weeks, this builds up and narrows the chute, eventually blocking it.</li><li><strong>Brew unit</strong> - oil deposits on the piston, seals, and chamber walls. This produces rancid, stale flavors even with fresh beans.</li><li><strong>Bean hopper</strong> - oily residue accumulates on the hopper walls and the funnel opening, attracting old grounds and creating a sticky film.</li></ol><p>The damage is cumulative. You will not notice a problem after one bag. After 3-4 bags of oily beans, grind consistency drops. After 6+ bags, you may start getting weak coffee, grinder errors, or a complete chute blockage.</p>",
             "font_size": 16,
             "color": "#3f3029"
           },
@@ -53,133 +60,270 @@
         },
         "heading_2": {
           "type": "editorial-heading",
-          "settings": { "heading": "A quick comparison", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "How to Tell If Your Beans Are Too Oily",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "comparison_table": {
           "type": "editorial-table",
           "settings": {
             "accessible_label": "Guide comparison",
-            "caption": "Use this table to help readers compare the available options.",
+            "caption": "Pick up a few beans and look at them:",
             "header_1": "What you see",
-            "header_2": "Recommended",
+            "header_2": "Safe for Jura?",
             "header_3": "Examples",
-            "row_1_1": "First option",
+            "row_1_1": "Dry, matte surface",
             "row_1_2": "Yes",
-            "row_1_3": "Add examples here",
-            "row_2_1": "Second option",
-            "row_2_2": "Borderline",
-            "row_2_3": "Add examples here",
-            "row_3_1": "Third option",
+            "row_1_3": "Most medium roasts, illy Classico, Lavazza Super Crema",
+            "row_2_1": "Slight sheen, barely visible",
+            "row_2_2": "Yes (borderline)",
+            "row_2_3": "Some medium-dark roasts, Lavazza Gran Selezione",
+            "row_3_1": "Visible oil, shiny surface",
             "row_3_2": "No",
-            "row_3_3": "Add examples here"
+            "row_3_3": "Starbucks French Roast, Peet’s Major Dickason’s, most “Italian” and “French” roasts",
+            "row_4_1": "Oil pooling in the bag",
+            "row_4_2": "Definitely no",
+            "row_4_3": "Ultra-dark roasts, some single-origin dark roasts",
+            "row_5_1": "",
+            "row_5_2": "",
+            "row_5_3": "",
+            "row_6_1": "",
+            "row_6_2": "",
+            "row_6_3": ""
           },
           "blocks": {}
         },
         "content_2": {
           "type": "editorial-rich-text",
-          "settings": { "content": "<p><strong>Practical test:</strong> Add a short method readers can use to make the right choice.</p>", "font_size": 16, "color": "#3f3029" },
+          "settings": {
+            "content": "<p><strong>The bag test:</strong> If the inside of the bag is oily or greasy, the beans are too oily for a super-automatic.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
           "blocks": {}
         },
-        "cards": {
-          "type": "editorial-card-row",
-          "settings": { "columns": 2, "gap": 16 },
-          "blocks": {
-            "card_1": {
-              "type": "editorial-link-card",
-              "settings": { "eyebrow": "Recommended", "title": "First helpful resource", "text": "Explain what readers will find after clicking.", "link_label": "See our picks", "link": "", "background": "#ffffff", "border": "#d8c6ab" },
-              "blocks": {}
-            },
-            "card_2": {
-              "type": "editorial-link-card",
-              "settings": { "eyebrow": "Our pick", "title": "Second helpful resource", "text": "Explain why this recommendation is useful.", "link_label": "Learn more", "link": "", "background": "#ffffff", "border": "#ded7d1" },
-              "blocks": {}
-            }
+        "editorial_rich_text_RbpfFw": {
+          "type": "editorial-rich-text",
+          "settings": {
+            "content": "<p><strong>The paper test:</strong> Place a few beans on a white paper towel for 30 seconds. If they leave an oil stain, they are too oily.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
           },
-          "block_order": ["card_1", "card_2"]
+          "blocks": {}
         },
         "heading_3": {
           "type": "editorial-heading",
-          "settings": { "heading": "Detailed recommendations", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "Dark Roast Beans That ARE Safe for Jura",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "content_3": {
           "type": "editorial-rich-text",
-          "settings": { "content": "<p>Use separate content blocks for each major part of the guide. This keeps every passage editable and reorderable.</p><ul><li><strong>Recommendation one</strong> — supporting explanation.</li><li><strong>Recommendation two</strong> — supporting explanation.</li><li><strong>Recommendation three</strong> — supporting explanation.</li></ul>", "font_size": 16, "color": "#3f3029" },
+          "settings": {
+            "content": "<p>Dark roast does not automatically mean oily. Some dark roasts are processed to remain dry on the surface. These are safe:</p><p><strong>Lavazza Gran Selezione</strong> - labeled “dark roast” but the surface stays relatively dry. Slight sheen is normal and will not cause problems. Good for owners who want bold, intense espresso without risking the grinder.</p><p><strong>Kicking Horse Cliff Hanger Espresso</strong> - medium-dark with a dry surface. Strong flavor without the oil problem. Organic and Fair Trade.</p><p><strong>Don Pablo Subtle Earth Organic</strong> - medium-dark, consistently dry. Good balance of bold flavor and grinder safety.</p><p>The key is checking the actual bean surface, not the roast label. “Dark roast” is a spectrum, and the dryer end of that spectrum is fine for Jura machines.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
           "blocks": {}
         },
         "heading_steps": {
           "type": "editorial-heading",
-          "settings": { "heading": "A step-by-step process", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "Beans to Avoid (Specific Brands)",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
+          "blocks": {}
+        },
+        "editorial_rich_text_ak6EU7": {
+          "type": "editorial-rich-text",
+          "name": "Article content",
+          "settings": {
+            "content": "<p>These popular beans cause problems in Jura machines. This is not a quality judgment - they may taste great in a manual grinder or French press - but they are not compatible with super-automatic grinders:</p><ul><li><strong>Starbucks French Roast</strong> - extremely oily, the most common offender in forum complaints</li><li><strong>Starbucks Espresso Roast</strong> - similarly oily surface</li><li><strong>Peet’s Major Dickason’s Blend</strong> - dark and oily</li><li><strong>Peet’s French Roast</strong> - very oily</li><li><strong>Death Wish Coffee</strong> - dark roast, very oily surface</li><li><strong>Most “Italian Roast” or “French Roast” labeled beans</strong> from any brand - these roast levels almost always produce oily surfaces</li><li><strong>Flavored beans</strong> (vanilla, hazelnut, caramel) - sugar-based coatings create sticky residue that is even harder to clean than oil</li></ul><p><strong>The common pattern:</strong> A frequent owner story is: “My Jura was great for 6 months, now the coffee is weak and the grinder sounds different.” In almost every case, the owner was using Starbucks or Peet’s dark roast beans the entire time.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
           "blocks": {}
         },
         "step_1": {
           "type": "editorial-heading",
-          "settings": { "heading": "Step 1: Start with the essentials", "heading_tag": "h3", "show_rule": false, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "What About Flavored Beans?",
+            "heading_tag": "h3",
+            "show_rule": false,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "step_1_content": {
           "type": "editorial-rich-text",
-          "settings": { "content": "<p>Explain the first action in a concise paragraph.</p>", "font_size": 16, "color": "#3f3029" },
+          "settings": {
+            "content": "<p>Flavored beans are worse than oily dark roasts. The flavoring is typically a sugar-based or oil-based coating applied after roasting. This coating:</p><ul><li>Melts and caramelizes inside the grinder, creating a sticky residue that does not dissolve with cleaning tablets</li><li>Clogs the chute faster than natural bean oil</li><li>Leaves a persistent flavor residue that taints every subsequent cup, even after switching beans</li><li>Can void your Jura warranty (Jura explicitly states only unflavored, uncoated beans should be used)</li></ul><p>If you want flavored coffee from your Jura, add syrups to the finished cup instead.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
           "blocks": {}
         },
         "step_2": {
           "type": "editorial-heading",
-          "settings": { "heading": "Step 2: Complete the next action", "heading_tag": "h3", "show_rule": false, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "How to Recover If You Have Been Using Oily Beans",
+            "heading_tag": "h3",
+            "show_rule": false,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "step_2_content": {
           "type": "editorial-rich-text",
-          "settings": { "content": "<p>Explain the second action and any important cautions.</p>", "font_size": 16, "color": "#3f3029" },
+          "settings": {
+            "content": "<p>If you have been running oily beans through your Jura for weeks or months, here is the recovery process:</p><h4>Step 1: Switch beans immediately</h4><p>Empty the hopper completely. Vacuum out any residual grounds and oil from the hopper and funnel. Fill with a dry, medium-roast bean (Lavazza Super Crema is the safest choice).</p><h4>Step 2: Run cleaning tablet cycles</h4><p>Run <strong>3 cleaning tablet cycles back to back</strong>. One cycle may not be enough to dissolve weeks of oil buildup. The tablets contain degreasing agents that break down coffee oil deposits on the brew unit and chute walls.</p><h4>Step 3: Brew and discard 5-6 cups</h4><p>After the cleaning cycles, brew and discard 5-6 cups of coffee. This flushes remaining oily grounds from the grinder chute and establishes the new, clean beans in the grind path.</p><h4>Step 4: Adjust grind setting</h4><p>The grind setting that worked with oily beans may not be correct for dry beans. Start at the middle position and dial in from there. See our <a href=\"https://juraespressomachines.com/jura-grinder-settings/\">grinder settings guide</a> for the full process.</p><h4>Step 5: Monitor over the next week</h4><p>If coffee quality improves after the switch, the oil was the issue. If quality remains poor after a full bag of dry beans and multiple cleaning cycles, the grinder burrs may have accumulated damage and need professional inspection.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
           "blocks": {}
         },
         "faq_heading": {
           "type": "editorial-heading",
-          "settings": { "heading": "FAQ", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "Prevention: A Simple Rule",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
+          "blocks": {}
+        },
+        "editorial_rich_text_DkbHUF": {
+          "type": "editorial-rich-text",
+          "name": "Article content",
+          "settings": {
+            "content": "<p><strong>If the beans are shiny, do not put them in a Jura.</strong> That is the entire rule. Check every new bag before loading it.</p><p>For ongoing maintenance, follow this schedule regardless of bean type:</p><ul><li><strong>Every 200 brews:</strong> Run a cleaning tablet cycle (removes oil from brew unit)</li><li><strong>Every 2-3 months:</strong> Descale (removes mineral buildup from boiler)</li><li><strong>Every 2 months:</strong> Replace CLARIS water filter</li></ul><p>Jura machines that follow this schedule and use dry beans can run for 10-15 years without grinder issues. Machines that use oily beans without increased cleaning frequency often need service within 2-3 years.</p><p>See our complete <a href=\"https://juraespressomachines.com/jura-cleaning-schedule/\">Jura cleaning schedule</a> for a month-by-month calendar.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
+          "blocks": {}
+        },
+        "editorial_heading_VKrfnK": {
+          "type": "editorial-heading",
+          "name": "Article heading",
+          "settings": {
+            "heading": "FAQ",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "faq_1": {
           "type": "editorial-faq-item",
-          "settings": { "question": "Add the first common question", "answer": "<p>Give readers a direct and useful answer.</p>", "open": true },
+          "settings": {
+            "question": "Will one bag of oily beans ruin my Jura?",
+            "answer": "<p>No. One bag will leave some residue but will not cause permanent damage. Switch to dry beans and run 2-3 cleaning cycles. The machine will recover. The problem is cumulative - months of oily beans cause serious buildup.</p>",
+            "open": true
+          },
           "blocks": {}
         },
         "faq_2": {
           "type": "editorial-faq-item",
-          "settings": { "question": "Add another common question", "answer": "<p>Give readers a direct and useful answer.</p>", "open": false },
+          "settings": {
+            "question": "Does Jura’s warranty cover grinder damage from oily beans?",
+            "answer": "<p>No. Jura’s warranty states that only unflavored whole beans should be used. Grinder or brew unit issues caused by oily or flavored beans are considered user error. This is another reason to stick with dry, medium roasts.</p>",
+            "open": false
+          },
+          "blocks": {}
+        },
+        "editorial_faq_item_ffMFVw": {
+          "type": "editorial-faq-item",
+          "settings": {
+            "question": "Can I mix oily and dry beans to reduce the oil content?",
+            "answer": "<p>This does reduce the per-cup oil exposure, but it does not eliminate it. You are still introducing oil into the system. If you want a bolder flavor without oil risk, use a dry dark roast like Lavazza Gran Selezione instead of mixing.</p>",
+            "open": false
+          },
+          "blocks": {}
+        },
+        "editorial_faq_item_rX9q3h": {
+          "type": "editorial-faq-item",
+          "settings": {
+            "question": "What about decaf beans - are they oily?",
+            "answer": "<p>Decaf beans are often drier than their caffeinated counterparts because the decaffeination process removes some oils. Most decaf medium roasts are safe for Jura machines. Check the surface as you would any other bean.</p>",
+            "open": false
+          },
+          "blocks": {}
+        },
+        "editorial_faq_item_YbhATK": {
+          "type": "editorial-faq-item",
+          "settings": {
+            "question": "I want the strongest possible espresso - how do I get intensity without dark roast?",
+            "answer": "<p>Use a medium roast bean, set the grind to fine (level 1-2 on a 6-level Jura), and increase the strength setting to maximum. This produces a more intense cup than a dark roast at medium grind, with better flavor complexity and no grinder risk. See our espresso settings guide for the full dial-in process.</p>",
+            "open": false
+          },
           "blocks": {}
         },
         "bottom_heading": {
           "type": "editorial-heading",
-          "settings": { "heading": "The bottom line", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
+          "settings": {
+            "heading": "The Bottom Line",
+            "heading_tag": "h2",
+            "show_rule": true,
+            "color": "#25130d",
+            "rule_color": "#ded7d1"
+          },
           "blocks": {}
         },
         "bottom_content": {
           "type": "editorial-rich-text",
-          "settings": { "content": "<p>Summarize the answer and leave readers with one clear action to take next.</p>", "font_size": 16, "color": "#3f3029" },
-          "blocks": {}
-        },
-        "callout": {
-          "type": "editorial-callout",
-          "settings": { "eyebrow": "Recommended next step", "heading": "Continue with a related guide", "content": "<p>Highlight the best resource or commercial recommendation for readers.</p>", "link_label": "See the recommendation", "link": "", "background": "#eeeae6", "border": "#d8d0ca" },
-          "blocks": {}
-        },
-        "related_heading": {
-          "type": "editorial-heading",
-          "settings": { "heading": "Related", "heading_tag": "h2", "show_rule": true, "color": "#25130d", "rule_color": "#ded7d1" },
-          "blocks": {}
-        },
-        "related_links": {
-          "type": "editorial-rich-text",
-          "settings": { "content": "<ul><li><a href=\"/blogs/news\">Related article or buying guide</a></li><li><a href=\"/blogs/news\">Another useful article</a></li><li><a href=\"/blogs/news\">Maintenance and care guide</a></li></ul>", "font_size": 16, "color": "#8a6735" },
-          "blocks": {}
-        },
-        "divider": {
-          "type": "editorial-divider",
-          "settings": { "color": "#ded7d1", "thickness": 1, "spacing": 8 },
+          "settings": {
+            "content": "<p>Dark roast is fine as long as the beans are dry. The test is simple: if they are shiny or leave oil on your fingers, do not use them. Stick with medium to medium-dark roasts from brands that keep the surface dry, clean the machine on schedule, and your Jura’s grinder will last for years.</p>",
+            "font_size": 16,
+            "color": "#3f3029"
+          },
           "blocks": {}
         }
       },
-      "block_order": ["hero", "intro", "heading_1", "content_1", "heading_2", "comparison_table", "content_2", "cards", "heading_3", "content_3", "heading_steps", "step_1", "step_1_content", "step_2", "step_2_content", "faq_heading", "faq_1", "faq_2", "bottom_heading", "bottom_content", "callout", "related_heading", "related_links", "divider"],
+      "block_order": [
+        "hero",
+        "intro",
+        "heading_1",
+        "content_1",
+        "heading_2",
+        "comparison_table",
+        "content_2",
+        "editorial_rich_text_RbpfFw",
+        "heading_3",
+        "content_3",
+        "heading_steps",
+        "editorial_rich_text_ak6EU7",
+        "step_1",
+        "step_1_content",
+        "step_2",
+        "step_2_content",
+        "faq_heading",
+        "editorial_rich_text_DkbHUF",
+        "editorial_heading_VKrfnK",
+        "faq_1",
+        "faq_2",
+        "editorial_faq_item_ffMFVw",
+        "editorial_faq_item_rX9q3h",
+        "editorial_faq_item_YbhATK",
+        "bottom_heading",
+        "bottom_content"
+      ],
       "settings": {
         "content_width": 760,
         "block_gap": 24,
@@ -189,5 +333,7 @@
       }
     }
   },
-  "order": ["editorial_article"]
+  "order": [
+    "editorial_article"
+  ]
 }

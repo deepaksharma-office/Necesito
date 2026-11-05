@@ -1,0 +1,77 @@
+<section class="delivery-steps" style="--ds-bg:{{ section.settings.background_color }};--ds-green:{{ section.settings.text_color }};--ds-brown:{{ section.settings.body_color }};--ds-gold:{{ section.settings.accent_color }};--ds-line:{{ section.settings.divider_color }};--ds-width:{{ section.settings.page_width }}px;--ds-gutter:{{ section.settings.padding_inline }}px;--ds-top:{{ section.settings.padding_top }}px;--ds-bottom:{{ section.settings.padding_bottom }}px;--ds-gap:{{ section.settings.column_gap }}px;--ds-heading:{{ section.settings.heading_size }}px;">
+  <div class="delivery-steps__inner">
+    {% if section.settings.heading != blank %}<h2 class="delivery-steps__heading">{{ section.settings.heading | escape }}</h2>{% endif %}
+    <div class="delivery-steps__grid">
+      {% for block in section.blocks %}
+        <article class="delivery-steps__item" style="--ds-image:{{ block.settings.image_width }}px;--ds-title:{{ block.settings.title_size }}px;--ds-copy:{{ block.settings.body_size }}px;" {{ block.shopify_attributes }}>
+          <div class="delivery-steps__number" aria-hidden="true"><span></span><b>{{ forloop.index | prepend: '0' }}</b><span></span></div>
+          {% if block.settings.title != blank %}<h3>{{ block.settings.title | escape }}</h3>{% endif %}
+          <div class="delivery-steps__media" aria-hidden="true">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 800 | image_tag: widths: '160, 240, 320, 480, 640, 800', sizes: '180px', loading: 'lazy', alt: '' }}
+            {% else %}
+              {% case block.settings.icon %}
+                {% when 'cart' %}<svg viewBox="0 0 100 100" fill="none"><path d="M18 22h14l10 45h38l9-31H36M42 50h42"/><circle cx="48" cy="80" r="6"/><circle cx="78" cy="80" r="6"/></svg>
+                {% when 'coffee' %}<svg viewBox="0 0 100 100" fill="none"><path d="M24 37h48v31a14 14 0 0 1-14 14H38a14 14 0 0 1-14-14V37Z"/><path d="M72 45h8a10 10 0 1 1 0 20h-8M20 87h62M40 29c-7-8 8-11 0-20M57 29c-7-8 8-11 0-20"/></svg>
+                {% when 'golf_cart' %}<svg viewBox="0 0 110 100" fill="none"><path d="M18 69h75V49H45l-9 20M52 49V28h30l11 21M43 28h50M78 49v-9"/><circle cx="34" cy="78" r="9"/><circle cx="81" cy="78" r="9"/><path d="M43 78h29"/></svg>
+              {% endcase %}
+            {% endif %}
+          </div>
+          {% if block.settings.description != blank %}<div class="delivery-steps__copy">{{ block.settings.description }}</div>{% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .delivery-steps{padding-block:var(--ds-top) var(--ds-bottom);background:var(--ds-bg)}
+  .delivery-steps__inner{width:min(calc(100% - 2 * var(--ds-gutter)),var(--ds-width));margin-inline:auto}
+  .delivery-steps__heading{margin:0 0 46px;color:var(--ds-green);font-size:var(--ds-heading);font-weight:400;line-height:1.2;text-align:center;text-wrap:balance}
+  .delivery-steps__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--ds-gap)}
+  .delivery-steps__item{position:relative;display:grid;grid-template-rows:auto auto minmax(150px,1fr) auto;min-width:0;text-align:center}
+  .delivery-steps__item+.delivery-steps__item:before{position:absolute;inset-block:34px 0;inset-inline-start:calc(var(--ds-gap)/-2);width:1px;background:var(--ds-line);content:""}
+  .delivery-steps__number{display:grid;grid-template-columns:minmax(24px,1fr) auto minmax(24px,1fr);align-items:center;gap:18px;color:var(--ds-gold)}
+  .delivery-steps__number span{height:1px;background:currentColor;opacity:.75}.delivery-steps__number b{font-size:18px;font-weight:400}
+  .delivery-steps__item h3{margin:24px 0 10px;color:var(--ds-green);font-size:var(--ds-title);font-weight:400;line-height:1.25}
+  .delivery-steps__media{display:grid;place-items:center;min-height:150px;padding:10px}
+  .delivery-steps__media img,.delivery-steps__media svg{display:block;width:min(100%,var(--ds-image));max-height:160px;object-fit:contain}
+  .delivery-steps__media svg{color:var(--ds-brown);stroke:currentColor;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+  .delivery-steps__copy{max-width:260px;margin-inline:auto;color:var(--ds-brown);font-size:var(--ds-copy);line-height:1.35}.delivery-steps__copy>*{margin:0}
+  @media(max-width:749px){.delivery-steps__heading{margin-block-end:34px;font-size:calc(var(--ds-heading)*.78)}.delivery-steps__grid{grid-template-columns:1fr;gap:44px}.delivery-steps__item+.delivery-steps__item:before{inset-block:-22px auto;inset-inline:0;width:100%;height:1px}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Local delivery steps","tag":"section","class":"section-wrapper","max_blocks":3,
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"Your next great cup is three steps away."},
+    {"type":"range","id":"heading_size","label":"Heading size","min":22,"max":54,"step":2,"unit":"px","default":36},
+    {"type":"color","id":"text_color","label":"Heading and title color","default":"#174c3b"},
+    {"type":"color","id":"body_color","label":"Description and icon color","default":"#68452f"},
+    {"type":"color","id":"accent_color","label":"Step number color","default":"#c38a35"},
+    {"type":"color","id":"divider_color","label":"Divider color","default":"#d7cabb"},
+    {"type":"color","id":"background_color","label":"Background color","default":"#f5efe5"},
+    {"type":"range","id":"page_width","label":"Maximum width","min":720,"max":1600,"step":20,"unit":"px","default":1320},
+    {"type":"range","id":"padding_inline","label":"Horizontal padding","min":16,"max":80,"step":4,"unit":"px","default":40},
+    {"type":"range","id":"column_gap","label":"Column gap","min":20,"max":100,"step":4,"unit":"px","default":48},
+    {"type":"header","content":"Spacing"},
+    {"type":"range","id":"padding_top","label":"Padding top","min":0,"max":200,"step":4,"unit":"px","default":72},
+    {"type":"range","id":"padding_bottom","label":"Padding bottom","min":0,"max":200,"step":4,"unit":"px","default":72}
+  ],
+  "blocks":[{"type":"step","name":"Step","settings":[
+    {"type":"text","id":"title","label":"Title","default":"Pick your coffee"},
+    {"type":"richtext","id":"description","label":"Description","default":"<p>Choose your favorites and order online.</p>"},
+    {"type":"image_picker","id":"image","label":"Image"},
+    {"type":"select","id":"icon","label":"Placeholder icon","options":[{"value":"cart","label":"Shopping cart"},{"value":"coffee","label":"Coffee"},{"value":"golf_cart","label":"Golf cart"}],"default":"cart"},
+    {"type":"range","id":"image_width","label":"Image width","min":60,"max":260,"step":10,"unit":"px","default":140},
+    {"type":"range","id":"title_size","label":"Title size","min":14,"max":30,"step":1,"unit":"px","default":22},
+    {"type":"range","id":"body_size","label":"Description size","min":12,"max":24,"step":1,"unit":"px","default":16}
+  ]}],
+  "presets":[{"name":"Local delivery steps","blocks":[
+    {"type":"step","settings":{"title":"Pick your coffee","description":"<p>Choose your favorites and order online.</p>","icon":"cart","image_width":120}},
+    {"type":"step","settings":{"title":"We roast it fresh","description":"<p>Small batches, roasted right here in Estero.</p>","icon":"coffee","image_width":160}},
+    {"type":"step","settings":{"title":"Don delivers","description":"<p>Straight to your door in our neighborhood golf cart.</p>","icon":"golf_cart","image_width":130}}
+  ]}]
+}
+{% endschema %}
