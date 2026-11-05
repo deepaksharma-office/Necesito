@@ -153,6 +153,7 @@
           "settings": {
             "title": "Pick your coffee",
             "description": "<p>Choose your favorites and order online.</p>",
+            "image": "shopify://shop_images/Frame_4.png",
             "icon": "cart",
             "image_width": 120,
             "title_size": 22,
@@ -164,6 +165,7 @@
           "settings": {
             "title": "We roast it fresh",
             "description": "<p>Small batches, roasted right here in Estero.</p>",
+            "image": "shopify://shop_images/Frame_5.png",
             "icon": "coffee",
             "image_width": 160,
             "title_size": 22,
@@ -175,6 +177,7 @@
           "settings": {
             "title": "Don delivers",
             "description": "<p>Straight to your door in our neighborhood golf cart.</p>",
+            "image": "shopify://shop_images/Frame_6.png",
             "icon": "golf_cart",
             "image_width": 130,
             "title_size": 22,
@@ -254,6 +257,7 @@
         "button"
       ],
       "settings": {
+        "image": "shopify://shop_images/Frame_7.png",
         "image_alt": "Map of The Place at Corkscrew delivery area",
         "card_color": "#104832",
         "text_color": "#f9f5e9",
