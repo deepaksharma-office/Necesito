@@ -75,7 +75,6 @@
         "background_color": "#f5efe5",
         "page_width": 1320,
         "padding_inline": 40,
-        "content_width": 43,
         "column_gap": 56,
         "block_gap": 20,
         "oval_width": 82,
@@ -99,6 +98,7 @@
           "type": "benefit",
           "settings": {
             "icon": "bean",
+            "custom_icon": "shopify://shop_images/Frame_1.png",
             "text": "Roasted in Estero",
             "text_size": 16,
             "icon_size": 32,
@@ -109,6 +109,7 @@
           "type": "benefit",
           "settings": {
             "icon": "cup",
+            "custom_icon": "shopify://shop_images/Frame_2.png",
             "text": "Small-batch freshness",
             "text_size": 16,
             "icon_size": 32,
@@ -119,6 +120,7 @@
           "type": "benefit",
           "settings": {
             "icon": "cart",
+            "custom_icon": "shopify://shop_images/Frame_3.png",
             "text": "Delivered by golf cart",
             "text_size": 16,
             "icon_size": 32,
