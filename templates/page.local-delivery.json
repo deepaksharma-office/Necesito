@@ -56,7 +56,7 @@
             "primary_background": "#124d3b",
             "primary_color": "#ffffff",
             "secondary_label": "How delivery works",
-            "secondary_link": "",
+            "secondary_link": "shopify://pages/local-delivery",
             "secondary_color": "#174c3b",
             "size": 15,
             "radius": 4,
@@ -312,6 +312,7 @@
         "link"
       ],
       "settings": {
+        "image": "shopify://shop_images/Frame_8.png",
         "image_alt": "Neighbors enjoying Necesito coffee outdoors",
         "background_color": "#f5efe5",
         "image_width": 57,
@@ -329,11 +330,12 @@
         "heading": "Questions? Don’s happy to help.",
         "text": "Call or text Necesito Coffee Roasters",
         "phone": "239-218-0339",
+        "image": "shopify://shop_images/Frame_9.png",
         "image_alt": "Necesito coffee mascot",
         "background_color": "#f8e5ae",
         "text_color": "#174c3b",
         "corner_radius": 16,
-        "card_padding": 44,
+        "card_padding": 20,
         "image_width": 240,
         "page_width": 1320,
         "padding_inline": 40,
@@ -382,6 +384,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
