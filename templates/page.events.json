@@ -9,8 +9,28 @@
  */
 {
   "sections": {
-    "events_hero": { "type": "local-events-hero", "settings": {} },
-    "events_highlights": { "type": "local-events-highlights", "blocks": {}, "block_order": [], "settings": {} },
+    "events_hero": {
+      "type": "local-events-hero",
+      "settings": {
+        "eyebrow": "COMMUNITY & CONNECTION",
+        "heading": "What's Happening in the Neighborhood",
+        "text": "<p>Discover local happenings, community gatherings, special events, and occasional Necesito Coffee Roasters events right here in Estero.</p>",
+        "cta_label": "Explore the calendar",
+        "background": "#f5efe5",
+        "text_color": "#174c3b",
+        "accent": "#c8683b"
+      }
+    },
+    "events_highlights": {
+      "type": "local-events-highlights",
+      "disabled": true,
+      "settings": {
+        "eyebrow": "AROUND ESTERO",
+        "heading": "Community Highlights",
+        "text": "<p>Stay connected with what's happening around our neighborhood.</p>",
+        "empty_text": "Fresh neighborhood stories are coming soon."
+      }
+    },
     "events_calendar": {
       "type": "local-events-calendar",
       "blocks": {
@@ -24,15 +44,25 @@
             "end_time": "11:30 AM",
             "location": "Necesito Coffee Roasters, Estero",
             "description": "Join neighbors and fellow coffee lovers for a relaxed small coffee gathering.",
-            "image": "",
             "url": ""
           }
         }
       },
-      "block_order": ["coffee_gathering_2026"],
-      "settings": {}
-    },
-    "events_contact": { "type": "local-events-contact", "settings": {} }
+      "block_order": [
+        "coffee_gathering_2026"
+      ],
+      "settings": {
+        "eyebrow": "SAVE THE DATE",
+        "heading": "Upcoming Events & Scheduled Closures",
+        "text": "<p>Explore upcoming community events and planned store closures during the next twelve months.</p>",
+        "empty_heading": "Nothing is scheduled just yet.",
+        "empty_text": "Check back soon for upcoming community gatherings, local happenings, and special events from Necesito Coffee Roasters."
+      }
+    }
   },
-  "order": ["events_hero", "events_highlights", "events_calendar", "events_contact"]
+  "order": [
+    "events_hero",
+    "events_highlights",
+    "events_calendar"
+  ]
 }

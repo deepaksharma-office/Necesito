@@ -834,7 +834,7 @@
             "icon": "chat_bubble",
             "heading": "Upcoming events",
             "description": "<p>Neighborhood happenings, coming soon.</p>",
-            "url": "",
+            "url": "shopify://pages/local-events",
             "open_in_new_tab": false
           }
         },
@@ -844,7 +844,7 @@
             "icon": "clock",
             "heading": "Scheduled Closures.",
             "description": "<p>Online-only. Find the latest updates.</p>",
-            "url": "",
+            "url": "shopify://pages/local-events",
             "open_in_new_tab": false
           }
         },
@@ -854,7 +854,7 @@
             "icon": "coffee_cup",
             "heading": "Featured coffees",
             "description": "<p>A closer look at our signature collection.</p>",
-            "url": "",
+            "url": "shopify://collections/all",
             "open_in_new_tab": false
           }
         }
