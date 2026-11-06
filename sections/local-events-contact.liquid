@@ -1,0 +1,37 @@
+{% comment %}
+  Community invitation and closing brand message.
+  @example
+  Used after the calendar in the page.events template.
+{% endcomment %}
+<section class="local-events-contact">
+  <div class="local-events-contact__inner">
+    <span class="local-events-contact__icon" aria-hidden="true">✦</span>
+    <h2>{{ section.settings.heading | escape }}</h2>
+    <div class="rte">{{ section.settings.text }}</div>
+    <a href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a>
+    <p class="local-events-contact__signoff">{{ section.settings.signoff | escape }}</p>
+  </div>
+</section>
+{% stylesheet %}
+  .local-events-contact { padding-block: clamp(68px, 9vw, 120px); color: #f9f0e4; background: #174c3b; text-align: center; }
+  .local-events-contact__inner { width: min(calc(100% - 40px), 1320px); margin-inline: auto; }
+  .local-events-contact__inner > * { max-width: 760px; margin-inline: auto; }
+  .local-events-contact__icon { color: #d98254; font-size: 28px; }
+  .local-events-contact h2 { margin: 18px auto 14px; color: inherit; font-size: clamp(32px, 4vw, 52px); }
+  .local-events-contact a { display: inline-block; margin-top: 18px; color: #fff; font-weight: 700; text-underline-offset: 5px; }
+  .local-events-contact__signoff { margin-top: 56px; color: #e5ad88; font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Community invitation",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Have a community event we should know about?" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>We love hearing about the people and gatherings that make Estero feel like home.</p>" },
+    { "type": "text", "id": "email", "label": "Email address", "default": "hello@necesitocoffee.com" },
+    { "type": "text", "id": "signoff", "label": "Closing message", "default": "Coffee. Community. Good Neighbors." }
+  ],
+  "presets": [{ "name": "Community invitation" }]
+}
+{% endschema %}

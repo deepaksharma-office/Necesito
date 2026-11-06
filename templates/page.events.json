@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "events_hero": { "type": "local-events-hero", "settings": {} },
+    "events_highlights": { "type": "local-events-highlights", "blocks": {}, "block_order": [], "settings": {} },
+    "events_calendar": {
+      "type": "local-events-calendar",
+      "blocks": {
+        "coffee_gathering_2026": {
+          "type": "event",
+          "settings": {
+            "title": "Small Coffee Gathering",
+            "date": "08-11-2026",
+            "category": "Necesito Coffee",
+            "start_time": "10:00 AM",
+            "end_time": "11:30 AM",
+            "location": "Necesito Coffee Roasters, Estero",
+            "description": "Join neighbors and fellow coffee lovers for a relaxed small coffee gathering.",
+            "image": "",
+            "url": ""
+          }
+        }
+      },
+      "block_order": ["coffee_gathering_2026"],
+      "settings": {}
+    },
+    "events_contact": { "type": "local-events-contact", "settings": {} }
+  },
+  "order": ["events_hero", "events_highlights", "events_calendar", "events_contact"]
+}

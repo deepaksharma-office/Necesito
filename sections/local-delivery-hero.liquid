@@ -15,7 +15,7 @@
 
 <section
   class="local-delivery-hero{% if section.settings.enable_animation %} local-delivery-hero--animated{% endif %}"
-  style="--local-delivery-background: {{ section.settings.background_color }}; --local-delivery-page-width: {{ section.settings.page_width }}px; --local-delivery-padding-inline: {{ section.settings.padding_inline }}px; --local-delivery-content-width: {{ section.settings.content_width }}%; --local-delivery-column-gap: {{ section.settings.column_gap }}px; --local-delivery-block-gap: {{ section.settings.block_gap }}px; --local-delivery-padding-top: {{ section.settings.padding_top }}px; --local-delivery-padding-bottom: {{ section.settings.padding_bottom }}px; --local-delivery-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --local-delivery-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --local-delivery-media-ratio: {{ section.settings.media_aspect_ratio }}%; --local-delivery-oval-width: {{ section.settings.oval_width }}%; --local-delivery-vehicle-width: {{ section.settings.vehicle_width }}%; --local-delivery-motion-distance: {{ section.settings.animation_distance }}px; --local-delivery-motion-duration: {{ section.settings.animation_duration }}s;"
+  style="--local-delivery-background: {{ section.settings.background_color }}; --local-delivery-page-width: {{ section.settings.page_width }}px; --local-delivery-padding-inline: {{ section.settings.padding_inline }}px; --local-delivery-column-gap: {{ section.settings.column_gap }}px; --local-delivery-block-gap: {{ section.settings.block_gap }}px; --local-delivery-padding-top: {{ section.settings.padding_top }}px; --local-delivery-padding-bottom: {{ section.settings.padding_bottom }}px; --local-delivery-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --local-delivery-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --local-delivery-media-ratio: {{ section.settings.media_aspect_ratio }}; --local-delivery-oval-width: {{ section.settings.oval_width }}%; --local-delivery-vehicle-width: {{ section.settings.vehicle_width }}%; --local-delivery-motion-distance: {{ section.settings.animation_distance }}px; --local-delivery-motion-duration: {{ section.settings.animation_duration }}s;"
 >
   <div class="local-delivery-hero__inner">
     <div class="local-delivery-hero__content">
@@ -68,21 +68,37 @@
 
 {% stylesheet %}
   .local-delivery-hero {
-    overflow: clip;
+    overflow: visible;
     padding-block: var(--local-delivery-padding-top) var(--local-delivery-padding-bottom);
     background: var(--local-delivery-background);
   }
 
-  .local-delivery-hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, var(--local-delivery-content-width)) minmax(0, 1fr);
-    align-items: center;
-    gap: var(--local-delivery-column-gap);
+  /* Force two equal desktop columns: never wrap media below text. */
+  .local-delivery-hero .local-delivery-hero__inner {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch;
+    column-gap: var(--local-delivery-column-gap);
     width: min(calc(100% - (2 * var(--local-delivery-padding-inline))), var(--local-delivery-page-width));
+    max-width: 100%;
     margin-inline: auto;
   }
 
-  .local-delivery-hero__content { min-width: 0; }
+  .local-delivery-hero .local-delivery-hero__content,
+  .local-delivery-hero .local-delivery-hero__media {
+    box-sizing: border-box;
+    flex: 0 0 calc((100% - var(--local-delivery-column-gap)) / 2) !important;
+    width: calc((100% - var(--local-delivery-column-gap)) / 2) !important;
+    min-width: 0 !important;
+    max-width: none;
+  }
+
+  .local-delivery-hero .local-delivery-hero__content {
+    align-self: center;
+    order: 0;
+  }
+
   .local-delivery-hero__content > * { margin-block-start: var(--block-spacing, var(--local-delivery-block-gap)); margin-block-end: 0; }
   .local-delivery-hero__content > :first-child { margin-block-start: 0; }
 
@@ -139,34 +155,106 @@
   .local-delivery-hero__button:hover { transform: translateY(-2px); }
   .local-delivery-hero__button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
+  /* Desktop grid row height comes only from the content, not the images. */
   .local-delivery-hero__media {
     position: relative;
+    align-self: stretch;
     min-width: 0;
-    aspect-ratio: 100 / var(--local-delivery-media-ratio);
+    min-height: 0;
+    /* This wrapper stretches to the text-defined flex row height. */
+    isolation: isolate;
   }
 
-  .local-delivery-hero__oval,
-  .local-delivery-hero__vehicle-motion { position: absolute; inset-inline-start: 50%; display: block; transform: translateX(-50%); }
-  .local-delivery-hero__oval { inset-block-start: 4%; width: var(--local-delivery-oval-width); height: auto; }
-  .local-delivery-hero__oval--fallback { aspect-ratio: 1.16; border-radius: 50%; background: #dfe7d3; }
-  .local-delivery-hero__vehicle-motion { inset-block-end: 0; z-index: 1; width: var(--local-delivery-vehicle-width); }
-  .local-delivery-hero__vehicle,
-  .local-delivery-hero__vehicle-placeholder,
-  .local-delivery-hero__vehicle-placeholder svg { display: block; width: 100%; height: auto; }
+  /* Center both layers in the content-height-driven media column. */
+  .local-delivery-hero__oval {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    top: 50%;
+    left: 50%;
+    width: var(--local-delivery-oval-width);
+    height: 88%;
+    max-width: 100%;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+  }
 
-  .local-delivery-hero--animated .local-delivery-hero__vehicle-motion { animation: local-delivery-drive var(--local-delivery-motion-duration) ease-in-out infinite; }
+  .local-delivery-hero__oval--fallback {
+    border-radius: 50%;
+    background: #dfe7d3;
+  }
+
+  .local-delivery-hero__vehicle-motion {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .local-delivery-hero__vehicle {
+    display: block;
+    flex: none;
+    width: var(--local-delivery-vehicle-width);
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .local-delivery-hero__vehicle-placeholder svg {
+    display: block;
+    width: 90%;
+    height: 90%;
+  }
+
+  .local-delivery-hero--animated .local-delivery-hero__vehicle-motion {
+    animation: local-delivery-drive var(--local-delivery-motion-duration) ease-in-out infinite;
+  }
 
   @keyframes local-delivery-drive {
-    0%, 100% { transform: translateX(calc(-50% - var(--local-delivery-motion-distance))) translateY(0) rotate(-0.35deg); }
-    50% { transform: translateX(calc(-50% + var(--local-delivery-motion-distance))) translateY(-4px) rotate(0.35deg); }
+    0%, 100% { transform: translateX(calc(-1 * var(--local-delivery-motion-distance))) translateY(0) rotate(-0.35deg); }
+    50% { transform: translateX(var(--local-delivery-motion-distance)) translateY(-4px) rotate(0.35deg); }
   }
 
   @media (max-width: 749px) {
-    .local-delivery-hero { padding-block: var(--local-delivery-padding-top-mobile) var(--local-delivery-padding-bottom-mobile); }
-    .local-delivery-hero__inner { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .local-delivery-hero {
+      padding-block: var(--local-delivery-padding-top-mobile) var(--local-delivery-padding-bottom-mobile);
+    }
+
+    .local-delivery-hero .local-delivery-hero__inner {
+      flex-direction: column !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch;
+      gap: 28px;
+    }
+
+    .local-delivery-hero .local-delivery-hero__content,
+    .local-delivery-hero .local-delivery-hero__media {
+      flex: none !important;
+      width: 100% !important;
+      max-width: 100%;
+    }
+
+    /* Media is ABOVE the copy on mobile, regardless of HTML order. */
+    .local-delivery-hero .local-delivery-hero__media {
+      order: -1 !important;
+      align-self: stretch;
+      position: relative;
+      height: auto;
+      aspect-ratio: 100 / var(--local-delivery-media-ratio);
+    }
+
+    .local-delivery-hero .local-delivery-hero__content {
+      order: 0 !important;
+      align-self: stretch;
+    }
+
     .local-delivery-hero__heading { font-size: var(--block-size-mobile); }
     .local-delivery-hero__text { font-size: var(--block-size-mobile); }
-    .local-delivery-hero__media { order: 2; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -187,15 +275,14 @@
     { "type": "color", "id": "background_color", "label": "Background color", "default": "#f5efe5" },
     { "type": "range", "id": "page_width", "label": "Maximum width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1320 },
     { "type": "range", "id": "padding_inline", "label": "Horizontal padding", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "content_width", "label": "Content column width", "min": 30, "max": 60, "step": 1, "unit": "%", "default": 43 },
     { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 56 },
     { "type": "range", "id": "block_gap", "label": "Default block spacing", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 20 },
     { "type": "header", "content": "Media" },
     { "type": "image_picker", "id": "oval_image", "label": "Green oval image" },
     { "type": "range", "id": "oval_width", "label": "Oval width", "min": 40, "max": 100, "step": 1, "unit": "%", "default": 82 },
     { "type": "image_picker", "id": "vehicle_image", "label": "Vehicle image" },
-    { "type": "range", "id": "vehicle_width", "label": "Vehicle width", "min": 40, "max": 110, "step": 1, "unit": "%", "default": 92 },
-    { "type": "range", "id": "media_aspect_ratio", "label": "Media height ratio", "min": 60, "max": 120, "step": 2, "unit": "%", "default": 84 },
+    { "type": "range", "id": "vehicle_width", "label": "Vehicle width", "min": 40, "max": 100, "step": 1, "unit": "%", "default": 92 },
+    { "type": "range", "id": "media_aspect_ratio", "label": "Mobile media height ratio", "min": 60, "max": 120, "step": 2, "unit": "%", "default": 84 },
     { "type": "text", "id": "media_label", "label": "Media accessible label", "default": "Necesito local coffee delivery vehicle" },
     { "type": "header", "content": "Animation" },
     { "type": "checkbox", "id": "enable_animation", "label": "Enable vehicle motion", "default": true },

@@ -1,0 +1,157 @@
+{% comment %}
+  View-only twelve-month event and closure calendar with an accessible details dialog.
+  @example
+  Add event and closure blocks using dates in YYYY-MM-DD format.
+{% endcomment %}
+
+<script src="{{ 'local-events-calendar.js' | asset_url }}" type="module"></script>
+{% render 'measure-header-heights', only_on_desktop: true %}
+
+<local-events-calendar id="local-events-calendar" class="local-events-calendar" data-section-id="{{ section.id }}">
+  <div class="local-events-calendar__inner">
+    <div class="local-events-calendar__content">
+      <header class="local-events-calendar__intro">
+        <p>{{ section.settings.eyebrow | escape }}</p>
+        <h2>{{ section.settings.heading | escape }}</h2>
+        <div class="rte">{{ section.settings.text }}</div>
+      </header>
+
+      <div class="local-events-calendar__empty" data-empty-state hidden><span aria-hidden="true">☕</span><h3>{{ section.settings.empty_heading | escape }}</h3><p>{{ section.settings.empty_text | escape }}</p></div>
+    </div>
+
+    <div class="local-events-calendar__shell">
+      <div class="local-events-calendar__toolbar">
+        <button type="button" data-action="previous" aria-label="Previous month">←</button>
+        <h3 data-month-heading aria-live="polite"></h3>
+        <div class="local-events-calendar__actions">
+          <button type="button" data-action="today">Today</button>
+          <button type="button" data-action="next" aria-label="Next month">→</button>
+        </div>
+      </div>
+      <div class="local-events-calendar__weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+      <div class="local-events-calendar__grid" data-calendar-grid role="grid" aria-label="Events calendar"></div>
+      <div class="local-events-calendar__legend"><span><i class="is-event"></i>Upcoming event</span><span><i class="is-closure"></i>Scheduled closure</span></div>
+    </div>
+  </div>
+
+  <dialog class="local-events-calendar__dialog" data-dialog aria-labelledby="events-dialog-title-{{ section.id }}">
+    <div class="local-events-calendar__dialog-panel">
+      <button class="local-events-calendar__dialog-close" type="button" data-dialog-close aria-label="Close dialog">×</button>
+      <p class="local-events-calendar__dialog-eyebrow">Neighborhood calendar</p>
+      <h2 id="events-dialog-title-{{ section.id }}" data-dialog-title></h2>
+      <div data-dialog-content></div>
+    </div>
+  </dialog>
+
+  <script type="application/json" data-calendar-data>
+    [
+      {% for block in section.blocks %}
+        {
+          "id": {{ block.id | json }},
+          "type": {{ block.type | json }},
+          "title": {{ block.settings.title | json }},
+          "date": {{ block.settings.date | json }},
+          "category": {{ block.settings.category | json }},
+          "startTime": {{ block.settings.start_time | json }},
+          "endTime": {{ block.settings.end_time | json }},
+          "location": {{ block.settings.location | json }},
+          "description": {{ block.settings.description | strip_html | json }},
+          "reopening": {{ block.settings.reopening | json }},
+          "url": {{ block.settings.url | json }},
+          "image": {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 900 | json }}{% else %}null{% endif %}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  </script>
+</local-events-calendar>
+
+{% stylesheet %}
+  .local-events-calendar { display: block; padding-block: clamp(48px, 6vw, 80px); color: #174c3b; background: #f3eadf; }
+  .local-events-calendar__inner { display: grid; grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr); align-items: start; gap: clamp(36px, 6vw, 88px); width: min(calc(100% - 40px), 1320px); margin-inline: auto; }
+  .local-events-calendar__content { position: sticky; top: calc(var(--header-height, 60px) + 24px); min-width: 0; }
+  .local-events-calendar__intro { max-width: 520px; }
+  .local-events-calendar__intro > p { margin: 0 0 12px; color: #b45b35; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .local-events-calendar__intro h2 { margin: 0 0 14px; color: inherit; font-size: clamp(34px, 4vw, 54px); letter-spacing: -.035em; }
+  .local-events-calendar__shell { overflow: hidden; border: 1px solid #d9cdbf; border-radius: 16px; background: #fffdf9; box-shadow: 0 20px 60px rgb(60 43 29 / 9%); }
+  .local-events-calendar__toolbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid #e3d9ce; }
+  .local-events-calendar__toolbar h3 { margin: 0; color: inherit; font-size: clamp(18px, 2.4vw, 25px); text-align: center; }
+  .local-events-calendar__toolbar button { min-width: 40px; min-height: 40px; padding: 6px 11px; border: 1px solid #cfc3b6; border-radius: 999px; color: #174c3b; background: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .local-events-calendar__toolbar > button { justify-self: start; }
+  .local-events-calendar__actions { display: flex; justify-self: end; gap: 8px; }
+  .local-events-calendar__toolbar button:disabled { opacity: .35; cursor: default; }
+  .local-events-calendar__weekdays, .local-events-calendar__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .local-events-calendar__weekdays { padding: 8px 0; color: #7e7166; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-align: center; text-transform: uppercase; }
+  .local-events-calendar__day { position: relative; min-width: 0; min-height: 78px; padding: 8px; border: 0; border-block-start: 1px solid #eee6dd; border-inline-start: 1px solid #eee6dd; color: #174c3b; background: transparent; font: inherit; font-size: 13px; text-align: start; }
+  button.local-events-calendar__day { cursor: pointer; }
+  button.local-events-calendar__day:hover { background: #f8f1e8; }
+  button.local-events-calendar__day.has-events { background: #f7e4d6; box-shadow: inset 0 0 0 1px #dfac8c; }
+  button.local-events-calendar__day.has-events:hover { background: #f1d4c0; }
+  button.local-events-calendar__day.has-closure:not(.has-event) { background: #e9eeea; box-shadow: inset 0 0 0 1px #bdc9c1; }
+  button.local-events-calendar__day.has-closure:not(.has-event):hover { background: #dde6df; }
+  .local-events-calendar__day:nth-child(7n + 1) { border-inline-start: 0; }
+  .local-events-calendar__day.is-outside { color: #aba096; background: #fbf8f4; }
+  .local-events-calendar__day.is-today .local-events-calendar__number { display: grid; width: 25px; height: 25px; place-items: center; border-radius: 50%; color: #fff; background: #174c3b; }
+  .local-events-calendar__number { font-weight: 700; }
+  .local-events-calendar__markers { display: flex; align-items: center; gap: 4px; margin-top: 12px; }
+  .local-events-calendar__marker, .local-events-calendar__legend i { width: 8px; height: 8px; border-radius: 50%; }
+  .local-events-calendar__marker.is-event, .local-events-calendar__legend .is-event { background: #c8683b; }
+  .local-events-calendar__marker.is-closure, .local-events-calendar__legend .is-closure { background: #718077; }
+  .local-events-calendar__count { font-size: 11px; font-weight: 700; }
+  .local-events-calendar__legend { display: flex; flex-wrap: wrap; gap: 18px; padding: 12px 16px; border-top: 1px solid #e3d9ce; color: #665d55; font-size: 12px; }
+  .local-events-calendar__legend span { display: flex; align-items: center; gap: 8px; }
+  .local-events-calendar__empty { margin-top: 32px; padding: 32px 24px; border: 1px dashed #c7b8a8; border-radius: 14px; text-align: center; }
+  .local-events-calendar__empty > span { font-size: 34px; }
+  .local-events-calendar__empty h3 { margin: 12px 0 8px; color: inherit; }
+  .local-events-calendar__dialog { width: min(calc(100% - 32px), 720px); max-height: min(86vh, 820px); padding: 0; border: 0; border-radius: 16px; color: #174c3b; background: #fffdf9; box-shadow: 0 30px 90px rgb(0 0 0 / 30%); }
+  .local-events-calendar__dialog::backdrop { background: rgb(20 32 26 / 65%); backdrop-filter: blur(3px); }
+  .local-events-calendar__dialog-panel { position: relative; padding: clamp(28px, 5vw, 52px); }
+  .local-events-calendar__dialog-close { position: absolute; inset: 18px 18px auto auto; width: 44px; height: 44px; border: 1px solid #d7cdc1; border-radius: 50%; color: inherit; background: #fff; font-size: 27px; cursor: pointer; }
+  .local-events-calendar__dialog-eyebrow { margin: 0 50px 10px 0; color: #b45b35; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .local-events-calendar__dialog h2 { margin: 0 50px 26px 0; color: inherit; font-size: clamp(28px, 5vw, 42px); }
+  .local-events-calendar__entry + .local-events-calendar__entry { margin-top: 28px; padding-top: 28px; border-top: 1px solid #ded5cb; }
+  .local-events-calendar__entry img { margin-bottom: 20px; border-radius: 10px; aspect-ratio: 16 / 9; object-fit: cover; }
+  .local-events-calendar__entry-badge { display: inline-block; padding: 5px 9px; border-radius: 999px; color: #fff; background: #c8683b; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+  .local-events-calendar__entry-badge.is-closure { background: #718077; }
+  .local-events-calendar__entry h3 { margin: 12px 0 8px; color: inherit; font-size: 25px; }
+  .local-events-calendar__entry-meta { margin: 0 0 12px; color: #70665e; font-weight: 600; }
+  .local-events-calendar__entry-link { display: inline-block; margin-top: 12px; color: inherit; font-weight: 700; text-underline-offset: 4px; }
+  @media (max-width: 899px) { .local-events-calendar__inner { grid-template-columns: 1fr; gap: 30px; } .local-events-calendar__content { position: static; } .local-events-calendar__intro { max-width: 740px; } }
+  @media (max-width: 599px) { .local-events-calendar__toolbar { grid-template-columns: auto 1fr auto; padding: 10px; } .local-events-calendar__toolbar button { min-width: 40px; min-height: 40px; padding: 5px 9px; } .local-events-calendar__actions [data-action='today'] { position: absolute; overflow: hidden; width: 1px; height: 1px; clip: rect(0 0 0 0); } .local-events-calendar__day { min-height: 60px; padding: 6px; font-size: 12px; } .local-events-calendar__markers { margin-top: 8px; } .local-events-calendar__weekdays span { font-size: 0; } .local-events-calendar__weekdays span::first-letter { font-size: 10px; } .local-events-calendar__count { font-size: 9px; } }
+  @media (prefers-reduced-motion: reduce) { .local-events-calendar__dialog::backdrop { backdrop-filter: none; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Local events calendar",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "SAVE THE DATE" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Upcoming Events & Scheduled Closures" },
+    { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Explore upcoming community events and planned store closures during the next twelve months.</p>" },
+    { "type": "text", "id": "empty_heading", "label": "Empty-state heading", "default": "Nothing is scheduled just yet." },
+    { "type": "textarea", "id": "empty_text", "label": "Empty-state text", "default": "Check back soon for upcoming community gatherings, local happenings, and special events from Necesito Coffee Roasters." }
+  ],
+  "blocks": [
+    { "type": "event", "name": "Event", "settings": [
+      { "type": "text", "id": "title", "label": "Event title", "default": "Community event" },
+      { "type": "text", "id": "date", "label": "Event date", "info": "Use YYYY-MM-DD or DD-MM-YYYY, for example 2026-11-21 or 21-11-2026." },
+      { "type": "text", "id": "category", "label": "Category", "default": "Community" },
+      { "type": "text", "id": "start_time", "label": "Start time", "info": "For example, 6:00 PM." },
+      { "type": "text", "id": "end_time", "label": "End time (optional)" },
+      { "type": "text", "id": "location", "label": "Location" },
+      { "type": "textarea", "id": "description", "label": "Short description" },
+      { "type": "image_picker", "id": "image", "label": "Event image" },
+      { "type": "url", "id": "url", "label": "External information link" }
+    ]},
+    { "type": "closure", "name": "Scheduled closure", "settings": [
+      { "type": "text", "id": "title", "label": "Closure title", "default": "Scheduled closure" },
+      { "type": "text", "id": "date", "label": "Closure date", "info": "Use YYYY-MM-DD or DD-MM-YYYY, for example 2026-12-25 or 25-12-2026." },
+      { "type": "textarea", "id": "description", "label": "Description or reason" },
+      { "type": "text", "id": "reopening", "label": "Reopening information (optional)" }
+    ]}
+  ],
+  "presets": [{ "name": "Local events calendar" }]
+}
+{% endschema %}

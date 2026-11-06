@@ -56,6 +56,7 @@
             "primary_background": "#124d3b",
             "primary_color": "#ffffff",
             "secondary_label": "How delivery works",
+            "secondary_link": "shopify://pages/local-delivery",
             "secondary_color": "#174c3b",
             "size": 15,
             "radius": 4,
@@ -64,15 +65,20 @@
           }
         }
       },
-      "block_order": ["eyebrow", "heading", "text", "buttons"],
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "text",
+        "buttons"
+      ],
       "settings": {
         "background_color": "#f5efe5",
         "page_width": 1320,
         "padding_inline": 40,
-        "content_width": 43,
         "column_gap": 56,
         "block_gap": 20,
         "oval_width": 82,
+        "vehicle_image": "shopify://shop_images/Frame.png",
         "vehicle_width": 92,
         "media_aspect_ratio": 84,
         "media_label": "Necesito local coffee delivery vehicle",
@@ -92,6 +98,7 @@
           "type": "benefit",
           "settings": {
             "icon": "bean",
+            "custom_icon": "shopify://shop_images/Frame_1.png",
             "text": "Roasted in Estero",
             "text_size": 16,
             "icon_size": 32,
@@ -102,6 +109,7 @@
           "type": "benefit",
           "settings": {
             "icon": "cup",
+            "custom_icon": "shopify://shop_images/Frame_2.png",
             "text": "Small-batch freshness",
             "text_size": 16,
             "icon_size": 32,
@@ -112,6 +120,7 @@
           "type": "benefit",
           "settings": {
             "icon": "cart",
+            "custom_icon": "shopify://shop_images/Frame_3.png",
             "text": "Delivered by golf cart",
             "text_size": 16,
             "icon_size": 32,
@@ -119,7 +128,11 @@
           }
         }
       },
-      "block_order": ["roasted", "freshness", "delivery"],
+      "block_order": [
+        "roasted",
+        "freshness",
+        "delivery"
+      ],
       "settings": {
         "background_color": "#f5efe5",
         "text_color": "#174c3b",
@@ -135,44 +148,200 @@
     "local_delivery_steps": {
       "type": "local-delivery-steps",
       "blocks": {
-        "pick": { "type": "step", "settings": { "title": "Pick your coffee", "description": "<p>Choose your favorites and order online.</p>", "icon": "cart", "image_width": 120, "title_size": 22, "body_size": 16 } },
-        "roast": { "type": "step", "settings": { "title": "We roast it fresh", "description": "<p>Small batches, roasted right here in Estero.</p>", "icon": "coffee", "image_width": 160, "title_size": 22, "body_size": 16 } },
-        "deliver": { "type": "step", "settings": { "title": "Don delivers", "description": "<p>Straight to your door in our neighborhood golf cart.</p>", "icon": "golf_cart", "image_width": 130, "title_size": 22, "body_size": 16 } }
+        "pick": {
+          "type": "step",
+          "settings": {
+            "title": "Pick your coffee",
+            "description": "<p>Choose your favorites and order online.</p>",
+            "image": "shopify://shop_images/Frame_4.png",
+            "icon": "cart",
+            "image_width": 120,
+            "title_size": 22,
+            "body_size": 16
+          }
+        },
+        "roast": {
+          "type": "step",
+          "settings": {
+            "title": "We roast it fresh",
+            "description": "<p>Small batches, roasted right here in Estero.</p>",
+            "image": "shopify://shop_images/Frame_5.png",
+            "icon": "coffee",
+            "image_width": 160,
+            "title_size": 22,
+            "body_size": 16
+          }
+        },
+        "deliver": {
+          "type": "step",
+          "settings": {
+            "title": "Don delivers",
+            "description": "<p>Straight to your door in our neighborhood golf cart.</p>",
+            "image": "shopify://shop_images/Frame_6.png",
+            "icon": "golf_cart",
+            "image_width": 130,
+            "title_size": 22,
+            "body_size": 16
+          }
+        }
       },
-      "block_order": ["pick", "roast", "deliver"],
+      "block_order": [
+        "pick",
+        "roast",
+        "deliver"
+      ],
       "settings": {
-        "heading": "Your next great cup is three steps away.", "heading_size": 36,
-        "text_color": "#174c3b", "body_color": "#68452f", "accent_color": "#c38a35", "divider_color": "#d7cabb", "background_color": "#f5efe5",
-        "page_width": 1320, "padding_inline": 40, "column_gap": 48, "padding_top": 72, "padding_bottom": 72
+        "heading": "Your next great cup is three steps away.",
+        "heading_size": 36,
+        "text_color": "#174c3b",
+        "body_color": "#68452f",
+        "accent_color": "#c38a35",
+        "divider_color": "#d7cabb",
+        "background_color": "#f5efe5",
+        "page_width": 1320,
+        "padding_inline": 40,
+        "column_gap": 48,
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "local_delivery_area": {
       "type": "local-delivery-area",
       "blocks": {
-        "eyebrow": { "type": "eyebrow", "settings": { "text": "KEEPING IT LOCAL", "color": "#becd72", "size": 11, "spacing": 0 } },
-        "heading": { "type": "heading", "settings": { "text": "Made in Estero.\nDelivered in The Place.", "color": "#f9f5e9", "size": 42, "size_mobile": 32, "spacing": 18 } },
-        "text": { "type": "text", "settings": { "text": "<p>Local delivery is available exclusively within The Place at Corkscrew. Eligible addresses will see local delivery at checkout.</p>", "color": "#f9f5e9", "size": 16, "max_width": 440, "spacing": 34 } },
-        "button": { "type": "button", "settings": { "label": "Shop for Local Delivery", "link": "shopify://collections/all", "color": "#f9f5e9", "border_color": "#f9f5e9", "size": 15, "radius": 4, "spacing": 24 } }
+        "eyebrow": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "KEEPING IT LOCAL",
+            "color": "#becd72",
+            "size": 11,
+            "spacing": 0
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Made in Estero.\nDelivered in The Place.",
+            "color": "#f9f5e9",
+            "size": 42,
+            "size_mobile": 32,
+            "spacing": 18
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Local delivery is available exclusively within The Place at Corkscrew. Eligible addresses will see local delivery at checkout.</p>",
+            "color": "#f9f5e9",
+            "size": 16,
+            "max_width": 440,
+            "spacing": 34
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop for Local Delivery",
+            "link": "shopify://collections/all",
+            "color": "#f9f5e9",
+            "border_color": "#f9f5e9",
+            "size": 15,
+            "radius": 4,
+            "spacing": 24
+          }
+        }
       },
-      "block_order": ["eyebrow", "heading", "text", "button"],
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "text",
+        "button"
+      ],
       "settings": {
-        "image_alt": "Map of The Place at Corkscrew delivery area", "card_color": "#104832", "text_color": "#f9f5e9", "accent_color": "#becd72", "divider_color": "#62816f",
-        "corner_radius": 18, "card_padding": 48, "column_gap": 52, "page_width": 1320, "padding_inline": 40, "padding_top": 64, "padding_bottom": 64
+        "image": "shopify://shop_images/Frame_7.png",
+        "image_alt": "Map of The Place at Corkscrew delivery area",
+        "card_color": "#104832",
+        "text_color": "#f9f5e9",
+        "accent_color": "#becd72",
+        "divider_color": "#62816f",
+        "corner_radius": 18,
+        "card_padding": 48,
+        "column_gap": 52,
+        "page_width": 1320,
+        "padding_inline": 40,
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "local_delivery_lifestyle": {
       "type": "local-delivery-lifestyle",
       "blocks": {
-        "heading": { "type": "heading", "settings": { "text": "Good mornings\nstart close\nto home.", "color": "#174c3b", "size": 44, "size_mobile": 34, "spacing": 0 } },
-        "text": { "type": "text", "settings": { "text": "<p>Freshly roasted coffee. A friendly neighborhood delivery. A little more joy in your daily ritual.</p>", "color": "#68452f", "size": 16, "max_width": 380, "spacing": 58 } },
-        "link": { "type": "link", "settings": { "label": "Find your next favorite", "link": "shopify://collections/all", "color": "#174c3b", "size": 16, "spacing": 36 } }
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Good mornings\nstart close\nto home.",
+            "color": "#174c3b",
+            "size": 44,
+            "size_mobile": 34,
+            "spacing": 0
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Freshly roasted coffee. A friendly neighborhood delivery. A little more joy in your daily ritual.</p>",
+            "color": "#68452f",
+            "size": 16,
+            "max_width": 380,
+            "spacing": 58
+          }
+        },
+        "link": {
+          "type": "link",
+          "settings": {
+            "label": "Find your next favorite",
+            "link": "shopify://collections/all",
+            "color": "#174c3b",
+            "size": 16,
+            "spacing": 36
+          }
+        }
       },
-      "block_order": ["heading", "text", "link"],
-      "settings": { "image_alt": "Neighbors enjoying Necesito coffee outdoors", "background_color": "#f5efe5", "image_width": 57, "image_radius": 14, "column_gap": 56, "page_width": 1320, "padding_inline": 40, "padding_top": 64, "padding_bottom": 48 }
+      "block_order": [
+        "heading",
+        "text",
+        "link"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Frame_8.png",
+        "image_alt": "Neighbors enjoying Necesito coffee outdoors",
+        "background_color": "#f5efe5",
+        "image_width": 57,
+        "image_radius": 14,
+        "column_gap": 56,
+        "page_width": 1320,
+        "padding_inline": 40,
+        "padding_top": 64,
+        "padding_bottom": 48
+      }
     },
     "local_delivery_contact": {
       "type": "local-delivery-contact",
-      "settings": { "heading": "Questions? Don’s happy to help.", "text": "Call or text Necesito Coffee Roasters", "phone": "239-218-0339", "image_alt": "Necesito coffee mascot", "background_color": "#f8e5ae", "text_color": "#174c3b", "corner_radius": 16, "card_padding": 44, "image_width": 240, "page_width": 1320, "padding_inline": 40, "padding_top": 0, "padding_bottom": 64 }
+      "settings": {
+        "heading": "Questions? Don’s happy to help.",
+        "text": "Call or text Necesito Coffee Roasters",
+        "phone": "239-218-0339",
+        "image": "shopify://shop_images/Frame_9.png",
+        "image_alt": "Necesito coffee mascot",
+        "background_color": "#f8e5ae",
+        "text_color": "#174c3b",
+        "corner_radius": 16,
+        "card_padding": 20,
+        "image_width": 240,
+        "page_width": 1320,
+        "padding_inline": 40,
+        "padding_top": 0,
+        "padding_bottom": 64
+      }
     },
     "main": {
       "type": "main-page",
@@ -187,10 +356,12 @@
             "alignment": "left",
             "type_preset": "h2",
             "font": "var(--font-body--family)",
+            "font_size": "1rem",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -203,7 +374,9 @@
         },
         "page-content": {
           "type": "page-content",
-          "settings": {},
+          "settings": {
+            "text_color": ""
+          },
           "blocks": {}
         }
       },
@@ -211,6 +384,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
