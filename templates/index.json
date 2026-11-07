@@ -86,7 +86,7 @@
           "settings": {
             "object_name": "Left product",
             "role": "product",
-            "image": "shopify://shop_images/morningblend_4a48ae7b-5fa9-4b6f-8637-49cad3d4d345.png",
+            "image": "shopify://shop_images/Morning_Blend_Coffee_Pouch.png",
             "alt_text": "Morning Blend",
             "circle_color": "#dce8d3",
             "left": 28,
@@ -109,7 +109,7 @@
           "settings": {
             "object_name": "Center product",
             "role": "product",
-            "image": "shopify://shop_images/reserve_957097f6-bd33-4196-a4db-7d3c7d285955.png",
+            "image": "shopify://shop_images/the_reserve.png",
             "alt_text": "The Reserve",
             "circle_color": "#dce8d3",
             "left": 50,
@@ -132,7 +132,7 @@
           "settings": {
             "object_name": "Right product",
             "role": "product",
-            "image": "shopify://shop_images/thecommunity_6e512ece-be42-4d7c-8865-8ea056d5a92f.png",
+            "image": "shopify://shop_images/community.png",
             "alt_text": "The Community",
             "circle_color": "#dce8d3",
             "left": 73,
