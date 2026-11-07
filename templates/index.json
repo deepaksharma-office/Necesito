@@ -763,7 +763,7 @@
             "body_line_height": 150,
             "body_max_width": 580,
             "button_label": "Leave a review",
-            "button_link": "",
+            "button_link": "shopify://pages/leave-a-review",
             "open_new_tab": false,
             "button_background": "#faf7f0",
             "button_color": "#173f35",
