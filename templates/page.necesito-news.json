@@ -155,7 +155,7 @@
     "necesito_news_blog": {
       "type": "blog-journal",
       "settings": {
-        "blog": "news",
+        "blog": "the-necesito-news",
         "article_limit": 9,
         "show_pagination": false,
         "category_source": "first_tag",

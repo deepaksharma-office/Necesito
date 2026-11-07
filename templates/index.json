@@ -893,7 +893,7 @@
         "card_description_size": 13,
         "show_button": true,
         "button_label": "Visit Necesito News",
-        "button_url": "shopify://blogs/news",
+        "button_url": "shopify://blogs/the-necesito-news",
         "button_type": "custom",
         "button_background": "#fffcf6",
         "button_color": "#173f35",
@@ -932,7 +932,7 @@
       "type": "blog-journal",
       "name": "Blog journal",
       "settings": {
-        "blog": "news",
+        "blog": "the-necesito-news",
         "article_limit": 3,
         "show_pagination": false,
         "category_source": "first_tag",
