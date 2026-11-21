@@ -4,7 +4,7 @@
 {% enddoc %}
 
 {% liquid
-  assign product = closest.product
+  #assign product = closest.product
   assign variant = product.selected_or_first_available_variant
   assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id
   assign gift_product = block.settings.gift_product
@@ -190,7 +190,7 @@
     </button>
 
     <script type="application/json" ref="productData">
-      let object = {"variants":[
+ {"variants":[
         {%- for item_variant in product.variants -%}
           {%- liquid
             assign variant_summary_title = item_variant.title
@@ -206,7 +206,7 @@
         {%- endfor -%}
       ]};
 
-      console.log(object);
+
     </script>
 
     <details class="custom-purchase__subscription-json" open>
