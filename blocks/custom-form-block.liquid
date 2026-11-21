@@ -216,6 +216,10 @@
   <script src="{{ 'custom-purchase-widget.js' | asset_url }}" type="module" fetchpriority="low"></script>
 {% endif %}
 
+<script>
+  var  productJson = {{  product | json }};
+  console.log(productJson);
+</script>
 {% stylesheet %}
   .custom-purchase {
     --custom-purchase-accent: #183c30;
