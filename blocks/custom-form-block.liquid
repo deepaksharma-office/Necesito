@@ -1,0 +1,679 @@
+{% doc %}
+  Renders a product purchase controller linked to the section's native Shopify product form.
+
+  @example
+  {% content_for 'block', type: 'custom-form-block', id: 'custom-form' %}
+{% enddoc %}
+
+{% liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id
+  assign gift_product = block.settings.gift_product
+  assign gift_variant = gift_product.selected_or_first_available_variant
+  assign initial_selling_plan = variant.selling_plan_allocations.first
+  assign has_selling_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_selling_plans = true
+  endif
+  assign has_initial_selling_plans = false
+  if variant.selling_plan_allocations.size > 0
+    assign has_initial_selling_plans = true
+  endif
+%}
+
+{% if product != blank %}
+  <custom-purchase-widget
+    class="custom-purchase"
+    data-product-id="{{ product.id }}"
+    data-product-form-id="{{ product_form_id }}"
+    data-initial-variant-id="{{ variant.id }}"
+    data-currency="{{ cart.currency.iso_code | default: localization.country.currency.iso_code | escape }}"
+    data-subscription-available="{{ has_initial_selling_plans }}"
+    data-debug="false"
+    data-bag-label="{{ block.settings.bag_label | escape }}"
+    data-bags-label="{{ block.settings.bags_label | escape }}"
+    data-save-up-to-label="{{ block.settings.save_up_to_label | escape }}"
+    data-savings-label="{{ block.settings.savings_label | escape }}"
+    data-cart-error-label="{{ 'products.product.add_to_cart_error' | t | escape }}"
+    data-gift-variant-id="{{ gift_variant.id }}"
+    data-gift-available="{{ gift_variant.available | default: false }}"
+    data-gift-partial-error-label="{{ block.settings.gift_partial_error_label | escape }}"
+    data-gift-configured-label="{{ block.settings.gift_configured_label | escape }}"
+    data-gift-edit-label="{{ block.settings.gift_edit_label | escape }}"
+    data-gift-default-label="{{ block.settings.gift_checkbox_label | escape }}"
+    data-gift-supporting-text="{{ block.settings.gift_supporting_text | escape }}"
+    {{ block.shopify_attributes }}
+  >
+    {% if has_selling_plans %}
+      <fieldset class="custom-purchase__section custom-purchase__modes">
+        <legend class="visually-hidden">{{ block.settings.purchase_options_label | escape }}</legend>
+        <label class="custom-purchase__mode">
+          <input type="radio" name="custom-purchase-mode-{{ block.id }}" value="subscription" {% if has_initial_selling_plans %}checked{% else %}disabled{% endif %} ref="modeInputs[]">
+          <span>
+            <strong>{{ block.settings.subscribe_label | escape }}</strong>
+            <small ref="saveUpTo"></small>
+          </span>
+        </label>
+        <label class="custom-purchase__mode">
+          <input type="radio" name="custom-purchase-mode-{{ block.id }}" value="one-time" {% unless has_initial_selling_plans %}checked{% endunless %} ref="modeInputs[]">
+          <span>
+            <strong>{{ block.settings.one_time_label | escape }}</strong>
+            <small>{{ block.settings.no_subscription_label | escape }}</small>
+          </span>
+        </label>
+      </fieldset>
+    {% endif %}
+
+    <section class="custom-purchase__section" ref="subscriptionPanel" {% unless has_initial_selling_plans %}hidden{% endunless %}>
+      <fieldset>
+        <legend>{{ block.settings.quantity_label | escape }}</legend>
+        <div class="custom-purchase__quantity-cards" ref="subscriptionQuantities">
+          {% for quantity in (1..4) %}
+            <label class="custom-purchase__quantity-card">
+              <input type="radio" name="custom-subscription-quantity-{{ block.id }}" value="{{ quantity }}" {% if forloop.first %}checked{% endif %} ref="subscriptionQuantityInputs[]">
+              <span><strong>{{ quantity }}</strong><small>{% if quantity == 1 %}{{ block.settings.bag_label | escape }}{% else %}{{ block.settings.bags_label | escape }}{% endif %}</small></span>
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+      <fieldset class="custom-purchase__frequency-fieldset">
+        <legend>{{ block.settings.frequency_label | escape }}</legend>
+        <div class="custom-purchase__frequencies" ref="frequencyOptions">
+          {% for allocation in variant.selling_plan_allocations %}
+            <label class="custom-purchase__frequency">
+              <input
+                type="radio"
+                name="custom-selling-plan-{{ block.id }}"
+                value="{{ allocation.selling_plan.id }}"
+                {% if forloop.first %}checked{% endif %}
+              >
+              <span>
+                <strong>{{ allocation.selling_plan.name | escape }}</strong>
+                <small>{{ allocation.per_delivery_price | default: allocation.price | money }} / {{ block.settings.bag_label | escape }}</small>
+              </span>
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="custom-purchase__section" ref="oneTimePanel" {% if has_initial_selling_plans %}hidden{% endif %}>
+      <span class="custom-purchase__label">{{ 'products.product.quantity' | t }}</span>
+      <div class="custom-purchase__stepper">
+        <button type="button" aria-label="{{ 'accessibility.decrease_quantity' | t }}" ref="decreaseButton">−</button>
+        <output aria-live="polite" ref="oneTimeQuantity">{{ variant.quantity_rule.min | default: 1 }}</output>
+        <button type="button" aria-label="{{ 'accessibility.increase_quantity' | t }}" ref="increaseButton">+</button>
+      </div>
+    </section>
+
+    {% if block.settings.enable_gift and gift_product != blank %}
+      <section class="custom-purchase__section custom-purchase__gift">
+        <button type="button" class="custom-purchase__gift-button" ref="giftButton" {% unless gift_variant.available %}disabled{% endunless %}>
+          <span class="custom-purchase__gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 10h16v10H4zM3 7h18v3H3zM12 7v13M7.5 7C5 7 4.5 3.5 7 3.5c2 0 5 3.5 5 3.5M16.5 7C19 7 19.5 3.5 17 3.5c-2 0-5 3.5-5 3.5"/>
+            </svg>
+          </span>
+          <span class="custom-purchase__gift-copy">
+            <strong ref="giftButtonTitle">{{ block.settings.gift_checkbox_label | escape }}</strong>
+            <small ref="giftButtonDetail">{{ block.settings.gift_supporting_text | escape }}</small>
+          </span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <dialog class="custom-purchase__gift-dialog" ref="giftDialog" aria-labelledby="gift-dialog-title-{{ block.id }}">
+          <button type="button" class="custom-purchase__gift-close" aria-label="{{ 'actions.close' | t }}" ref="giftCloseButton">×</button>
+          <div class="custom-purchase__gift-modal">
+            <div class="custom-purchase__gift-media">
+              {% if gift_product.featured_image %}
+                {{ gift_product.featured_image | image_url: width: 900 | image_tag: widths: '320, 480, 640, 900', sizes: '(max-width: 749px) 90vw, 45vw', loading: 'lazy', alt: gift_product.title }}
+              {% endif %}
+              <div>
+                <strong>{{ gift_product.title | escape }}</strong>
+                <span>{{ gift_variant.price | money }}</span>
+              </div>
+            </div>
+            <form class="custom-purchase__gift-form" ref="giftForm">
+              <h2 id="gift-dialog-title-{{ block.id }}">{{ block.settings.gift_form_heading | escape }}</h2>
+              {% if block.settings.enable_sender %}
+                <label>
+                  <span>{{ block.settings.sender_label | escape }}</span>
+                  <input type="text" ref="giftFrom" autocomplete="name" {% if block.settings.sender_required %}required{% endif %}>
+                </label>
+              {% endif %}
+              {% if block.settings.enable_recipient %}
+                <label>
+                  <span>{{ block.settings.recipient_label | escape }}</span>
+                  <input type="text" ref="giftTo" {% if block.settings.recipient_required %}required{% endif %}>
+                </label>
+              {% endif %}
+              {% if block.settings.enable_message %}
+                <label>
+                  <span>{{ block.settings.message_label | escape }}</span>
+                  <textarea ref="giftMessage" maxlength="{{ block.settings.message_max_length }}" placeholder="{{ block.settings.message_placeholder | escape }}" {% if block.settings.message_required %}required{% endif %}></textarea>
+                  <small class="custom-purchase__gift-count"><span ref="giftMessageCount">0</span> / {{ block.settings.message_max_length }}</small>
+                </label>
+              {% endif %}
+              <div class="custom-purchase__gift-actions">
+                <button type="button" class="custom-purchase__gift-remove" ref="giftRemoveButton" hidden>{{ block.settings.gift_remove_label | escape }}</button>
+                <button type="submit" class="custom-purchase__gift-save">{{ block.settings.gift_save_label | escape }}</button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      </section>
+    {% endif %}
+
+    <input
+      type="hidden"
+      name="selling_plan"
+      form="{{ product_form_id }}"
+      value="{{ initial_selling_plan.selling_plan.id }}"
+      {% unless initial_selling_plan %}disabled{% endunless %}
+      ref="sellingPlanInput"
+    >
+
+    <section class="custom-purchase__summary" aria-live="polite">
+      <span class="custom-purchase__eyebrow">{{ block.settings.summary_label | escape }}</span>
+      <div class="custom-purchase__summary-row"><span ref="summaryDescription"></span><strong ref="summaryTotal"></strong></div>
+      <div class="custom-purchase__savings" ref="summarySavings" hidden></div>
+    </section>
+
+    <div class="custom-purchase__error-row">
+      <p class="custom-purchase__error" role="alert" ref="error" hidden></p>
+      <button type="button" class="custom-purchase__gift-retry" ref="giftRetryButton" hidden>{{ block.settings.gift_retry_label | escape }}</button>
+    </div>
+    <button type="submit" form="{{ product_form_id }}" class="custom-purchase__button" ref="submitButton">
+      <span>{{ block.settings.button_text | escape }}</span>
+      <span aria-hidden="true">—</span>
+      <span ref="buttonTotal"></span>
+    </button>
+
+    <script type="application/json" ref="productData">
+      {"variants":[
+        {%- for item_variant in product.variants -%}
+          {%- liquid
+            assign variant_summary_title = item_variant.title
+            if product.has_only_default_variant
+              assign variant_summary_title = product.title
+            endif
+          -%}
+          {"id":{{ item_variant.id | json }},"title":{{ variant_summary_title | json }},"price":{{ item_variant.price | json }},"compareAtPrice":{{ item_variant.compare_at_price | default: 0 | json }},"available":{{ item_variant.available | json }},"min":{{ item_variant.quantity_rule.min | default: 1 | json }},"max":{{ item_variant.quantity_rule.max | default: 0 | json }},"step":{{ item_variant.quantity_rule.increment | default: 1 | json }},"allocations":[
+            {%- for allocation in item_variant.selling_plan_allocations -%}
+              {"id":{{ allocation.selling_plan.id | json }},"name":{{ allocation.selling_plan.name | json }},"price":{{ allocation.price | json }},"compareAtPrice":{{ allocation.compare_at_price | default: item_variant.price | json }},"perDeliveryPrice":{{ allocation.per_delivery_price | default: allocation.price | json }}}{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]}
+    </script>
+
+    <details class="custom-purchase__subscription-json" open>
+      <summary>Available subscription frequencies (JSON)</summary>
+      <pre ref="subscriptionJsonOutput" aria-live="polite"></pre>
+    </details>
+  </custom-purchase-widget>
+
+  <script src="{{ 'custom-purchase-widget.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+
+{% stylesheet %}
+  .custom-purchase {
+    --custom-purchase-accent: #183c30;
+    display: grid;
+    gap: var(--gap-lg);
+    color: var(--color-foreground);
+  }
+
+  .custom-purchase fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .custom-purchase__subscription-json {
+    min-width: 0;
+    padding: var(--padding-sm);
+    border: var(--style-border-width) solid var(--color-border);
+    border-radius: var(--style-border-radius-sm);
+  }
+
+  .custom-purchase__subscription-json summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .custom-purchase__subscription-json pre {
+    max-block-size: 24rem;
+    margin-block: var(--margin-sm) 0;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 0.75rem;
+  }
+
+  .custom-purchase legend,
+  .custom-purchase__label,
+  .custom-purchase__eyebrow {
+    display: block;
+    margin-block-end: var(--gap-sm);
+    font-size: var(--font-size--xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .custom-purchase__modes,
+  .custom-purchase__quantity-cards,
+  .custom-purchase__frequencies {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-xs);
+  }
+
+  .custom-purchase__quantity-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .custom-purchase__mode,
+  .custom-purchase__quantity-card,
+  .custom-purchase__frequency {
+    position: relative;
+    min-width: 0;
+  }
+
+  .custom-purchase__mode input,
+  .custom-purchase__quantity-card input,
+  .custom-purchase__frequency input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .custom-purchase__mode > span,
+  .custom-purchase__quantity-card > span,
+  .custom-purchase__frequency > span {
+    display: grid;
+    place-content: center;
+    min-height: 64px;
+    padding: var(--padding-sm);
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: var(--style-border-radius-inputs);
+    background: var(--color-background);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color var(--animation-speed) var(--animation-easing), background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .custom-purchase__frequency > span {
+    place-content: start;
+    text-align: start;
+  }
+
+  .custom-purchase__mode small,
+  .custom-purchase__quantity-card small,
+  .custom-purchase__frequency small {
+    font-size: var(--font-size--xs);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .custom-purchase input:checked + span {
+    border-color: var(--custom-purchase-accent);
+    background: color-mix(in srgb, var(--custom-purchase-accent) 8%, var(--color-background));
+    box-shadow: inset 0 0 0 1px var(--custom-purchase-accent);
+  }
+
+  .custom-purchase input:focus-visible + span,
+  .custom-purchase button:focus-visible,
+  .custom-purchase input:focus-visible,
+  .custom-purchase textarea:focus-visible {
+    outline: var(--focus-outline-width) solid var(--custom-purchase-accent);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .custom-purchase__section[hidden] {
+    display: none;
+  }
+
+  .custom-purchase__frequency-fieldset {
+    margin-block-start: var(--gap-lg) !important;
+  }
+
+  .custom-purchase__stepper {
+    display: grid;
+    grid-template-columns: 44px minmax(48px, auto) 44px;
+    align-items: center;
+    width: max-content;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: var(--style-border-radius-inputs);
+    overflow: hidden;
+  }
+
+  .custom-purchase__stepper button {
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .custom-purchase__stepper output {
+    text-align: center;
+  }
+
+  .custom-purchase__gift-button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--gap-md);
+    width: 100%;
+    padding: var(--padding-md) var(--padding-lg);
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: var(--style-border-radius-inputs);
+    background: color-mix(in srgb, var(--custom-purchase-accent) 4%, var(--color-background));
+    color: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .custom-purchase__gift-button[data-configured='true'] {
+    border-color: var(--custom-purchase-accent);
+    background: color-mix(in srgb, var(--custom-purchase-accent) 8%, var(--color-background));
+  }
+
+  .custom-purchase__gift-button:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-50);
+  }
+
+  .custom-purchase__gift-icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    color: var(--custom-purchase-accent);
+  }
+
+  .custom-purchase__gift-copy {
+    display: grid;
+    gap: 2px;
+  }
+
+  .custom-purchase__gift-copy small {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .custom-purchase__gift-dialog {
+    width: min(920px, calc(100vw - 32px));
+    max-width: none;
+    max-height: min(760px, calc(100dvh - 32px));
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: calc(var(--style-border-radius-inputs) + 8px);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    overflow: auto;
+  }
+
+  .custom-purchase__gift-dialog::backdrop {
+    background: rgb(0 0 0 / 0.55);
+  }
+
+  .custom-purchase__gift-close {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: var(--padding-sm);
+    inset-inline-end: var(--padding-sm);
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-background);
+    color: inherit;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .custom-purchase__gift-modal {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+    min-height: 520px;
+  }
+
+  .custom-purchase__gift-media {
+    display: grid;
+    align-content: center;
+    gap: var(--gap-md);
+    padding: var(--padding-xl);
+    background: rgb(var(--color-foreground-rgb) / 0.05);
+  }
+
+  .custom-purchase__gift-media img {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: contain;
+  }
+
+  .custom-purchase__gift-media > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-md);
+  }
+
+  .custom-purchase__gift-form {
+    display: grid;
+    align-content: center;
+    gap: var(--gap-md);
+    padding: clamp(28px, 5vw, 56px);
+  }
+
+  .custom-purchase__gift-form label {
+    display: grid;
+    gap: var(--gap-xs);
+  }
+
+  .custom-purchase__gift-form input,
+  .custom-purchase__gift-form textarea {
+    width: 100%;
+    padding: var(--padding-sm);
+    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    border-radius: var(--style-border-radius-inputs);
+    background: var(--color-input-background);
+    color: var(--color-input-text);
+  }
+
+  .custom-purchase__gift-form textarea {
+    min-height: 96px;
+    resize: vertical;
+  }
+
+  .custom-purchase__gift-count {
+    justify-self: end;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .custom-purchase__gift-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--gap-sm);
+  }
+
+  .custom-purchase__gift-save,
+  .custom-purchase__gift-remove {
+    min-height: 44px;
+    padding: var(--padding-sm) var(--padding-lg);
+    border: 1px solid var(--custom-purchase-accent);
+    border-radius: var(--style-border-radius-buttons-primary);
+    cursor: pointer;
+  }
+
+  .custom-purchase__gift-save {
+    background: var(--custom-purchase-accent);
+    color: #fff;
+  }
+
+  .custom-purchase__gift-remove {
+    background: transparent;
+    color: var(--custom-purchase-accent);
+  }
+
+  .custom-purchase__summary {
+    padding: var(--padding-lg);
+    border-radius: calc(var(--style-border-radius-inputs) + 4px);
+    background: color-mix(in srgb, var(--custom-purchase-accent) 7%, var(--color-background));
+  }
+
+  .custom-purchase__summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-md);
+  }
+
+  .custom-purchase__savings {
+    margin-block-start: var(--gap-xs);
+    color: var(--custom-purchase-accent);
+    font-size: var(--font-size--sm);
+    font-weight: 600;
+  }
+
+  .custom-purchase__button {
+    width: 100%;
+    min-height: 52px;
+    padding: var(--padding-sm) var(--padding-lg);
+    border: 1px solid var(--custom-purchase-accent);
+    border-radius: var(--style-border-radius-buttons-primary);
+    background: var(--custom-purchase-accent);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .custom-purchase__button:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-50);
+  }
+
+  .custom-purchase__error {
+    margin: 0;
+    color: var(--color-error);
+  }
+
+  .custom-purchase__error-row {
+    display: grid;
+    gap: var(--gap-xs);
+  }
+
+  .custom-purchase__gift-retry {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--custom-purchase-accent);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .custom-purchase-native-form .product-form-buttons {
+    position: absolute !important;
+    inline-size: 1px !important;
+    block-size: 1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-purchase__quantity-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .custom-purchase__gift-dialog {
+      width: calc(100vw - 16px);
+      max-height: calc(100dvh - 16px);
+    }
+
+    .custom-purchase__gift-modal {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .custom-purchase__gift-media {
+      grid-template-columns: 96px minmax(0, 1fr);
+      align-items: center;
+      padding: var(--padding-lg);
+    }
+
+    .custom-purchase__gift-media img {
+      max-height: 96px;
+    }
+
+    .custom-purchase__gift-media > div {
+      display: grid;
+    }
+
+    .custom-purchase__gift-form {
+      padding: var(--padding-lg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .custom-purchase__mode > span,
+    .custom-purchase__quantity-card > span,
+    .custom-purchase__frequency > span {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_form_block",
+  "tag": null,
+  "settings": [
+    { "type": "header", "content": "t:custom_purchase.widget_labels" },
+    { "type": "text", "id": "purchase_options_label", "label": "t:custom_purchase.purchase_options_label", "default": "Purchase options" },
+    { "type": "text", "id": "subscribe_label", "label": "t:custom_purchase.subscribe_label", "default": "Subscribe & save" },
+    { "type": "text", "id": "one_time_label", "label": "t:custom_purchase.one_time_label", "default": "One-time purchase" },
+    { "type": "text", "id": "no_subscription_label", "label": "t:custom_purchase.no_subscription_label", "default": "No subscription" },
+    { "type": "text", "id": "quantity_label", "label": "t:custom_purchase.quantity_label", "default": "Quantity of bags" },
+    { "type": "text", "id": "frequency_label", "label": "t:custom_purchase.frequency_label", "default": "Delivery frequency" },
+    { "type": "text", "id": "summary_label", "label": "t:custom_purchase.summary_label", "default": "Order summary" },
+    { "type": "text", "id": "bag_label", "label": "t:custom_purchase.bag_label", "default": "bag" },
+    { "type": "text", "id": "bags_label", "label": "t:custom_purchase.bags_label", "default": "bags" },
+    { "type": "text", "id": "save_up_to_label", "label": "t:custom_purchase.save_up_to_label", "default": "Save up to" },
+    { "type": "text", "id": "savings_label", "label": "t:custom_purchase.savings_label", "default": "You save" },
+    { "type": "header", "content": "t:custom_purchase.gift_options" },
+    { "type": "checkbox", "id": "enable_gift", "label": "t:custom_purchase.enable_gift", "default": true },
+    { "type": "product", "id": "gift_product", "label": "t:custom_purchase.gift_product" },
+    { "type": "text", "id": "gift_checkbox_label", "label": "t:custom_purchase.gift_checkbox_label", "default": "Add a gift", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_supporting_text", "label": "t:custom_purchase.gift_supporting_text", "default": "Add a personal message to your order", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_configured_label", "label": "t:custom_purchase.gift_configured_label", "default": "Gift details saved", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_edit_label", "label": "t:custom_purchase.gift_edit_label", "default": "Edit gift details", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_form_heading", "label": "t:custom_purchase.gift_form_heading", "default": "Gift details", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "checkbox", "id": "enable_recipient", "label": "t:custom_purchase.enable_recipient", "default": true, "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "recipient_label", "label": "t:custom_purchase.recipient_label", "default": "To", "visible_if": "{{ block.settings.enable_gift and block.settings.enable_recipient }}" },
+    { "type": "checkbox", "id": "recipient_required", "label": "t:custom_purchase.required", "default": false, "visible_if": "{{ block.settings.enable_gift and block.settings.enable_recipient }}" },
+    { "type": "checkbox", "id": "enable_sender", "label": "t:custom_purchase.enable_sender", "default": true, "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "sender_label", "label": "t:custom_purchase.sender_label", "default": "From", "visible_if": "{{ block.settings.enable_gift and block.settings.enable_sender }}" },
+    { "type": "checkbox", "id": "sender_required", "label": "t:custom_purchase.required", "default": false, "visible_if": "{{ block.settings.enable_gift and block.settings.enable_sender }}" },
+    { "type": "checkbox", "id": "enable_message", "label": "t:custom_purchase.enable_message", "default": true, "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "message_label", "label": "t:custom_purchase.message_label", "default": "Gift message", "visible_if": "{{ block.settings.enable_gift and block.settings.enable_message }}" },
+    { "type": "textarea", "id": "message_placeholder", "label": "t:custom_purchase.message_placeholder", "default": "Write your message", "visible_if": "{{ block.settings.enable_gift and block.settings.enable_message }}" },
+    { "type": "range", "id": "message_max_length", "label": "t:custom_purchase.message_max_length", "min": 50, "max": 500, "step": 10, "default": 250, "visible_if": "{{ block.settings.enable_gift and block.settings.enable_message }}" },
+    { "type": "checkbox", "id": "message_required", "label": "t:custom_purchase.required", "default": false, "visible_if": "{{ block.settings.enable_gift and block.settings.enable_message }}" },
+    { "type": "text", "id": "gift_save_label", "label": "t:custom_purchase.gift_save_label", "default": "Save gift details", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_remove_label", "label": "t:custom_purchase.gift_remove_label", "default": "Remove gift", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_partial_error_label", "label": "t:custom_purchase.gift_partial_error_label", "default": "The main product was added, but the gift could not be added. Please try the gift again.", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "gift_retry_label", "label": "t:custom_purchase.gift_retry_label", "default": "Retry gift", "visible_if": "{{ block.settings.enable_gift }}" },
+    { "type": "text", "id": "button_text", "label": "t:custom_purchase.button_text", "default": "Add to cart" }
+  ],
+  "presets": [{ "name": "t:names.custom_form_block", "category": "t:categories.product" }]
+}
+{% endschema %}

@@ -30,12 +30,6 @@
     assign min_quantity = variant.quantity_rule.min | default: 1
   endif
 
-  assign maximum_quantity = variant.quantity_rule.max
-  if block.settings.enable_maximum_quantity
-    if maximum_quantity == null or block.settings.maximum_quantity < maximum_quantity
-      assign maximum_quantity = block.settings.maximum_quantity
-    endif
-  endif
 %}
 
 <div
@@ -82,8 +76,8 @@
       {% if line_index %}
         data-cart-line="{{ line_index | plus: 1 }}"
       {% endif %}
-      {% if maximum_quantity %}
-        max="{{ maximum_quantity }}"
+      {% if variant.quantity_rule.max %}
+        max="{{ variant.quantity_rule.max }}"
       {% endif %}
       step="{{ variant.quantity_rule.increment | default: 1 }}"
       {% if can_update_quantity == false or variant.available == false %}
