@@ -148,7 +148,6 @@ class CustomPurchaseWidget extends Component {
       const selected = this.refs.subscriptionQuantityInputs?.find((input) => Number(input.value) === this.#quantity);
       if (selected) selected.checked = true;
     } else {
-      this.#sellingPlanId = '';
       this.refs.sellingPlanInput.value = '';
       this.#quantity = this.#nativeQuantity();
     }
