@@ -6,37 +6,53 @@
 {% enddoc %}
 
 {% liquid
-  assign product = closest.product
-  assign variant = product.selected_or_first_available_variant
-  assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id
+  assign main_product = product
+  assign main_variant = main_product.selected_or_first_available_variant
+  assign product_form_id = 'CustomPurchase-ProductForm-' | append: section.id | append: '-' | append: block.id
   assign gift_product = block.settings.gift_product
   assign gift_variant = gift_product.selected_or_first_available_variant
-  assign initial_selling_plan = variant.selling_plan_allocations.first
+  assign initial_selling_plan = main_variant.selling_plan_allocations.first
   assign has_selling_plans = false
-  if product.selling_plan_groups.size > 0
+  if main_product.selling_plan_groups.size > 0
     assign has_selling_plans = true
   endif
   assign has_initial_selling_plans = false
-  if variant.selling_plan_allocations.size > 0
+  if main_variant.selling_plan_allocations.size > 0
     assign has_initial_selling_plans = true
   endif
 %}
 
-{% if product != blank %}
+{% if main_product != blank %}
+  <product-form-component
+    class="custom-purchase-native-form"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ main_product.id }}"
+    data-product-url="{{ main_product.url }}"
+    data-quantity-default="{{ main_variant.quantity_rule.min | default: 1 }}"
+    on:submit="/handleSubmit"
+    hidden
+  >
+    <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+    {% form 'product', main_product, id: product_form_id, data-type: 'add-to-cart-form' %}
+      <input type="hidden" name="id" value="{{ main_variant.id }}" ref="variantId">
+      <input type="hidden" name="quantity" value="{{ main_variant.quantity_rule.min | default: 1 }}" ref="quantityInput">
+    {% endform %}
+  </product-form-component>
+
   <custom-purchase-widget
     class="custom-purchase"
-    data-product-id="{{ product.id }}"
+    data-product-id="{{ main_product.id }}"
     data-product-form-id="{{ product_form_id }}"
-    data-initial-variant-id="{{ variant.id }}"
+    data-initial-variant-id="{{ main_variant.id }}"
     data-currency="{{ cart.currency.iso_code | default: localization.country.currency.iso_code | escape }}"
     data-subscription-available="{{ has_initial_selling_plans }}"
-    data-debug="false"
     data-bag-label="{{ block.settings.bag_label | escape }}"
     data-bags-label="{{ block.settings.bags_label | escape }}"
     data-save-up-to-label="{{ block.settings.save_up_to_label | escape }}"
     data-savings-label="{{ block.settings.savings_label | escape }}"
     data-cart-error-label="{{ 'products.product.add_to_cart_error' | t | escape }}"
     data-gift-variant-id="{{ gift_variant.id }}"
+    data-gift-product-id="{{ gift_product.id }}"
     data-gift-available="{{ gift_variant.available | default: false }}"
     data-gift-partial-error-label="{{ block.settings.gift_partial_error_label | escape }}"
     data-gift-configured-label="{{ block.settings.gift_configured_label | escape }}"
@@ -81,7 +97,7 @@
       <fieldset class="custom-purchase__frequency-fieldset">
         <legend>{{ block.settings.frequency_label | escape }}</legend>
         <div class="custom-purchase__frequencies" ref="frequencyOptions">
-          {% for allocation in variant.selling_plan_allocations %}
+          {% for allocation in main_variant.selling_plan_allocations %}
             <label class="custom-purchase__frequency">
               <input
                 type="radio"
@@ -102,9 +118,18 @@
     <section class="custom-purchase__section" ref="oneTimePanel" {% if has_initial_selling_plans %}hidden{% endif %}>
       <span class="custom-purchase__label">{{ 'products.product.quantity' | t }}</span>
       <div class="custom-purchase__stepper">
-        <button type="button" aria-label="{{ 'accessibility.decrease_quantity' | t }}" ref="decreaseButton">−</button>
-        <output aria-live="polite" ref="oneTimeQuantity">{{ variant.quantity_rule.min | default: 1 }}</output>
-        <button type="button" aria-label="{{ 'accessibility.increase_quantity' | t }}" ref="increaseButton">+</button>
+        <button type="button" aria-label="{{ 'accessibility.decrease_quantity' | t }}" ref="decreaseButton">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" focusable="false">
+            <path d="M5 12H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <output aria-live="polite" ref="oneTimeQuantity">{{ main_variant.quantity_rule.min | default: 1 }}</output>
+        <button type="button" aria-label="{{ 'accessibility.increase_quantity' | t }}" ref="increaseButton">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" focusable="false">
+            <path d="M12 5V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M5 12H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -192,12 +217,12 @@
     </button>
 
     <script type="application/json" ref="productData">
-      {"variants":[
-        {%- for item_variant in product.variants -%}
+      {"productId":{{ main_product.id | json }},"variants":[
+        {%- for item_variant in main_product.variants -%}
           {%- liquid
             assign variant_summary_title = item_variant.title
-            if product.has_only_default_variant
-              assign variant_summary_title = product.title
+            if main_product.has_only_default_variant
+              assign variant_summary_title = main_product.title
             endif
           -%}
           {"id":{{ item_variant.id | json }},"title":{{ variant_summary_title | json }},"price":{{ item_variant.price | json }},"compareAtPrice":{{ item_variant.compare_at_price | default: 0 | json }},"available":{{ item_variant.available | json }},"min":{{ item_variant.quantity_rule.min | default: 1 | json }},"max":{{ item_variant.quantity_rule.max | default: 0 | json }},"step":{{ item_variant.quantity_rule.increment | default: 1 | json }},"allocations":[
@@ -209,15 +234,10 @@
       ]}
     </script>
 
-    <details class="custom-purchase__subscription-json" open>
-      <summary>Available subscription frequencies (JSON)</summary>
-      <pre ref="subscriptionJsonOutput" aria-live="polite"></pre>
-    </details>
   </custom-purchase-widget>
 
   <script src="{{ 'custom-purchase-widget.js' | asset_url }}" type="module" fetchpriority="low"></script>
 {% endif %}
-
 {% stylesheet %}
   .custom-purchase {
     --custom-purchase-accent: #183c30;
@@ -231,27 +251,6 @@
     margin: 0;
     padding: 0;
     border: 0;
-  }
-
-  .custom-purchase__subscription-json {
-    min-width: 0;
-    padding: var(--padding-sm);
-    border: var(--style-border-width) solid var(--color-border);
-    border-radius: var(--style-border-radius-sm);
-  }
-
-  .custom-purchase__subscription-json summary {
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .custom-purchase__subscription-json pre {
-    max-block-size: 24rem;
-    margin-block: var(--margin-sm) 0;
-    overflow: auto;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    font-size: 0.75rem;
   }
 
   .custom-purchase legend,
@@ -352,6 +351,8 @@
   }
 
   .custom-purchase__stepper button {
+    display: grid;
+    place-items: center;
     min-height: 44px;
     border: 0;
     background: transparent;

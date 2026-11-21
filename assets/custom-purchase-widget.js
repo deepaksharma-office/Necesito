@@ -5,7 +5,6 @@ import { fetchConfig } from '@theme/utilities';
 class CustomPurchaseWidget extends Component {
   requiredRefs = [
     'productData',
-    'subscriptionJsonOutput',
     'sellingPlanInput',
     'submitButton',
     'summaryDescription',
@@ -24,22 +23,32 @@ class CustomPurchaseWidget extends Component {
 
   connectedCallback() {
     super.connectedCallback();
-    this.#data = JSON.parse(this.refs.productData.textContent || '{"variants":[]}');
+    if (this.#abortController.signal.aborted) this.#abortController = new AbortController();
+    try {
+      this.#data = JSON.parse(this.refs.productData.textContent || '{"variants":[]}');
+    } catch (error) {
+      console.error('[CustomPurchaseWidget] Main product JSON could not be parsed.', error);
+      return;
+    }
+
+    const form = this.#form;
+    const formProductId = form?.closest('product-form-component')?.dataset.productId;
+    const productIds = [this.dataset.productId, this.#data.productId, formProductId].filter(Boolean).map(String);
+    if (!form || new Set(productIds).size !== 1) {
+      console.error('[CustomPurchaseWidget] Main product identity mismatch; initialization stopped.', {
+        widgetProductId: this.dataset.productId || null,
+        jsonProductId: this.#data.productId || null,
+        formProductId: formProductId || null,
+        productFormId: this.dataset.productFormId || null,
+      });
+      return;
+    }
+
     this.#variant = this.#findVariant(this.dataset.initialVariantId);
     this.#mode = this.#variant?.allocations.length > 0 ? 'subscription' : 'one-time';
 
-    this.#debug('initialization started', {
-      productId: this.dataset.productId,
-      variantId: this.#variant?.id,
-      productFormId: this.dataset.productFormId,
-      productDataParsed: Boolean(this.#data),
-      variantCount: this.#data.variants.length,
-      giftVariantId: this.dataset.giftVariantId || null,
-      giftAvailable: this.dataset.giftAvailable === 'true',
-    });
-
-    const form = this.#form;
-    form?.closest('product-form-component')?.classList.add('custom-purchase-native-form');
+    const productForm = form.closest('product-form-component');
+    productForm?.classList.add('custom-purchase-native-form');
 
     const { signal } = this.#abortController;
     this.addEventListener('change', this.#handleChange, { signal });
@@ -54,8 +63,9 @@ class CustomPurchaseWidget extends Component {
     this.refs.giftMessage?.addEventListener('input', this.#updateGiftMessageCount, { signal });
     form?.addEventListener('submit', this.#handleSubmit, { signal });
     this.closest('.shopify-section')?.addEventListener(StandardEvents.productSelect, this.#handleProductSelect, { signal });
-    document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartComplete, { signal });
-    document.addEventListener(StandardEvents.cartError, this.#handleCartError, { signal });
+    productForm?.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartComplete, { signal });
+    productForm?.addEventListener(StandardEvents.cartError, this.#handleCartError, { signal });
+    this.addEventListener(StandardEvents.cartError, this.#handleCartError, { signal });
 
     this.#syncVariant();
   }
@@ -112,7 +122,6 @@ class CustomPurchaseWidget extends Component {
     this.dataset.subscriptionAvailable = String(subscriptionAvailable);
     this.#quantity = Math.max(this.#variant.min || 1, this.#quantity);
     this.#renderFrequencies();
-    this.#renderSubscriptionJson();
 
     if (!subscriptionAvailable && this.#mode === 'subscription') {
       this.#mode = 'one-time';
@@ -126,13 +135,6 @@ class CustomPurchaseWidget extends Component {
 
     this.#syncMode();
     this.refs.submitButton.disabled = !this.#variant.available;
-    this.#debug('variant synchronized', {
-      variantId: this.#variant.id,
-      subscriptionAvailable,
-      sellingPlanCount: this.#variant.allocations.length,
-      sellingPlans: this.#variant.allocations.map(({ id, name }) => ({ id, name })),
-      selectedSellingPlanId: this.#sellingPlanId || null,
-    });
   }
 
   #syncMode() {
@@ -176,12 +178,15 @@ class CustomPurchaseWidget extends Component {
 
   #nativeQuantity() {
     const selector = this.#form?.closest('product-form-component')?.refs?.quantitySelector;
-    return Number(selector?.getValue?.()) || this.#variant?.min || 1;
+    const quantityInput = this.#form?.querySelector('input[name="quantity"]');
+    return Number(selector?.getValue?.()) || Number(quantityInput?.value) || this.#variant?.min || 1;
   }
 
   #syncQuantity() {
     const selector = this.#form?.closest('product-form-component')?.refs?.quantitySelector;
     selector?.setValue?.(String(this.#quantity));
+    const quantityInput = this.#form?.querySelector('input[name="quantity"]');
+    if (quantityInput) quantityInput.value = String(this.#quantity);
     if (this.refs.oneTimeQuantity) this.refs.oneTimeQuantity.textContent = String(this.#quantity);
     if (this.refs.decreaseButton) this.refs.decreaseButton.disabled = this.#quantity <= this.#variant.min;
     if (this.refs.increaseButton) this.refs.increaseButton.disabled = Boolean(this.#variant.max && this.#quantity >= this.#variant.max);
@@ -225,25 +230,6 @@ class CustomPurchaseWidget extends Component {
     if (selected) selected.checked = true;
     this.#syncSellingPlan();
     this.#renderSaveUpTo();
-  }
-
-  #renderSubscriptionJson() {
-    const frequencies = this.#variant.allocations.map((allocation) => ({
-      sellingPlanId: allocation.id,
-      name: allocation.name,
-      price: allocation.price,
-      compareAtPrice: allocation.compareAtPrice,
-      perDeliveryPrice: allocation.perDeliveryPrice,
-    }));
-
-    this.refs.subscriptionJsonOutput.textContent = JSON.stringify({
-      source: 'Shopify selling plan allocations (created by Appstle)',
-      productId: this.dataset.productId,
-      variantId: this.#variant.id,
-      subscriptionAvailable: frequencies.length > 0,
-      frequencyCount: frequencies.length,
-      frequencies,
-    }, null, 2);
   }
 
   #syncSellingPlan() {
@@ -291,7 +277,10 @@ class CustomPurchaseWidget extends Component {
       event.stopPropagation();
       return;
     }
-    if (this.#gift.configured && (!this.dataset.giftVariantId || this.dataset.giftAvailable !== 'true')) {
+    if (
+      this.#gift.configured &&
+      (!this.dataset.giftProductId || !this.dataset.giftVariantId || this.dataset.giftAvailable !== 'true')
+    ) {
       event.preventDefault();
       event.stopPropagation();
       this.#showError(this.#giftPartialErrorLabel);
@@ -303,16 +292,28 @@ class CustomPurchaseWidget extends Component {
     this.#awaitingMainAdd = true;
     this.refs.submitButton.disabled = true;
     this.refs.submitButton.setAttribute('aria-busy', 'true');
+
+    if (this.#gift.configured) {
+      event.preventDefault();
+      event.stopPropagation();
+      void this.#addMainAndGiftProducts();
+    }
   };
 
   #handleCartComplete = (event) => {
     const productForm = this.#form?.closest('product-form-component');
     if (!this.#awaitingMainAdd || event.target !== productForm) return;
 
+    if (!event.promise) {
+      this.#awaitingMainAdd = false;
+      this.#restoreButton();
+      this.#showError(this.#cartErrorLabel);
+      return;
+    }
+
     event.promise
-      ?.then(async ({ detail }) => {
-        if (detail?.didError) return;
-        if (this.#gift.configured) await this.#addGiftProduct();
+      .then(({ detail }) => {
+        if (detail?.didError) this.#showError(this.#cartErrorLabel);
       })
       .catch((error) => {
         if (error?.name !== 'AbortError') this.#showError(error.message || this.#giftPartialErrorLabel);
@@ -324,8 +325,11 @@ class CustomPurchaseWidget extends Component {
   };
 
   #handleCartError = (event) => {
-    this.#showError(event.detail?.error || this.#cartErrorLabel);
-    if (!this.#awaitingMainAdd) this.#restoreButton();
+    this.#showError(event.error || event.detail?.error || this.#cartErrorLabel);
+    if (this.#awaitingMainAdd) {
+      this.#awaitingMainAdd = false;
+      this.#restoreButton();
+    }
   };
 
   #restoreButton() {
@@ -410,10 +414,106 @@ class CustomPurchaseWidget extends Component {
     if (this.refs.giftMessageCount) this.refs.giftMessageCount.textContent = String(this.refs.giftMessage?.value.length || 0);
   };
 
+  async #addMainAndGiftProducts() {
+    const giftVariantId = this.dataset.giftVariantId;
+    if (!this.#variant || !giftVariantId || this.dataset.giftAvailable !== 'true') {
+      this.#showError(this.#giftPartialErrorLabel);
+      this.#awaitingMainAdd = false;
+      this.#restoreButton();
+      return;
+    }
+
+    const mainItem = {
+      id: Number(this.#variant.id),
+      quantity: this.#quantity,
+    };
+    if (this.#mode === 'subscription' && this.#sellingPlanId) {
+      mainItem.selling_plan = Number(this.#sellingPlanId);
+    }
+
+    const giftProperties = {};
+    if (this.#gift.from) giftProperties.From = this.#gift.from;
+    if (this.#gift.to) giftProperties.To = this.#gift.to;
+    if (this.#gift.message) giftProperties['Gift Message'] = this.#gift.message;
+    giftProperties['_Gift Reference'] = this.#giftLineToken || crypto.randomUUID();
+
+    const items = [
+      mainItem,
+      {
+        id: Number(giftVariantId),
+        quantity: 1,
+        properties: giftProperties,
+      },
+    ];
+    const sectionIds = Array.from(document.querySelectorAll('cart-items-component'))
+      .map((item) => item instanceof HTMLElement ? item.dataset.sectionId : '')
+      .filter(Boolean);
+    const deferredEventPromise = CartLinesUpdateEvent.createPromise();
+
+    this.dispatchEvent(new CartLinesUpdateEvent({
+      action: 'add',
+      context: 'product',
+      lines: items.map((item) => ({ merchandiseId: String(item.id), quantity: item.quantity })),
+      promise: deferredEventPromise.promise,
+    }));
+
+    try {
+      const response = await fetch(Theme.routes.cart_add_url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify({ items, sections: sectionIds.join(',') }),
+      });
+      const result = await response.json();
+      if (!response.ok || result.status) {
+        throw new Error(result.description || result.message || this.#cartErrorLabel);
+      }
+
+      const cartResponse = await fetch(`${Theme.routes.cart_url}.json`, {
+        headers: { Accept: 'application/json' },
+        credentials: 'same-origin',
+      });
+      if (!cartResponse.ok) throw new Error(this.#cartErrorLabel);
+      const cart = await cartResponse.json();
+
+      deferredEventPromise.resolve({
+        cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart),
+        detail: {
+          items: cart.items,
+          itemCount: this.#quantity + 1,
+          sections: result.sections,
+          source: 'custom-purchase-widget',
+          didError: false,
+        },
+      });
+      this.#giftLineToken = '';
+      this.#showError('');
+    } catch (error) {
+      deferredEventPromise.reject(error);
+      this.#showError(error?.message || this.#cartErrorLabel);
+      this.dispatchEvent(new CartErrorEvent({
+        error: error?.message || this.#cartErrorLabel,
+        code: 'INVALID',
+      }));
+    } finally {
+      this.#awaitingMainAdd = false;
+      this.#restoreButton();
+    }
+  }
+
   async #addGiftProduct() {
+    const giftProductId = this.dataset.giftProductId;
+    const giftVariantId = this.dataset.giftVariantId;
+    if (!this.#gift.configured || !giftProductId || !giftVariantId || this.dataset.giftAvailable !== 'true') {
+      throw new Error(this.#giftPartialErrorLabel);
+    }
+
     const deferredEventPromise = CartLinesUpdateEvent.createPromise();
     const formData = new FormData();
-    formData.set('id', this.dataset.giftVariantId || '');
+    formData.set('id', giftVariantId);
     formData.set('quantity', '1');
     if (this.#gift.from) formData.set('properties[From]', this.#gift.from);
     if (this.#gift.to) formData.set('properties[To]', this.#gift.to);
@@ -428,7 +528,7 @@ class CustomPurchaseWidget extends Component {
     this.dispatchEvent(new CartLinesUpdateEvent({
       action: 'add',
       context: 'product',
-      lines: [{ merchandiseId: this.dataset.giftVariantId || '', quantity: 1 }],
+      lines: [{ merchandiseId: giftVariantId, quantity: 1 }],
       promise: deferredEventPromise.promise,
     }));
 
@@ -474,11 +574,6 @@ class CustomPurchaseWidget extends Component {
     if (!this.refs.error) return;
     this.refs.error.textContent = message;
     this.refs.error.hidden = !message;
-  }
-
-  #debug(message, detail) {
-    if (this.dataset.debug !== 'true') return;
-    console.debug(`[CustomPurchaseWidget] ${message}`, detail);
   }
 
   #formatMoney(cents) {

@@ -134,16 +134,6 @@
         "disabled": true,
         "settings": {}
       },
-      "15014643352720781508": {
-        "type": "shopify://apps/wrapped/blocks/app-embed/1714fc7d-e525-4a14-8c3e-1b6ed95734c5",
-        "disabled": false,
-        "settings": {}
-      },
-      "10436698916776057164": {
-        "type": "shopify://apps/appstle-subscription/blocks/appstle-subscription-helper/fe257d39-6f88-4f35-ab08-bd437e3aa94e",
-        "disabled": false,
-        "settings": {}
-      },
       "15683396631634586217": {
         "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
         "disabled": true,
@@ -167,9 +157,9 @@
           "agent_border_radius": 16
         }
       },
-      "10508887350528622030": {
-        "type": "shopify://apps/appstle-bundles/blocks/appstle-bundle/8909921b-2d24-4d68-9b12-9d045d3dcb0a",
-        "disabled": false,
+      "10436698916776057164": {
+        "type": "shopify://apps/appstle-subscription/blocks/appstle-subscription-helper/fe257d39-6f88-4f35-ab08-bd437e3aa94e",
+        "disabled": true,
         "settings": {}
       }
     },
@@ -241,6 +231,7 @@
       "cart_price_font": "subheading",
       "show_cart_note": false,
       "show_add_discount_code": true,
+      "auto_open_cart_drawer": true,
       "drawer_background_color": "{{ settings.color_palette.background }}",
       "drawer_text_color": "{{ settings.color_palette.foreground }}",
       "drawer_border_color": "{{ settings.color_palette.color2 }}",
