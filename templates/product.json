@@ -236,7 +236,7 @@
                 "save_up_to_label": "Save up to",
                 "savings_label": "You save",
                 "enable_gift": true,
-                "gift_product": "",
+                "gift_product": "wrapped-gift-blocks-gifting-for-products",
                 "gift_checkbox_label": "Add a gift",
                 "gift_supporting_text": "Add a personal message to your order",
                 "gift_configured_label": "Gift details saved",
