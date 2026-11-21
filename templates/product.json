@@ -260,6 +260,8 @@
                   "type": "quantity",
                   "static": true,
                   "settings": {
+                    "enable_maximum_quantity": true,
+                    "maximum_quantity": 4,
                     "input_style": "default",
                     "input_background_color": "{{ settings.color_palette.background }}",
                     "input_text_color": "{{ settings.color_palette.foreground }}",
@@ -288,12 +290,6 @@
                 }
               },
               "block_order": []
-            },
-            "wrapped_app_block_product_gmnQez": {
-              "type": "shopify://apps/wrapped/blocks/app-block.product/1714fc7d-e525-4a14-8c3e-1b6ed95734c5",
-              "settings": {
-                "launcher_variant": "button"
-              }
             },
             "accordion_DzT3UD": {
               "type": "accordion",
@@ -383,7 +379,6 @@
             "variant_picker_R3rGDr",
             "appstle_subscription_appstle_subscription_product_page_widget_6EjcYe",
             "buy_buttons_eYQEYi",
-            "wrapped_app_block_product_gmnQez",
             "accordion_DzT3UD",
             "additional_info_KnkmWj"
           ]
