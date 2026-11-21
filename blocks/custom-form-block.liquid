@@ -4,7 +4,7 @@
 {% enddoc %}
 
 {% liquid
-  #assign product = closest.product
+  assign product = closest.product
   assign variant = product.selected_or_first_available_variant
   assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id
   assign gift_product = block.settings.gift_product
