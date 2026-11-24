@@ -611,7 +611,7 @@
         "heading_tag": "h2",
         "show_description": true,
         "description": "<p>Necesito is a small-batch coffee roaster in Estero, Florida. Our idea is simple: good coffee and a warm welcome for the neighborhood.</p>",
-        "supporting_text": "Delivery schedule & fees coming soon.",
+        "supporting_text": "",
         "text_alignment": "left",
         "mobile_text_alignment": "left",
         "eyebrow_color": "#456553",
