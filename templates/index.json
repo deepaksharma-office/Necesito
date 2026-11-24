@@ -245,7 +245,7 @@
         "support_alignment": "center",
         "media_label": "Featured products",
         "enable_animation": true,
-        "caption": "&nbsp;SMALL BATCH. BIG NEIGHBORHOOD HEART.&nbsp;",
+        "caption": "<em><strong>&nbsp;SMALL BATCH. BIG NEIGHBORHOOD HEART.&nbsp;</strong></em>",
         "caption_color": "#173f35",
         "caption_background": "#ffffff",
         "caption_size": 11,
