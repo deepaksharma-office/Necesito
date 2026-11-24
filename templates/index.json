@@ -531,7 +531,7 @@
         "heading_tag": "h2",
         "show_description": true,
         "description": "<p>We’re launching local delivery for our neighbors. Good coffee, with a familiar neighborhood hello.</p>",
-        "supporting_text": "Delivery schedule & fees coming soon.",
+        "supporting_text": "",
         "text_alignment": "left",
         "mobile_text_alignment": "left",
         "eyebrow_color": "#456553",
